@@ -44,7 +44,7 @@ void InitGL()
 	OPV_G.R = 15.0;		OPV_G.alfa = 0.0;	OPV_G.beta = 0.0;	// Origen PV en esfèriques per a Vista_Geode
 
 // Entorn VGI: Variables de control per Menú Vista: Pantalla Completa, Pan, dibuixar eixos i grids 
-	fullscreen = false;
+	fullscreen = true;
 	pan = false;
 	eixos = true;	eixos_programID = 0;  eixos_Id = 0;
 	sw_grid = false;
@@ -571,6 +571,8 @@ void configura_Escena() {
 
 // Aplicar Transformacions Geometriques segons persiana Transformacio i Quaternions
 	GTMatrix = instancia(transf, TG, TGF);
+
+	
 }
 
 // dibuixa_Escena: Funcio que crida al dibuix dels diferents elements de l'escana
@@ -592,7 +594,7 @@ void dibuixa_Escena() {
 		textura, texturesID, textura_map, tFlag_invert_Y,
 		npts_T, PC_t, pas_CS, sw_Punts_Control, dibuixa_TriedreFrenet,
 		ObOBJ,				// Classe de l'objecte OBJ que conté els VAO's
-		ViewMatrix, GTMatrix);
+		ViewMatrix, GTMatrix, gameState);
 }
 
 // Barra_Estat: Actualitza la barra d'estat (Status Bar) de l'aplicació amb els
@@ -2567,6 +2569,9 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 
 	// (2) ONLY forward mouse data to your underlying app/game.
 	if (!io.WantCaptureKeyboard) { //<Tractament mouse de l'aplicació>}
+		// ABP: pass input to game
+		gameState.OnKeyDown(window, key, scancode, action, mods);
+
 		// EntornVGI: Si tecla pulsada és ESCAPE, tancar finestres i aplicació.
 		if (mods == 0 && key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(window, GL_TRUE);
 		else if (mods == 0 && key == GLFW_KEY_PRINT_SCREEN && action == GLFW_PRESS) statusB = !statusB;
@@ -4225,6 +4230,8 @@ void OnMouseButton(GLFWwindow* window, int button, int action, int mods)
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
 
+	
+
 // EntornVGI.ImGui: Test si events de mouse han sigut filtrats per ImGui (io.WantCaptureMouse)
 // (1) ALWAYS forward mouse data to ImGui! This is automatic with default backends. With your own backend:
 	ImGuiIO& io = ImGui::GetIO();
@@ -4235,6 +4242,10 @@ void OnMouseButton(GLFWwindow* window, int button, int action, int mods)
 		// OnLButtonDown
 		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 		{
+			// ABP DEBUG
+			gameState.OnMouseButton(window, button, action, mods);
+			
+
 			// Entorn VGI: Detectem en quina posició s'ha apretat el botó esquerra del
 			//				mouse i ho guardem a la variable m_PosEAvall i activem flag m_ButoEAvall
 			m_ButoEAvall = true;
@@ -4243,7 +4254,10 @@ void OnMouseButton(GLFWwindow* window, int button, int action, int mods)
 		}
 		// OnLButtonUp: Funció que es crida quan deixem d'apretar el botó esquerra del mouse.
 		else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
-		{	// Entorn VGI: Desactivem flag m_ButoEAvall quan deixem d'apretar botó esquerra del mouse.
+		{	
+			gameState.OnMouseButtonRelease(window, button, action, mods);
+
+			// Entorn VGI: Desactivem flag m_ButoEAvall quan deixem d'apretar botó esquerra del mouse.
 			m_ButoEAvall = false;
 
 			// OPCIÓ VISTA-->SATÈLIT: Càlcul increment desplaçament del Punt de Vista
@@ -4286,6 +4300,7 @@ void OnMouseButton(GLFWwindow* window, int button, int action, int mods)
 void OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
 // TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
+	gameState.OnMouseMove(window, xpos, ypos);
 	double modul = 0;
 	GLdouble vdir[3] = { 0, 0, 0 };
 	CSize gir = { 0,0 }, girn = { 0,0 }, girT = { 0,0 }, zoomincr = { 0,0 };
@@ -4994,6 +5009,9 @@ int main(void)
 
 // Entorn VGI.ImGui: Dibuixa menú ImGui
 		//draw_Menu_ImGui();
+
+// ABP: Game update
+		gameState.UpdateGame(delta);
 
 // Crida a OnPaint() per redibuixar l'escena
 		OnPaint(window);

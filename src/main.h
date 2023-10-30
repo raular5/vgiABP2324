@@ -8,6 +8,7 @@
 
 // Entorn VGI: Llibreries i constants Constants de l'aplicació EntornVGI
 #include "stdafx.h"
+#include "game.h"
 
 // Entorn VGI: //******** Entorn bàsic VS2022 MONOFINESTRA amb OpenGL 4.3+, interfície GLFW, ImGui i llibreries GLM.h"	
 
@@ -257,3 +258,6 @@
 	GLenum glCheckError_(const char* file, int line);
 	void APIENTRY glDebugOutput(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
 		const GLchar* message, const void* userParam);
+
+// -------- ABP
+	GameState gameState;

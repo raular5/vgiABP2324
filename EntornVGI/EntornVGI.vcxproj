@@ -27,13 +27,13 @@
     <ClCompile Include="..\include\ImGui\imgui_tables.cpp" />
     <ClCompile Include="..\include\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="..\src\escena.cpp" />
+    <ClCompile Include="..\src\game.cpp" />
     <ClCompile Include="..\src\glut_geometry.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\material.cpp" />
     <ClCompile Include="..\src\objLoader.cpp" />
     <ClCompile Include="..\src\shader.cpp" />
     <ClCompile Include="..\src\visualitzacio.cpp" />
-    <ClCompile Include="game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ImGui\imconfig.h" />
@@ -46,6 +46,7 @@
     <ClInclude Include="..\include\ImGui\imstb_textedit.h" />
     <ClInclude Include="..\src\constants.h" />
     <ClInclude Include="..\src\escena.h" />
+    <ClInclude Include="..\src\game.h" />
     <ClInclude Include="..\src\glut_geometry.h" />
     <ClInclude Include="..\src\main.h" />
     <ClInclude Include="..\src\material.h" />

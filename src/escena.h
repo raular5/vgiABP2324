@@ -9,6 +9,8 @@
 
 // Entorn VGI: OBJECTE OBJ. Include per la definició de l'objecte Obj_OBJ
 #include "objLoader.h"	
+#include "game.h"
+
 
 /* ------------------------------------------------------------------------- */
 /*                            Funcions de les escenes                        */
@@ -22,13 +24,13 @@ void dibuixa_EscenaGL(GLuint sh_programID, bool eix, GLuint axis_Id, CMask3D rei
 	bool textur, GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, bool flagInvertY,
 	int nptsU, CPunt3D PC_u[MAX_PATCH_CORBA], GLfloat pasCS, bool sw_PC, bool dib_TFrenet,
 	COBJModel* objecteOBJ,
-	glm::mat4 MatriuVista, glm::mat4 MatriuTG);
+	glm::mat4 MatriuVista, glm::mat4 MatriuTG, GameState gameState);
 
 // Entorn VGI: dibuixa -> Funció que dibuixa objectes simples de la llibreria GLUT segons obj
 void dibuixa(GLuint sh_programID, char obj, glm::mat4 MatriuVista, glm::mat4 MatriuTG);
 
-// Entorn VGI: Objecte Arc
-void escenaABP(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5]);
+// Entorn VGI: ABP
+void escenaABP(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GameState gameState);
 //oid sea(GLint shaderId, glm::mat4 MatriuVista, glm::mat4 MatriuTG, CColor colorM);
 CVAO loadSea_VAO(CColor colorM);
 
@@ -43,4 +45,7 @@ void Cabina(GLint shaderId, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_m
 // Entorn VGI: Funcions locals a escena.cpp
 // CString2char: Funció de conversió de variable CString a char * per a noms de fitxers 
 //char* CString2Char(CString entrada);
+
+
+
 #endif

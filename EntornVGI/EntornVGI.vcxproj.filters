@@ -63,7 +63,7 @@
     <ClCompile Include="..\include\ImGui\imgui_widgets.cpp">
       <Filter>Archivos de origen\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
+    <ClCompile Include="..\src\game.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -118,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="..\include\ImGui\imstb_textedit.h">
       <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
