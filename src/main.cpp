@@ -4862,6 +4862,10 @@ void LoadVAOsAPB()
 
 }
 
+void LoadTexturesABP()
+{
+	texturesID[0] = loadIMA_SOIL(".\\textures\\nota.png");
+}
 int main(void)
 {
 //    GLFWwindow* window;
@@ -4990,6 +4994,7 @@ int main(void)
 
 // -- Custom for ABP --
 	LoadVAOsAPB();	// Load Object VAOs
+	LoadTexturesABP();
 	c_fons.r = 0;	c_fons.g = 0;	c_fons.b = 0;	c_fons.a = 0;	// Set black background color
 	wglSwapIntervalEXT(1);	// Enable vsync
 
