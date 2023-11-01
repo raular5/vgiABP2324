@@ -2604,6 +2604,7 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 
 void OnKeyUp(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	gameState.OnKeyUp(window, key, scancode, action, mods);
 }
 
 void OnTextDown(GLFWwindow* window, unsigned int codepoint)
@@ -4810,7 +4811,7 @@ void LoadVAOsAPB()
 	Set_VAOList(GLUT_CYLINDER, loadgluCylinder_EBO(5.0f, 5.0f, 0.5f, 6, 1));// Càrrega cilindre com a VAO.
 
 	//if (Get_VAOId(GLU_DISK) != 0)deleteVAOList(GLU_DISK);
-	Set_VAOList(GLU_DISK, loadgluDisk_EBO(0.0f, 5.0f, 6, 1));	// Càrrega disc com a VAO
+	Set_VAOList(GLU_DISK, loadgluDisk_EBO(0.0f, 5.0f, 20, 5));	// Càrrega disc com a VAO
 
 
 	//if (Get_VAOId(GLUT_USER1) != 0)deleteVAOList(GLUT_USER1);

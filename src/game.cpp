@@ -47,6 +47,15 @@ void GameState::UpdateGame(float delta)
 
 void GameState::OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	if (action == GLFW_RELEASE) {
+		OnKeyUp(window, key, scancode, action, mods);
+		return;
+	}
+
+	if (action != GLFW_PRESS) {
+		return;
+	}
+
 	// Move item inspector
 	switch (key) {	// Mejorable, poner en el update
 	case GLFW_KEY_D:
@@ -70,6 +79,34 @@ void GameState::OnKeyDown(GLFWwindow* window, int key, int scancode, int action,
 
 	}
 	
+	// Change item in inspector
+	switch (key)
+	{
+	case GLFW_KEY_TAB: // show inspector
+		showItemInspector = !showItemInspector;
+		break;
+
+	case GLFW_KEY_0:
+		currentItem = ITEM_NONE;
+		break;
+	case GLFW_KEY_1:
+		currentItem = ITEM_KEY;
+		break;
+	case GLFW_KEY_2:
+		currentItem = ITEM_NOTE;
+		break;
+	case GLFW_KEY_3:
+		currentItem = ITEM_CANDLE;
+		break;
+	default:
+		break;
+	}
+}
+
+void GameState::OnKeyUp(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	
+
 }
 
 void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mods)
@@ -82,8 +119,6 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	printf("Click pos : %f, %f\n", xpos, ypos);
 	ChangeDebugCubePos(vec3(2.5f, 3 * (xpos / 1280), 1 - 3 * (ypos / 720)));
 }
-
-
 
 void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action, int mods)
 {

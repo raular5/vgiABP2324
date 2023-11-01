@@ -3,6 +3,11 @@
 // Entorn VGI: Llibreries i constants Constants de l'aplicació EntornVGI
 #include "stdafx.h"
 
+// Inventory items
+#define ITEM_NONE 0
+#define ITEM_KEY 1
+#define ITEM_NOTE 2
+#define ITEM_CANDLE 3
 
 
 class GameState {
@@ -20,6 +25,7 @@ public:
 
 	// Executes on mouse/kb input
 	void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods);
+	void OnKeyUp(GLFWwindow* window, int key, int scancode, int action, int mods);
 	void OnMouseButton(GLFWwindow* window, int button, int action, int mods);
 	void OnMouseButtonRelease(GLFWwindow* window, int button, int action, int mods);
 	void OnMouseMove(GLFWwindow* window, double xpos, double ypos);
@@ -43,7 +49,8 @@ public:
 	vec3 debug_cube_scale;
 
 	// item inspector
-	bool showItemInspector = true;
+	bool showItemInspector = false;
+	int currentItem = ITEM_NONE;
 	vec3 item_inspect_rotation = vec3(0.0f, 0.0f, 0.0f);
 	vec3 item_inspect_scale = vec3(2.0f, 2.0f, 2.0f);
 
