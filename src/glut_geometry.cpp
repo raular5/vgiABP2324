@@ -747,7 +747,6 @@ void drawCubeSkybox()
 		}
 }
 // ---------- FI CUBE SKYBOX -----------------------------------------------------
-
 // ---------- SPHERE -------------------------------------------------------------
 /*
  * Compute lookup table of cos and sin values forming a cirle

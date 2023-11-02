@@ -18,6 +18,8 @@
 #include "escena.h"
 #include "main.h"
 
+int gameScene = 1;
+time_t gameTimer;
 
 void InitGL()
 {
@@ -588,13 +590,84 @@ void dibuixa_Escena() {
 
 // Escalat d'objectes, per adequar-los a les vistes ortogràfiques (Pràctica 2)
 //	GTMatrix = glm::scale();
+	bool pulsado = false;
+
+	ImGuiWindowFlags flags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings;
+	time_t elapsedTimer;
+	int elapsedS, elapsedM;
+	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+	ImGuiCond escalado = 0;
+	switch (gameScene) {
+	case 3:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Game over", nullptr, flags);
+		ImGui::Text("Game Over");
+
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
+
+	case 1:
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+		ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(-0.25f, -0.25f));
+		ImGui::SetNextWindowSize(ImVec2(300.0f,450.0f), escalado);
+
+		if (false) flags |= ImGuiWindowFlags_NoBackground;
+
+		ImGui::Begin("Game start window", nullptr,flags);
+
+		ImGui::Text("Hello there adventurer!");
+		if (ImGui::Button("Start scape room")) {
+			printf("gameScene= %d \n", gameScene);
+			gameScene = 2;
+			gameTimer = time(NULL);
+		}
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
+	case 2:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Game timer", nullptr, flags);
+
+		ImGui::Text("Time till game over");
+		elapsedTimer = 10-(time(NULL) - gameTimer);
+		elapsedM = (elapsedTimer / 60) % 60;
+		elapsedS = elapsedTimer % 60;
+		ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
+		if (elapsedM == 0 && elapsedS == 0) {
+			gameScene = 3;
+		}
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
+	default:
+		break;
+	}
+
 
 //	Dibuix geometria de l'escena amb comandes GL.
 	dibuixa_EscenaGL(shader_programID, eixos, eixos_Id, grid, hgrid, objecte, col_obj, sw_material,
 		textura, texturesID, textura_map, tFlag_invert_Y,
 		npts_T, PC_t, pas_CS, sw_Punts_Control, dibuixa_TriedreFrenet,
 		ObOBJ,				// Classe de l'objecte OBJ que conté els VAO's
-		ViewMatrix, GTMatrix, gameState);
+		ViewMatrix, GTMatrix, gameState, gameScene);
+
+
+
 }
 
 // Barra_Estat: Actualitza la barra d'estat (Status Bar) de l'aplicació amb els
@@ -2557,6 +2630,7 @@ void Menu_Shaders_Opcio_GravarProgram()
 //    - mods: Variable que identifica si la tecla s'ha pulsat directa (mods=0), juntament amb la tecla Shift (mods=1) o la tecla Ctrl (mods=2).
 void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	
 // TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
 	const double incr = 0.025f;
 	double modul = 0;
@@ -2568,28 +2642,40 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 	//io.AddMouseButtonEvent(button, true);
 
 	// (2) ONLY forward mouse data to your underlying app/game.
-	if (!io.WantCaptureKeyboard) { //<Tractament mouse de l'aplicació>}
-		// ABP: pass input to game
-		gameState.OnKeyDown(window, key, scancode, action, mods);
+	switch (gameScene) {
+	case 1:
+		break;
+	case 2:
+		if (!io.WantCaptureKeyboard) { //<Tractament mouse de l'aplicació>}
+			// ABP: pass input to game
+			gameState.OnKeyDown(window, key, scancode, action, mods);
 
-		// EntornVGI: Si tecla pulsada és ESCAPE, tancar finestres i aplicació.
-		if (mods == 0 && key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(window, GL_TRUE);
-		else if (mods == 0 && key == GLFW_KEY_PRINT_SCREEN && action == GLFW_PRESS) statusB = !statusB;
-		else if ((mods == 1) && (action == GLFW_PRESS)) Teclat_Shift(key, window);	// Shorcuts Shift Key
-		else if ((mods == 2) && (action == GLFW_PRESS)) Teclat_Ctrl(key);	// Shortcuts Ctrl Key
-		else if ((sw_grid) && ((grid.x) || (grid.y) || (grid.z))) Teclat_Grid(key, action);
-		else if (((key == GLFW_KEY_G) && (action == GLFW_PRESS)) && ((grid.x) || (grid.y) || (grid.z))) sw_grid = !sw_grid;
-		else if ((key == GLFW_KEY_O) && (action == GLFW_PRESS)) sw_color = true; // Activació color objecte
-		else if ((key == GLFW_KEY_F) && (action == GLFW_PRESS)) sw_color = false; // Activació color objecte
-		else if (pan) Teclat_Pan(key, action);
-		else if (transf)
-				{	if (rota) Teclat_TransRota(key, action);
-						else if (trasl) Teclat_TransTraslada(key, action);
-							else if (escal) Teclat_TransEscala(key, action);
-				}
-		else if (camera == CAM_NAVEGA) Teclat_Navega(key, action);
-		else if (!sw_color) Teclat_ColorFons(key, action);
-		else Teclat_ColorObjecte(key, action);
+			// EntornVGI: Si tecla pulsada és ESCAPE, tancar finestres i aplicació.
+			if (mods == 0 && key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(window, GL_TRUE);
+			else if (mods == 0 && key == GLFW_KEY_PRINT_SCREEN && action == GLFW_PRESS) statusB = !statusB;
+			else if ((mods == 1) && (action == GLFW_PRESS)) Teclat_Shift(key, window);	// Shorcuts Shift Key
+			else if ((mods == 2) && (action == GLFW_PRESS)) Teclat_Ctrl(key);	// Shortcuts Ctrl Key
+			else if ((sw_grid) && ((grid.x) || (grid.y) || (grid.z))) Teclat_Grid(key, action);
+			else if (((key == GLFW_KEY_G) && (action == GLFW_PRESS)) && ((grid.x) || (grid.y) || (grid.z))) sw_grid = !sw_grid;
+			else if ((key == GLFW_KEY_O) && (action == GLFW_PRESS)) sw_color = true; // Activació color objecte
+			else if ((key == GLFW_KEY_F) && (action == GLFW_PRESS)) sw_color = false; // Activació color objecte
+			else if (pan) Teclat_Pan(key, action);
+			else if (transf)
+			{
+				if (rota) Teclat_TransRota(key, action);
+				else if (trasl) Teclat_TransTraslada(key, action);
+				else if (escal) Teclat_TransEscala(key, action);
+			}
+			else if (camera == CAM_NAVEGA) Teclat_Navega(key, action);
+			else if (!sw_color) Teclat_ColorFons(key, action);
+			else Teclat_ColorObjecte(key, action);
+		}
+		break;
+	case 3:
+		break;
+	default:
+		
+		break;
 	}
 // Crida a OnPaint() per redibuixar l'escena
 	//OnPaint(window);
@@ -5037,9 +5123,9 @@ int main(void)
 		glfwWindowShouldClose(window) == 0);
 
 // Entorn VGI.ImGui: Cleanup ImGui
-	//ImGui_ImplOpenGL3_Shutdown();
-	//ImGui_ImplGlfw_Shutdown();
-	//ImGui::DestroyContext();
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 	glfwDestroyWindow(window);
 

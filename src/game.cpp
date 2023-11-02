@@ -28,7 +28,7 @@ void GameState::UpdateGame(float delta)
 
 	timeAcumm += delta;
 	gameOverCountdownInSeconds -= delta;
-	if (gameOverCountdownInSeconds <= 0)
+	if (false)//Cambiar a  (gameOverCountdownInSeconds <= 0)	 para que funcione
 	{
 		printf("Game over!\n");
 		gameOver = true;

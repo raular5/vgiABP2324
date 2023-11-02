@@ -19,7 +19,7 @@ public:
 	
 
 	// ABP: Player current room
-	int currentRoom = 0;
+	int currentRoom = 1;
 
 	void ChangeDebugCubePos(vec3 pos);
 
@@ -32,6 +32,7 @@ public:
 
 	// Executes every frame. Delta is the time difference between frames (e.g 0.16666 seconds if 60FPS)
 	void UpdateGame(float delta);
+	
 
 //private:
 
