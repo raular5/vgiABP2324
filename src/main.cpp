@@ -625,10 +625,25 @@ void dibuixa_Escena() {
 		ImGui::Begin("Game start window", nullptr,flags);
 
 		ImGui::Text("Hello there adventurer!");
+
 		if (ImGui::Button("Start scape room")) {
-			printf("gameScene= %d \n", gameScene);
 			gameScene = 2;
+			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Debug scene for testing")) {
+			gameScene = 10;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Options")) {
+			
+		}
+
+		if (ImGui::Button("Exit Game")) {
+			//glfwSetWindowShouldClose(window);
 		}
 		ImGui::End();
 		ImGui::Render();
@@ -643,7 +658,27 @@ void dibuixa_Escena() {
 		ImGui::Begin("Game timer", nullptr, flags);
 
 		ImGui::Text("Time till game over");
-		elapsedTimer = 200-(time(NULL) - gameTimer);
+		elapsedTimer = 100000-(time(NULL) - gameTimer);
+		elapsedM = (elapsedTimer / 60) % 60;
+		elapsedS = elapsedTimer % 60;
+		ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
+		if (elapsedM == 0 && elapsedS == 0) {
+			gameScene = 3;
+		}
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
+	case 10:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Game timer", nullptr, flags);
+
+		ImGui::Text("debug scene");
+		elapsedTimer = 100000 - (time(NULL) - gameTimer);
 		elapsedM = (elapsedTimer / 60) % 60;
 		elapsedS = elapsedTimer % 60;
 		ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
@@ -2644,38 +2679,41 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 	// (2) ONLY forward mouse data to your underlying app/game.
 	switch (gameScene) {
 	case 1:
-		break;
+		return;
 	case 2:
-		if (!io.WantCaptureKeyboard) { //<Tractament mouse de l'aplicació>}
-			// ABP: pass input to game
-			gameState.OnKeyDown(window, key, scancode, action, mods);
-
-			// EntornVGI: Si tecla pulsada és ESCAPE, tancar finestres i aplicació.
-			if (mods == 0 && key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(window, GL_TRUE);
-			else if (mods == 0 && key == GLFW_KEY_PRINT_SCREEN && action == GLFW_PRESS) statusB = !statusB;
-			else if ((mods == 1) && (action == GLFW_PRESS)) Teclat_Shift(key, window);	// Shorcuts Shift Key
-			else if ((mods == 2) && (action == GLFW_PRESS)) Teclat_Ctrl(key);	// Shortcuts Ctrl Key
-			else if ((sw_grid) && ((grid.x) || (grid.y) || (grid.z))) Teclat_Grid(key, action);
-			else if (((key == GLFW_KEY_G) && (action == GLFW_PRESS)) && ((grid.x) || (grid.y) || (grid.z))) sw_grid = !sw_grid;
-			else if ((key == GLFW_KEY_O) && (action == GLFW_PRESS)) sw_color = true; // Activació color objecte
-			else if ((key == GLFW_KEY_F) && (action == GLFW_PRESS)) sw_color = false; // Activació color objecte
-			else if (pan) Teclat_Pan(key, action);
-			else if (transf)
-			{
-				if (rota) Teclat_TransRota(key, action);
-				else if (trasl) Teclat_TransTraslada(key, action);
-				else if (escal) Teclat_TransEscala(key, action);
-			}
-			else if (camera == CAM_NAVEGA) Teclat_Navega(key, action);
-			else if (!sw_color) Teclat_ColorFons(key, action);
-			else Teclat_ColorObjecte(key, action);
-		}
+	case 10:
+		
 		break;
 	case 3:
-		break;
+		return;
 	default:
 		
 		break;
+	}
+
+	if (!io.WantCaptureKeyboard) { //<Tractament mouse de l'aplicació>}
+		// ABP: pass input to game
+		gameState.OnKeyDown(window, key, scancode, action, mods);
+
+		// EntornVGI: Si tecla pulsada és ESCAPE, tancar finestres i aplicació.
+		if (mods == 0 && key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(window, GL_TRUE);
+		else if (mods == 0 && key == GLFW_KEY_PRINT_SCREEN && action == GLFW_PRESS) statusB = !statusB;
+		else if ((mods == 1) && (action == GLFW_PRESS)) Teclat_Shift(key, window);	// Shorcuts Shift Key
+		else if ((mods == 2) && (action == GLFW_PRESS)) Teclat_Ctrl(key);	// Shortcuts Ctrl Key
+		else if ((sw_grid) && ((grid.x) || (grid.y) || (grid.z))) Teclat_Grid(key, action);
+		else if (((key == GLFW_KEY_G) && (action == GLFW_PRESS)) && ((grid.x) || (grid.y) || (grid.z))) sw_grid = !sw_grid;
+		else if ((key == GLFW_KEY_O) && (action == GLFW_PRESS)) sw_color = true; // Activació color objecte
+		else if ((key == GLFW_KEY_F) && (action == GLFW_PRESS)) sw_color = false; // Activació color objecte
+		else if (pan) Teclat_Pan(key, action);
+		else if (transf)
+		{
+			if (rota) Teclat_TransRota(key, action);
+			else if (trasl) Teclat_TransTraslada(key, action);
+			else if (escal) Teclat_TransEscala(key, action);
+		}
+		else if (camera == CAM_NAVEGA) Teclat_Navega(key, action);
+		else if (!sw_color) Teclat_ColorFons(key, action);
+		else Teclat_ColorObjecte(key, action);
 	}
 // Crida a OnPaint() per redibuixar l'escena
 	//OnPaint(window);

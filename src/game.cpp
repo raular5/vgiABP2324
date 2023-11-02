@@ -5,7 +5,7 @@ GameState::GameState()
 	// Init debug cube variables
 	debug_cube_pos = vec3(0.0f, 0.0f, 0.0f);
 	debug_cube_rotation = vec3(0.0f, 0.0f, 0.0f);
-	debug_cube_scale = vec3(0.0f, 0.0f, 0.0f);
+	debug_cube_scale = vec3(1.0f, 1.0f, 1.0f);
 	cube_color.r = 1.0;
 	cube_color.g = 0.5;
 	cube_color.b = 0.0;
@@ -39,7 +39,7 @@ void GameState::UpdateGame(float delta)
 	//printf("delta: %f \n", delta);
 	//debug_cube_rotation.x += 5.0 * delta;
 	debug_cube_rotation.y += 20.0 * delta;
-	debug_cube_pos.z = 2.0f*sin(timeAcumm);
+	//debug_cube_pos.z = 2.0f*sin(timeAcumm);
 
 	
 

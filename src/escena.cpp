@@ -135,6 +135,9 @@ void dibuixa_EscenaGL(GLuint sh_programID, bool eix, GLuint axis_Id, CMask3D rei
 	case 3:
 		escenaABP3(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
 		break;
+	case 10:
+		escenaDebug(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
+		break;
 	default:
 		escenaABP(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
 		break;
@@ -488,23 +491,6 @@ void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Mat
 
 
 
-// Cubito
-	SeleccionaColorMaterial(sh_programID, gameState.cube_color , sw_mat);
-	
-	
-	ModelMatrix = glm::scale(MatriuTG, gameState.debug_cube_scale);
-	ModelMatrix = glm::translate(ModelMatrix, gameState.debug_cube_pos);
-	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.x), vec3(1.0f, 0.0f, 0.0f));
-	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.y), vec3(0.0f, 1.0f, 0.0f));
-	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.z), vec3(0.0f, 0.0f, 1.0f));
-	// Pas ModelView Matrix a shader
-	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
-	// Pas NormalMatrix a shader
-	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
-	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
-	draw_TriEBO_Object(GLUT_CUBE); // drawSolidCube();	//  glutSolidCube(1.0);
-	//glPopMatrix();
-
 
 // Item inspect
 	if (gameState.showItemInspector)
@@ -588,6 +574,44 @@ void escenaABP3(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, 
 
 
 
+}
+
+void escenaDebug(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GameState gameState)
+{
+	CColor col_object = { 0.0,0.0,0.0,1.0 };
+	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
+	// Cubito
+	SeleccionaColorMaterial(sh_programID, gameState.cube_color, sw_mat);
+
+
+	ModelMatrix = glm::scale(MatriuTG, gameState.debug_cube_scale);
+	ModelMatrix = glm::translate(ModelMatrix, gameState.debug_cube_pos);
+	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.x), vec3(1.0f, 0.0f, 0.0f));
+	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.y), vec3(0.0f, 1.0f, 0.0f));
+	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.z), vec3(0.0f, 0.0f, 1.0f));
+	// Pas ModelView Matrix a shader
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+	// Pas NormalMatrix a shader
+	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+	draw_TriEBO_Object(GLUT_CUBE);
+
+	// Suelo
+	col_object.r = 0.0f;
+	col_object.g = 0.0f;
+	col_object.b = 0.0f;
+	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+
+
+	ModelMatrix = glm::scale(MatriuTG, vec3(10.0f, 10.0f, 0.25f));
+	ModelMatrix = glm::translate(ModelMatrix, vec3(0.0f, 0.0f, -5.0f));
+	
+	// Pas ModelView Matrix a shader
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+	// Pas NormalMatrix a shader
+	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+	draw_TriEBO_Object(GLUT_CUBE);
 }
 
 void dibuixa_Key(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5])
