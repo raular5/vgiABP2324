@@ -643,7 +643,7 @@ void dibuixa_Escena() {
 		ImGui::Begin("Game timer", nullptr, flags);
 
 		ImGui::Text("Time till game over");
-		elapsedTimer = 10-(time(NULL) - gameTimer);
+		elapsedTimer = 200-(time(NULL) - gameTimer);
 		elapsedM = (elapsedTimer / 60) % 60;
 		elapsedS = elapsedTimer % 60;
 		ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);

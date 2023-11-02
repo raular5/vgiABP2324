@@ -130,7 +130,7 @@ void dibuixa_EscenaGL(GLuint sh_programID, bool eix, GLuint axis_Id, CMask3D rei
 		escenaABP (sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
 		break;
 	case 2:
-		escenaABP2(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
+		escenaABP_antigua(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
 		break;
 	case 3:
 		escenaABP3(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
