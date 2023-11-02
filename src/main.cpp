@@ -41,6 +41,7 @@ void InitGL()
 	opvN.x = 10.0;	opvN.y = 0.0;		opvN.z = 0.0;
 	angleZ = 0.0;
 	ViewMatrix = glm::mat4(1.0);		// Inicialitzar a identitat
+	gameState.m_ViewMatrix = &ViewMatrix;
 
 // Entorn VGI: Variables de control de l'opció Càmera->Geode?
 	OPV_G.R = 15.0;		OPV_G.alfa = 0.0;	OPV_G.beta = 0.0;	// Origen PV en esfèriques per a Vista_Geode
@@ -60,6 +61,7 @@ void InitGL()
 // Entorn VGI: Variables de control per les opcions de menú Projecció, Objecte
 	projeccio = PERSPECT;	// projeccio = PERSPECT;
 	ProjectionMatrix = glm::mat4(1.0);	// Inicialitzar a identitat
+	gameState.m_ProjectionMatrix = &ProjectionMatrix;
 	objecte = ARC;		// objecte = TETERA;
 
 // Entorn VGI: Variables de control Skybox Cube
@@ -4990,6 +4992,8 @@ void LoadTexturesABP()
 {
 	texturesID[0] = loadIMA_SOIL(".\\textures\\nota.png");
 }
+
+
 int main(void)
 {
 //    GLFWwindow* window;

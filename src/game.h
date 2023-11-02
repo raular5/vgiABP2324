@@ -36,6 +36,9 @@ public:
 
 //private:
 
+	// For changing screen coords to world coords
+	mat4 *m_ViewMatrix, *m_ProjectionMatrix;
+
 	bool gameOver = false;
 	float gameOverCountdownInSeconds = 3; // Cuando se acaba el tiempo (30s) es game over.
 
@@ -56,3 +59,8 @@ public:
 	vec3 item_inspect_scale = vec3(2.0f, 2.0f, 2.0f);
 
 };
+
+
+glm::vec3 screenToNDC(float screenX, float screenY, float screenWidth, float screenHeight);
+glm::vec3 NDCToViewSpace(vec3 ndcCoords, mat4 ProjectionMatrix);
+glm::vec3 ViewSpaceToWorld(vec3 viewSpaceCoords, mat4 ViewMatrix);

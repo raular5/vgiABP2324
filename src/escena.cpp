@@ -612,6 +612,7 @@ void escenaDebug(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG,
 	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
 	draw_TriEBO_Object(GLUT_CUBE);
+
 }
 
 void dibuixa_Key(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5])

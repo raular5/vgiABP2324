@@ -1219,3 +1219,7 @@ void SetTextureParameters(GLint IDText, bool extensT, bool filterT, bool blendT,
 //	glMatrixMode(GL_PROJECTION);
 }
 
+//ABP
+
+
+

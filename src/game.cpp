@@ -13,12 +13,13 @@ GameState::GameState()
 
 }
 
+
 void GameState::ChangeDebugCubePos(vec3 pos)
 {
 	debug_cube_pos = pos;
-	cube_color.r = fmod(cube_color.r * 1.2f, 1.0f);
+	/*cube_color.r = fmod(cube_color.r * 1.2f, 1.0f);
 	cube_color.g = fmod(cube_color.g * 1.1f, 1.0f);
-	cube_color.b = fmod(cube_color.b * 1.3f, 1.0f);
+	cube_color.b = fmod(cube_color.b * 1.3f, 1.0f);*/
 }
 
 void GameState::UpdateGame(float delta)
@@ -113,11 +114,25 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 {
 	isMouseDown = true;
 
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
 
 	printf("Click pos : %f, %f\n", xpos, ypos);
-	ChangeDebugCubePos(vec3(2.5f, 3 * (xpos / 1280), 1 - 3 * (ypos / 720)));
+
+	// Convert coords
+	vec3 ndc = screenToNDC(xpos, ypos, width, height);
+	printf("NDC : %f, %f\n", ndc.x, ndc.y);
+	vec3 viewSpace = NDCToViewSpace(ndc, *m_ProjectionMatrix);
+	printf("View Space : %f, %f\n", viewSpace.x, viewSpace.y);
+	vec3 worldPos = ViewSpaceToWorld(viewSpace, *m_ViewMatrix);
+	printf("World pos : %f, %f, %f\n", worldPos.x, worldPos.y, worldPos.z);
+	worldPos.x = 0;
+	worldPos.y *= 500;
+	worldPos.z *= 500;
+	ChangeDebugCubePos(worldPos);
 }
 
 void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action, int mods)
@@ -137,5 +152,29 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	}
 }
 
+
+// Coord
+glm::vec3 screenToNDC(float screenX, float screenY, float screenWidth, float screenHeight)
+{
+	float ndcX = (2.0f * screenX / screenWidth) - 1.0f;
+	float ndcY = 1.0f - (2.0f * screenY / screenHeight);
+	return glm::vec3(ndcX, ndcY, 0.0f);
+}
+
+glm::vec3 NDCToViewSpace(vec3 ndcCoords, mat4 ProjectionMatrix)
+{
+	glm::mat4 inverseProjectionMatrix = glm::inverse(ProjectionMatrix);
+	glm::vec4 viewCoords = inverseProjectionMatrix * glm::vec4(ndcCoords, 1.0);
+	glm::vec3 viewSpaceCoords = viewCoords / viewCoords.w;
+	return viewSpaceCoords;
+}
+
+glm::vec3 ViewSpaceToWorld(vec3 viewSpaceCoords, mat4 ViewMatrix)
+{
+	glm::mat4 inverseViewMatrix = glm::inverse(ViewMatrix);
+	glm::vec4 worldCoords = inverseViewMatrix * glm::vec4(viewSpaceCoords, 1.0);
+	glm::vec3 worldSpaceCoords = glm::vec3(worldCoords);
+	return worldSpaceCoords;
+}
 
 
