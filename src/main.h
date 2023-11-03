@@ -239,6 +239,7 @@
 // Entorn VGI: Funcions de tractament de teclat en diferents modus
 	void Teclat_Shift(int key, GLFWwindow* window);
 	void Teclat_Ctrl(int key);
+	void Teclat_Alt(int key);
 	void Teclat_ColorObjecte(int key, int action);
 	void Teclat_ColorFons(int key, int action);
 	void Teclat_Navega(int key, int action);

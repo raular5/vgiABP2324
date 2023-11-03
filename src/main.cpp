@@ -2710,8 +2710,9 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 		// EntornVGI: Si tecla pulsada és ESCAPE, tancar finestres i aplicació.
 		if (mods == 0 && key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(window, GL_TRUE);
 		else if (mods == 0 && key == GLFW_KEY_PRINT_SCREEN && action == GLFW_PRESS) statusB = !statusB;
-		else if ((mods == 1) && (action == GLFW_PRESS)) Teclat_Shift(key, window);	// Shorcuts Shift Key
-		else if ((mods == 2) && (action == GLFW_PRESS)) Teclat_Ctrl(key);	// Shortcuts Ctrl Key
+		else if ((mods == GLFW_MOD_SHIFT) && (action == GLFW_PRESS)) Teclat_Shift(key, window);	// Shorcuts Shift Key
+		else if ((mods == GLFW_MOD_CONTROL) && (action == GLFW_PRESS)) Teclat_Ctrl(key);	// Shortcuts Ctrl Key
+		else if ((mods == GLFW_MOD_ALT) && (action == GLFW_PRESS)) Teclat_Alt(key);	// Shortcuts Ctrl Key
 		else if ((sw_grid) && ((grid.x) || (grid.y) || (grid.z))) Teclat_Grid(key, action);
 		else if (((key == GLFW_KEY_G) && (action == GLFW_PRESS)) && ((grid.x) || (grid.y) || (grid.z))) sw_grid = !sw_grid;
 		else if ((key == GLFW_KEY_O) && (action == GLFW_PRESS)) sw_color = true; // Activació color objecte
@@ -2921,6 +2922,7 @@ void Teclat_Shift(int key, GLFWwindow* window)
 // 
 		// Tecla Full Screen?
 		case GLFW_KEY_F:
+			fullscreen = !fullscreen;
 			OnFull_Screen(primary, window);
 			break;
 
@@ -3537,6 +3539,18 @@ void Teclat_Ctrl(int key)
 		break;
 
 	default:
+		break;
+	}
+}
+
+void Teclat_Alt(int key) 
+{
+	switch (key)
+	{
+	// Tecla Full Screen?
+	case GLFW_KEY_ENTER:
+		fullscreen = !fullscreen;
+		OnFull_Screen(primary, window);
 		break;
 	}
 }
