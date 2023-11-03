@@ -151,6 +151,7 @@
 // Entorn VGI: Variables que controlen paràmetres visualització: Mides finestra Windows i PV
 	int w, h;				// Mides de la finestra Windows (w-amplada,h-alçada)
 	int width_old, height_old;	// Mides de la resolució actual de la pantalla (finestra Windows)
+	int winPosX_old, winPosY_old;
 	int w_old, h_old;		// Mides de la finestra Windows (w-amplada,h-alçada) per restaurar Finestra des de fullscreen
 	CEsfe3D OPV;			// Paràmetres camera en coord. esfèriques (R,alfa,beta)
 	float cam_Esferica[3] = { 15.0f, 0.0f, 0.0f }; // ImGui: Coordenades Esfèriques Càmera

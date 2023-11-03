@@ -650,7 +650,7 @@ void dibuixa_Escena() {
 		if (ImGui::Button("Apply Settings")) {
 			printf("Apply settings\n");
 			wglSwapIntervalEXT(vsync);
-			
+			OnFull_Screen(primary, window);
 			
 		}
 
@@ -4819,11 +4819,11 @@ void OnFull_Screen(GLFWmonitor* monitor, GLFWwindow *window)
 	//int winPosX, winPosY;
 	//winPosX = 0;	winPosY = 0;
 
-	fullscreen = !fullscreen;
+	//fullscreen = !fullscreen;
 
 	if (fullscreen) {	// backup window position and window size
-						//glfwGetWindowPos(window, &winPosX, &winPosY);
-						//glfwGetWindowSize(window, &width_old, &height_old);
+						glfwGetWindowPos(window, &winPosX_old, &winPosY_old);
+						glfwGetWindowSize(window, &width_old, &height_old);
 
 						// Get resolution of monitor
 						const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
@@ -4833,7 +4833,7 @@ void OnFull_Screen(GLFWmonitor* monitor, GLFWwindow *window)
 						glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 					}
 	else {	// Restore last window size and position
-			glfwSetWindowMonitor(window, nullptr, 216, 239, 640, 480, mode->refreshRate);
+			glfwSetWindowMonitor(window, nullptr, winPosX_old, winPosY_old, width_old, height_old, mode->refreshRate);
 		}
 	}
 
@@ -5050,6 +5050,7 @@ int main(void)
         return -1;
     }
 
+
 // Make the window's context current
     glfwMakeContextCurrent(window);
 
@@ -5096,6 +5097,9 @@ int main(void)
 
 // Initialize Application control varibles
 	InitGL();
+
+// Make the game fullscreen if the variable is enabled :) (ABP)
+	OnFull_Screen(primary, window);
 
 // ------------- Entorn VGI: Callbacks
 // Set GLFW event callbacks. I removed glfwSetWindowSizeCallback for conciseness
