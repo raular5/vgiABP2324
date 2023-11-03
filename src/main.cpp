@@ -640,12 +640,22 @@ void dibuixa_Escena() {
 			gameTimer = time(NULL);
 		}
 
-		if (ImGui::Button("Options")) {
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "Options");
+
+		ImGui::SliderFloat("Volume (Music)", &volumeMusic, 0.0f, 1.0f);
+		ImGui::SliderFloat("Volume (Sound effects)", &volumeSfx, 0.0f, 1.0f);
+		ImGui::Checkbox("Fullscreen", &fullscreen);
+		ImGui::Checkbox("Vsync", &vsync);
+		
+		if (ImGui::Button("Apply Settings")) {
+			printf("Apply settings\n");
+			wglSwapIntervalEXT(vsync);
+			
 			
 		}
 
 		if (ImGui::Button("Exit Game")) {
-			//glfwSetWindowShouldClose(window);
+			glfwSetWindowShouldClose(window, true);
 		}
 		ImGui::End();
 		ImGui::Render();
@@ -5031,6 +5041,7 @@ int main(void)
 #endif
 
 // Create a windowed mode window and its OpenGL context */
+	glfwWindowHint(GLFW_SAMPLES, antialiasing);	// enable AA
     window = glfwCreateWindow(1280, 720, "Escape room - Projecte ABP VGI 2023", NULL, NULL);
     if (!window)
     {	fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
@@ -5058,9 +5069,7 @@ int main(void)
 	int major, minor;
 	GetGLVersion(&major, &minor);
 
-// ------------- Entorn VGI: Configure OpenGL context
-//	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
+// ------------- Entorn VGI: Configure OpenGL context	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor); // GL4.3
 
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Si funcions deprecades són eliminades (no ARB_COMPATIBILITY)
@@ -5124,7 +5133,7 @@ int main(void)
 	LoadVAOsAPB();	// Load Object VAOs
 	LoadTexturesABP();
 	c_fons.r = 0;	c_fons.g = 0;	c_fons.b = 0;	c_fons.a = 0;	// Set black background color
-	wglSwapIntervalEXT(1);	// Enable vsync
+	wglSwapIntervalEXT(vsync);	// Enable or disable vsync
 
 // Loop until the user closes the window
     while (!glfwWindowShouldClose(window))

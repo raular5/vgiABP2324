@@ -60,6 +60,13 @@
 	CMask3D grid;		// Opció per a dibuixar grids (.x: grid XY, .y:grid XZ, .z: grid YZ, .w:grid XYZ)
 	CPunt3D hgrid;		// Alçada de cada grid (.x: grid XY, .y:grid XZ, .z: grid YZ, .w:grid XYZ)
 
+// ABP: Més opcions
+	float volumeMusic = 1.0f;
+	float volumeSfx = 1.0f;
+	bool vsync = true;
+	int antialiasing = 4;  // 0 per a mes rendiment. 2, 4, 8 per a mes qualitat
+
+
 // Entorn VGI: Variables de l'opció Vista->Pan
 	double fact_pan;	// Factor de desplaçament de la càmara (opció pan).
 	CPunt3D tr_cpv;		// Vector de Traslació del Centre del Punt de Vista actiu dins opció pan.
