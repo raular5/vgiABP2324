@@ -45,6 +45,7 @@ public:
 	float timeAcumm = 0;	// Useful for animations
 
 	bool isMouseDown = false;
+	double previousMouse_xpos, previousMouse_ypos;
 
 	// Debug cube
 	CColor cube_color;

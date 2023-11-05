@@ -147,9 +147,11 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	// Inspect item with mouse
 	if (showItemInspector && isMouseDown)
 	{
-		item_inspect_rotation.z = 360 - 360*(xpos / width);
-		item_inspect_rotation.y = 360*(ypos / height);
+		item_inspect_rotation.z += 360 * (xpos - previousMouse_xpos) / width;
+		item_inspect_rotation.y += 360 * (ypos - previousMouse_ypos) / height;
 	}
+	previousMouse_xpos = xpos;
+	previousMouse_ypos = ypos;
 }
 
 
