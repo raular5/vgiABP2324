@@ -640,6 +640,12 @@ void dibuixa_Escena() {
 			gameTimer = time(NULL);
 		}
 
+		if (ImGui::Button("Debug scene for textures")) {
+			gameScene = 11;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "Options");
 
 		ImGui::SliderFloat("Volume (Music)", &volumeMusic, 0.0f, 1.0f);
@@ -682,6 +688,7 @@ void dibuixa_Escena() {
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case 10:
+	case 11:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -2694,6 +2701,7 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 		return;
 	case 2:
 	case 10:
+	case 11:
 		
 		break;
 	case 3:
@@ -5015,6 +5023,12 @@ void LoadVAOsAPB()
 void LoadTexturesABP()
 {
 	texturesID[0] = loadIMA_SOIL(".\\textures\\nota.png");
+	texturesID[1] = loadIMA_SOIL(".\\textures\\brick.jpg");
+	texturesID[2] = loadIMA_SOIL(".\\textures\\sac.JPG");
+	texturesID[3] = loadIMA_SOIL(".\\textures\\sorra.jpg");
+	texturesID[4] = loadIMA_SOIL(".\\textures\\totxana.jpg");
+	texturesID[5] = loadIMA_SOIL(".\\textures\\Vent.bmp");
+	texturesID[6] = loadIMA_SOIL(".\\textures\\wood.jpg");
 }
 
 
