@@ -140,6 +140,18 @@ void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action,
 	isMouseDown = false;
 }
 
+void GameState::OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset)
+{
+	//printf("x: %f, y:%f\n", xoffset, yoffset);
+	if (showItemInspector)
+	{
+		if(yoffset > 0)
+			item_inspect_scale *= 1.1f;
+		else
+			item_inspect_scale *= 0.9f;
+	}
+}
+
 void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
 	int width, height;

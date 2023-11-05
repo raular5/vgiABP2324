@@ -4707,6 +4707,8 @@ void OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 //							 (coord. pantalla) quan el botó s'ha apretat.
 void OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset)
 {
+	gameState.OnMouseWheel(window, xoffset, yoffset);
+
 	// TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
 	double modul = 0;
 	GLdouble vdir[3] = { 0, 0, 0 };
