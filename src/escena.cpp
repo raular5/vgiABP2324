@@ -105,6 +105,8 @@ void dibuixa_EscenaGL(GLuint sh_programID, bool eix, GLuint axis_Id, CMask3D rei
 	glUseProgram(sh_programID);
 
 // Parametrització i activació/desactivació de textures
+// ABP: IMPLEMENTADO EN LAS ESCENAS PARA CADA OBJETO!!!
+/*
 	if (texturID[0] != -1) SetTextureParameters(texturID[0], true, true, textur_map, false);
 	if (textur) {	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
 					glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
@@ -113,6 +115,7 @@ void dibuixa_EscenaGL(GLuint sh_programID, bool eix, GLuint axis_Id, CMask3D rei
 				glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_FALSE); //glDisable(GL_MODULATE);
 			}
 	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), flagInvertY);
+	*/
 
 // Attribute Locations must be setup before calling glLinkProgram()
 	glBindAttribLocation(sh_programID, 0, "in_Vertex");		// Vèrtexs
@@ -130,7 +133,7 @@ void dibuixa_EscenaGL(GLuint sh_programID, bool eix, GLuint axis_Id, CMask3D rei
 		escenaABP (sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
 		break;
 	case 2:
-		escenaABP_antigua(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
+		escenaABP_antigua(sh_programID, MatriuVista, MatriuTG, sw_mat, texturID, textur_map, gameState);
 		break;
 	case 3:
 		escenaABP3(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
@@ -228,7 +231,7 @@ void escenaABP(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, b
 
 }
 
-void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GameState gameState)
+void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, GameState gameState)
 {	CColor col_object = { 0.0,0.0,0.0,1.0 };
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
 
@@ -258,7 +261,7 @@ void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Mat
 			dibuixa_Key(sh_programID, MatriuVista, ModelMatrix, sw_mat);
 			break;
 		case ITEM_NOTE:
-			dibuixa_Note(sh_programID, MatriuVista, ModelMatrix, sw_mat);
+			dibuixa_Note(sh_programID, MatriuVista, ModelMatrix, sw_mat, texturID, textur_map);
 			break;
 		case ITEM_CANDLE:
 			dibuixa_Candle(sh_programID, MatriuVista, ModelMatrix, sw_mat);
@@ -364,7 +367,7 @@ void escenaTextures(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Matriu
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
 
 	for (int i = 0; i < 7; i++) {
-		SetTextureParameters(texturID[i], true, true, textur_map, false);
+		SetTextureParameters(texturID[i], true, true, textur_map, true);
 		glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
 		glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
 		SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
@@ -446,18 +449,22 @@ void dibuixa_Key(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG,
 	draw_TriEBO_Object(GLUT_CUBE);
 }
 
-void dibuixa_Note(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5])
+void dibuixa_Note(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map)
 {
 	CColor col_object = { 1.0,1.0,1.0,1.0 };
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
 	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
 
-	// cabeza
 	ModelMatrix = glm::translate(MatriuTG, vec3(0.0f, 0.0f, 0.0f));
 	ModelMatrix = glm::scale(ModelMatrix, vec3(0.1f, 3.0f, 4.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(1.0f, 0.0f, 0.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(0.0f, 1.0f, 0.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(0.0f, 0.0f, 1.0f));
+	// Set texture
+	SetTextureParameters(texturID[0], true, true, textur_map, true);
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
 	// Pas ModelView Matrix a shader
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
 	// Pas NormalMatrix a shader
