@@ -41,6 +41,9 @@ void InitGL()
 	opvN.x = 10.0;	opvN.y = 0.0;		opvN.z = 0.0;
 	angleZ = 0.0;
 	ViewMatrix = glm::mat4(1.0);		// Inicialitzar a identitat
+	gameState.n = n;
+	gameState.opvN = &opvN;
+	gameState.angleZ = &angleZ;
 	gameState.m_ViewMatrix = &ViewMatrix;
 
 // Entorn VGI: Variables de control de l'opció Càmera->Geode?

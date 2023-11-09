@@ -39,6 +39,12 @@ public:
 	// For changing screen coords to world coords
 	mat4 *m_ViewMatrix, *m_ProjectionMatrix;
 
+	// Variables for camera movement
+	double* n;				// Punt cap on mira.
+	CPunt3D* opvN;				// Definició Orígen Punt de Vista (en coordenades món)
+	double* angleZ;				// angle de rotació de la trajectòria.
+
+
 	bool gameOver = false;
 	float gameOverCountdownInSeconds = 3; // Cuando se acaba el tiempo (30s) es game over.
 
