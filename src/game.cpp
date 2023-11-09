@@ -1,4 +1,6 @@
 #include "game.h";
+#include <iostream>
+using namespace irrklang;
 
 GameState::GameState()
 {
@@ -56,7 +58,22 @@ void GameState::OnKeyDown(GLFWwindow* window, int key, int scancode, int action,
 	if (action != GLFW_PRESS) {
 		return;
 	}
+	ISoundEngine* engine = createIrrKlangDevice();
+	if (key == GLFW_KEY_P)
+	{
 
+		
+		if (!engine) {
+			std::cout << "No xuta" << std::endl;
+		}
+		engine->play2D("media/Charonne - Initiating Program.mp3", true);
+		
+	
+		
+	}
+	if (key == GLFW_KEY_L) {
+			engine->drop();
+		}
 	// Move item inspector
 	switch (key) {	// Mejorable, poner en el update
 	case GLFW_KEY_D:

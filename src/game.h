@@ -2,7 +2,7 @@
 
 // Entorn VGI: Llibreries i constants Constants de l'aplicació EntornVGI
 #include "stdafx.h"
-
+#include <irrKlang.h>
 // Inventory items
 #define ITEM_NONE 0
 #define ITEM_KEY 1
