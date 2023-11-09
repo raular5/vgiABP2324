@@ -102,6 +102,19 @@ void GameState::OnKeyDown(GLFWwindow* window, int key, int scancode, int action,
 	default:
 		break;
 	}
+
+	// Puzle 1:
+	// NO FUNCIONA AUN
+	/*
+	if (gameScene == 12)
+	{
+		switch (key)
+		{
+		default:
+			break;
+		}
+	}
+	*/
 }
 
 void GameState::OnKeyUp(GLFWwindow* window, int key, int scancode, int action, int mods)

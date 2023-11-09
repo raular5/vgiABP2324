@@ -24,7 +24,7 @@ time_t gameTimer;
 void InitGL()
 {
 // TODO: agregar aquí el código de construcción
-
+	gameState.gameScene = &gameScene;
 //------ Entorn VGI: Inicialització de les variables globals de CEntornVGIView
 	int i;
 
