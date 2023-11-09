@@ -133,6 +133,9 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	worldPos.y *= 500;
 	worldPos.z *= 500;
 	ChangeDebugCubePos(worldPos);
+
+	// Puzle 1
+	puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % puz1_n_Symbols;
 }
 
 void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action, int mods)

@@ -66,6 +66,11 @@ public:
 	vec3 item_inspect_rotation = vec3(0.0f, 0.0f, 0.0f);
 	vec3 item_inspect_scale = vec3(1.0f, 1.0f, 1.0f);
 
+	// Puzle 1: Cadenat amb simbols
+	int puz1_n_Symbols = 4;
+	int puz1_currentCombination[4] = { 0, 0, 0, 0 };
+	int puz1_correctCombination[4] = { 1, 1, 1, 1 };
+
 };
 
 
