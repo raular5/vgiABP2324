@@ -18,8 +18,6 @@
 #include "escena.h"
 #include "main.h"
 
-int gameScene = 1;
-time_t gameTimer;
 
 void InitGL()
 {
@@ -610,7 +608,9 @@ void dibuixa_Escena() {
 
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
 		ImGui::Begin("Game over", nullptr, flags);
+		ImGui::PushFont(font2);
 		ImGui::Text("Game Over");
+		ImGui::PopFont();
 
 		ImGui::End();
 		ImGui::Render();
@@ -628,8 +628,9 @@ void dibuixa_Escena() {
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
 
 		ImGui::Begin("Game start window", nullptr,flags);
-
+		ImGui::PushFont(font2);
 		ImGui::Text("Hello there adventurer!");
+		ImGui::PopFont();
 
 		if (ImGui::Button("Start scape room")) {
 			gameScene = 2;
@@ -5153,6 +5154,11 @@ int main(void)
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	//Imgui Fonts
+	font1 = io.Fonts->AddFontDefault();
+	font2 = io.Fonts->AddFontFromFileTTF(".\\fonts\\Creepster-Regular.ttf", 30.0f);
+
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
