@@ -29,6 +29,7 @@ public:
 	void OnMouseButton(GLFWwindow* window, int button, int action, int mods);
 	void OnMouseButtonRelease(GLFWwindow* window, int button, int action, int mods);
 	void OnMouseMove(GLFWwindow* window, double xpos, double ypos);
+	void OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset);
 
 	// Executes every frame. Delta is the time difference between frames (e.g 0.16666 seconds if 60FPS)
 	void UpdateGame(float delta);
@@ -45,6 +46,7 @@ public:
 	float timeAcumm = 0;	// Useful for animations
 
 	bool isMouseDown = false;
+	double previousMouse_xpos, previousMouse_ypos;
 
 	// Debug cube
 	CColor cube_color;
@@ -56,7 +58,7 @@ public:
 	bool showItemInspector = false;
 	int currentItem = ITEM_NONE;
 	vec3 item_inspect_rotation = vec3(0.0f, 0.0f, 0.0f);
-	vec3 item_inspect_scale = vec3(2.0f, 2.0f, 2.0f);
+	vec3 item_inspect_scale = vec3(1.0f, 1.0f, 1.0f);
 
 };
 

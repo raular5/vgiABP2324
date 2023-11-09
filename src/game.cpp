@@ -140,6 +140,18 @@ void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action,
 	isMouseDown = false;
 }
 
+void GameState::OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset)
+{
+	//printf("x: %f, y:%f\n", xoffset, yoffset);
+	if (showItemInspector)
+	{
+		if(yoffset > 0)
+			item_inspect_scale *= 1.1f;
+		else
+			item_inspect_scale *= 0.9f;
+	}
+}
+
 void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
 	int width, height;
@@ -147,9 +159,11 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	// Inspect item with mouse
 	if (showItemInspector && isMouseDown)
 	{
-		item_inspect_rotation.z = 360 - 360*(xpos / width);
-		item_inspect_rotation.y = 360*(ypos / height);
+		item_inspect_rotation.z += 360 * (xpos - previousMouse_xpos) / width;
+		item_inspect_rotation.y += 360 * (ypos - previousMouse_ypos) / height;
 	}
+	previousMouse_xpos = xpos;
+	previousMouse_ypos = ypos;
 }
 
 
