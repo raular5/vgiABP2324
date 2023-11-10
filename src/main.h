@@ -67,6 +67,13 @@
 	bool vsync = true;
 	int antialiasing = 4;  // 0 per a mes rendiment. 2, 4, 8 per a mes qualitat
 
+//Opcions control escena del joc
+	int gameScene = 1;
+	time_t gameTimer;
+
+//Opcions control Imgui menus
+	ImFont* font1;
+	ImFont* font2;
 
 // Entorn VGI: Variables de l'opció Vista->Pan
 	double fact_pan;	// Factor de desplaçament de la càmara (opció pan).
