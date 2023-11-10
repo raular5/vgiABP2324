@@ -402,6 +402,7 @@ void escenaPuzle1(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	SetTextureParameters(texturID[7 + gameState.puz1_currentCombination[0]], true, true, textur_map, true);
 	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
 	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
 	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
 	ModelMatrix = glm::scale(MatriuTG, vec3(1.0f, 1.0f, 1.0f));
 	ModelMatrix = glm::translate(ModelMatrix, vec3(0.0f, -1.5f, 0.0f));
@@ -416,6 +417,7 @@ void escenaPuzle1(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	SetTextureParameters(texturID[7 + gameState.puz1_currentCombination[1]], true, true, textur_map, true);
 	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
 	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
 	ModelMatrix = glm::scale(MatriuTG, vec3(1.0f, 1.0f, 1.0f));
 	ModelMatrix = glm::translate(ModelMatrix, vec3(0.0f, -0.5f, 0.0f));
 	// Pas ModelView Matrix a shader
@@ -431,6 +433,7 @@ void escenaPuzle1(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	SetTextureParameters(texturID[7 + gameState.puz1_currentCombination[2]], true, true, textur_map, true);
 	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
 	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
 	ModelMatrix = glm::scale(MatriuTG, vec3(1.0f, 1.0f, 1.0f));
 	ModelMatrix = glm::translate(ModelMatrix, vec3(0.0f, 0.5f, 0.0f));
 	// Pas ModelView Matrix a shader
@@ -444,6 +447,7 @@ void escenaPuzle1(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	SetTextureParameters(texturID[7 + gameState.puz1_currentCombination[3]], true, true, textur_map, true);
 	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
 	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
 	ModelMatrix = glm::scale(MatriuTG, vec3(1.0f, 1.0f, 1.0f));
 	ModelMatrix = glm::translate(ModelMatrix, vec3(0.0f, 1.5f, 0.0f));
 	// Pas ModelView Matrix a shader
