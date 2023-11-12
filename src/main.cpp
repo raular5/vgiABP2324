@@ -21,7 +21,7 @@
 void InitGL()
 {
 // TODO: agregar aquí el código de construcción
-	gameState.gameScene = &gameScene;
+
 //------ Entorn VGI: Inicialització de les variables globals de CEntornVGIView
 	int i;
 
@@ -649,12 +649,6 @@ void dibuixa_Escena() {
 			gameTimer = time(NULL);
 		}
 
-		if (ImGui::Button("Puzle 1")) {
-			gameScene = 12;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
-
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "Options");
 
 		ImGui::SliderFloat("Volume (Music)", &volumeMusic, 0.0f, 1.0f);
@@ -713,26 +707,6 @@ void dibuixa_Escena() {
 		if (elapsedM == 0 && elapsedS == 0) {
 			gameScene = 3;
 		}
-		ImGui::End();
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-		break;
-	case 12:
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-
-		if (false) flags |= ImGuiWindowFlags_NoBackground;
-		ImGui::Begin("Game timer", nullptr, flags);
-
-		ImGui::Text("Puzzle 1");
-		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
-		//elapsedM = (elapsedTimer / 60) % 60;
-		//elapsedS = elapsedTimer % 60;
-		//ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
-		//if (elapsedM == 0 && elapsedS == 0) {
-		//	gameScene = 3;
-		//}
 		ImGui::End();
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -2731,7 +2705,6 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 	case 2:
 	case 10:
 	case 11:
-	case 12:
 		
 		break;
 	case 3:
@@ -5061,12 +5034,6 @@ void LoadTexturesABP()
 	texturesID[4] = loadIMA_SOIL(".\\textures\\totxana.jpg");
 	texturesID[5] = loadIMA_SOIL(".\\textures\\Vent.bmp");
 	texturesID[6] = loadIMA_SOIL(".\\textures\\wood.jpg");
-
-	// Textures cadenat
-	texturesID[7] = loadIMA_SOIL(".\\textures\\cadenat\\red.bmp");
-	texturesID[8] = loadIMA_SOIL(".\\textures\\cadenat\\green.bmp");
-	texturesID[9] = loadIMA_SOIL(".\\textures\\cadenat\\blue.bmp");
-	texturesID[10] = loadIMA_SOIL(".\\textures\\cadenat\\black.bmp");
 }
 
 

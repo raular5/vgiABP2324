@@ -6,7 +6,6 @@
 /////////////////////////////////////////////////////////////////////////////
 
 
-
 // Entorn VGI: Llibreries i constants Constants de l'aplicació EntornVGI
 #include "stdafx.h"
 #include "game.h"

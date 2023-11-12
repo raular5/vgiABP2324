@@ -9,13 +9,6 @@
 #define ITEM_NOTE 2
 #define ITEM_CANDLE 3
 
-// Scenes
-#define SCENE_MAIN 1
-#define SCENE_GAME 2
-#define SCENE_DEBUG_TEST 10
-#define SCENE_DEBUG_TEX 11
-#define SCENE_PUZLE1 12
-
 
 class GameState {
 public:
@@ -52,8 +45,6 @@ public:
 	CPunt3D* opvN;				// Definició Orígen Punt de Vista (en coordenades món)
 	double* angleZ;				// angle de rotació de la trajectòria.
 
-	// Game Scene
-	int *gameScene;	// current scene
 
 	bool gameOver = false;
 	float gameOverCountdownInSeconds = 3; // Cuando se acaba el tiempo (30s) es game over.
@@ -74,11 +65,6 @@ public:
 	int currentItem = ITEM_NONE;
 	vec3 item_inspect_rotation = vec3(0.0f, 0.0f, 0.0f);
 	vec3 item_inspect_scale = vec3(1.0f, 1.0f, 1.0f);
-
-	// Puzle 1: Cadenat amb simbols
-	int puz1_n_Symbols = 4;
-	int puz1_currentCombination[4] = { 0, 0, 0, 0 };
-	int puz1_correctCombination[4] = { 1, 1, 1, 2 };
 
 };
 
