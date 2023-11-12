@@ -225,6 +225,7 @@
 
 // EntornVGI: Funcions de mostrar Finestres ImGui
 	void draw_Menu_ImGui();
+	void draw_Menu_ABP();
 	void MostraEntornVGIWindow(bool* p_open);
 	void ShowArxiusOptions();
 	void ShowAboutWindow(bool* p_open);
