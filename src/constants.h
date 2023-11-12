@@ -28,6 +28,7 @@
 
 //-------------- VGI: Tipus d'Objectes
 #define ARC 'a'
+#define ABP_CUSTOM 'a'
 #define CAMIO 'm'
 #define CILINDRE 'y'
 #define CUB 'c'
