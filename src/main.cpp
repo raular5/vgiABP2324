@@ -18,9 +18,6 @@
 #include "escena.h"
 #include "main.h"
 
-int gameScene = 1;
-time_t gameTimer;
-
 void InitGL()
 {
 // TODO: agregar aquí el código de construcción
