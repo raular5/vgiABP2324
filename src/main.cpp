@@ -275,6 +275,11 @@ void InitGL()
 // Entorn VGI: Altres variables
 	mida = 1.0;			nom = "";		buffer = "";
 	initVAOList();	// Inicialtzar llista de VAO'S.
+
+	// Init audio
+	irrklang::ISoundEngine* audioEngine;
+	audioEngine = irrklang::createIrrKlangDevice();
+	gameState.audioEngine = audioEngine;
 }
 
 

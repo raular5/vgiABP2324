@@ -1,6 +1,5 @@
 #include "game.h";
 #include <iostream>
-using namespace irrklang;
 
 GameState::GameState()
 {
@@ -12,6 +11,8 @@ GameState::GameState()
 	cube_color.g = 0.5;
 	cube_color.b = 0.0;
 	cube_color.a = 0.5f;
+
+	
 
 }
 
@@ -56,21 +57,21 @@ void GameState::OnKeyDown(GLFWwindow* window, int key, int scancode, int action,
 	if (action != GLFW_PRESS) {
 		return;
 	}
-	ISoundEngine* engine = createIrrKlangDevice();
+	
 	if (key == GLFW_KEY_P)
 	{
 
 		
-		if (!engine) {
+		if (!audioEngine) {
 			std::cout << "No xuta" << std::endl;
 		}
-		engine->play2D("media/Charonne - Initiating Program.mp3", true);
+		audioEngine->play2D("media\\getout.ogg", true);
 		
 	
 		
 	}
 	if (key == GLFW_KEY_L) {
-			engine->drop();
+			//audioEngine->drop();
 		}
 	// Move item inspector
 	switch (key) {	// Mejorable, poner en el update
