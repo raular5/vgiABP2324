@@ -41,7 +41,7 @@ public:
 	mat4 *m_ViewMatrix, *m_ProjectionMatrix;
 
 	// Variables for camera movement
-	double* n;				// Punt cap on mira.
+	double* n;				    // Punt cap on mira.
 	CPunt3D* opvN;				// Definició Orígen Punt de Vista (en coordenades món)
 	double* angleZ;				// angle de rotació de la trajectòria.
 
@@ -52,6 +52,7 @@ public:
 	float timeAcumm = 0;	// Useful for animations
 
 	bool isMouseDown = false;
+	bool firstMouseMovement = true;
 	double previousMouse_xpos, previousMouse_ypos;
 
 	// Debug cube

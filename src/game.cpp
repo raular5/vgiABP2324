@@ -154,16 +154,42 @@ void GameState::OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset)
 
 void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
-	int width, height;
-	glfwGetWindowSize(window, &width, &height);
-	// Inspect item with mouse
-	if (showItemInspector && isMouseDown)
-	{
-		item_inspect_rotation.z += 360 * (xpos - previousMouse_xpos) / width;
-		item_inspect_rotation.y += 360 * (ypos - previousMouse_ypos) / height;
+	if (!isMouseDown) {
+		return;
 	}
+
+	// Calcula el desplazamiento del cursor desde la última posición
+	double xoffset = xpos - previousMouse_xpos;
+	double yoffset = previousMouse_ypos - ypos;
+
+	// Actualiza la última posición del cursor
 	previousMouse_xpos = xpos;
 	previousMouse_ypos = ypos;
+
+	const float sensitivity = 0.1f; 
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	// Actualiza los ángulos de rotación
+	*angleZ += xoffset; // Rotación horizontal
+	double pitch = yoffset;  // Rotación vertical
+
+	// Mantén la distancia original al origen constante
+	float originalDistance = sqrt(opvN->x * opvN->x + opvN->z * opvN->z);
+
+	// Calcular la nueva orientación de la cámara
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(*angleZ)) * originalDistance;
+	direction.z = sin(glm::radians(*angleZ)) * originalDistance;
+	direction.y = opvN->y + sin(glm::radians(pitch)) * originalDistance;
+
+	// Actualizar opvN con la nueva dirección
+	opvN->x = direction.x;
+	opvN->y = direction.y;
+	opvN->z = direction.z;
+
+	// Actualizar la matriz de vista
+	*m_ViewMatrix = glm::lookAt(glm::vec3(opvN->x, opvN->y, opvN->z), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 }
 
 
