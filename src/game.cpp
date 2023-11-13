@@ -113,12 +113,17 @@ void GameState::OnKeyUp(GLFWwindow* window, int key, int scancode, int action, i
 void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mods)
 {
 	isMouseDown = true;
+	
 
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
 
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
+
+	// Actualiza la última posición del cursor
+	previousMouse_xpos = xpos;
+	previousMouse_ypos = ypos;
 
 	printf("Click pos : %f, %f\n", xpos, ypos);
 
@@ -158,6 +163,9 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 		return;
 	}
 
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+
 	// Calcula el desplazamiento del cursor desde la última posición
 	double xoffset = xpos - previousMouse_xpos;
 	double yoffset = previousMouse_ypos - ypos;
@@ -166,31 +174,33 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	previousMouse_xpos = xpos;
 	previousMouse_ypos = ypos;
 
-	const float sensitivity = 0.1f; 
-	xoffset *= sensitivity;
-	yoffset *= sensitivity;
+	GLdouble vdir[3] = { 0, 0, 0 };
+	double modul = 0;
 
-	// Actualiza los ángulos de rotación
-	*angleZ += xoffset; // Rotación horizontal
-	double pitch = yoffset;  // Rotación vertical
+	// Entorn VGI: Controls de moviment de navegació
+	vdir[0] = n[0] - opvN->x;
+	vdir[1] = n[1] - opvN->y;
+	vdir[2] = n[2] - opvN->z;
+	modul = sqrt(vdir[0] * vdir[0] + vdir[1] * vdir[1] + vdir[2] * vdir[2]);
+	vdir[0] = vdir[0] / modul;
+	vdir[1] = vdir[1] / modul;
+	vdir[2] = vdir[2] / modul;
 
-	// Mantén la distancia original al origen constante
-	float originalDistance = sqrt(opvN->x * opvN->x + opvN->z * opvN->z);
 
-	// Calcular la nueva orientación de la cámara
-	glm::vec3 direction;
-	direction.x = cos(glm::radians(*angleZ)) * originalDistance;
-	direction.z = sin(glm::radians(*angleZ)) * originalDistance;
-	direction.y = opvN->y + sin(glm::radians(pitch)) * originalDistance;
+	//angleZ += fact_pan;
+	(*angleZ) = xoffset * 0.05;
+	printf("%f", *angleZ);
 
-	// Actualizar opvN con la nueva dirección
-	opvN->x = direction.x;
-	opvN->y = direction.y;
-	opvN->z = direction.z;
-
-	// Actualizar la matriz de vista
-	*m_ViewMatrix = glm::lookAt(glm::vec3(opvN->x, opvN->y, opvN->z), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	//(*angleZ) = (*angleZ) % 360;
+	n[0] = vdir[0]; // n[0] - opvN.x;
+	n[1] = vdir[1]; // n[1] - opvN.y;
+	n[0] = n[0] * cos((*angleZ) * PI / 180) - n[1] * sin((*angleZ) * PI / 180);
+	n[1] = n[0] * sin((*angleZ) * PI / 180) + n[1] * cos((*angleZ) * PI / 180);
+	n[0] = n[0] + opvN->x;
+	n[1] = n[1] + opvN->y;
 }
+
+	
 
 
 // Coord
