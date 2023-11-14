@@ -534,7 +534,7 @@ void dibuixa_Escena() {
 		textura, texturesID, textura_map, tFlag_invert_Y,
 		npts_T, PC_t, pas_CS, sw_Punts_Control, dibuixa_TriedreFrenet,
 		ObOBJ,				// Classe de l'objecte OBJ que conté els VAO's
-		ViewMatrix, GTMatrix, gameState, gameScene);
+		ViewMatrix, GTMatrix, gameState, gameScene, modelos);
 
 	draw_Menu_ABP();
 
@@ -1922,8 +1922,27 @@ void LoadTexturesABP()
 	texturesID[8] = loadIMA_SOIL(".\\textures\\cadenat\\green.bmp");
 	texturesID[9] = loadIMA_SOIL(".\\textures\\cadenat\\blue.bmp");
 	texturesID[10] = loadIMA_SOIL(".\\textures\\cadenat\\black.bmp");
+
+	// for models
+	texturesID[20] = loadIMA_SOIL(".\\textures\\furniturebits_texture.png");
 }
 
+void LoadModelsABP()
+{
+	printf("Loading OBJ models...\n");
+	modelos[0].LoadModel((char*)".\\models\\cactus_small_A.obj");
+	modelos[1].LoadModel((char*)".\\models\\bed_double_A.obj");
+	modelos[2].LoadModel((char*)".\\models\\book_set.obj");
+	modelos[3].LoadModel((char*)".\\models\\chair_A.obj");
+	modelos[4].LoadModel((char*)".\\models\\pictureframe_large_B.obj");
+	modelos[5].LoadModel((char*)".\\models\\chair_stool.obj");
+	modelos[6].LoadModel((char*)".\\models\\couch.obj");
+	modelos[7].LoadModel((char*)".\\models\\lamp_standing.obj");
+	modelos[8].LoadModel((char*)".\\models\\shelf_A_big.obj");
+	modelos[9].LoadModel((char*)".\\models\\table_medium_long.obj");
+	printf("Finished loading models.\n");
+	
+}
 
 int main(void)
 {
@@ -2062,6 +2081,7 @@ int main(void)
 // -- Custom for ABP --
 	LoadVAOsAPB();	// Load Object VAOs
 	LoadTexturesABP();
+	LoadModelsABP();
 	c_fons.r = 0;	c_fons.g = 0;	c_fons.b = 0;	c_fons.a = 0;	// Set black background color
 	wglSwapIntervalEXT(vsync);	// Enable or disable vsync
 
