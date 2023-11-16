@@ -65,9 +65,9 @@ void InitGL()
 	objecte = ABP_CUSTOM;		// objecte = TETERA;
 
 // Entorn VGI: Variables de control Skybox Cube
-	SkyBoxCube = true;		skC_programID = 0;
+	SkyBox = 0;		skC_programID = 0;
 	skC_VAOID.vaoId = 0;	skC_VAOID.vboId = 0;	skC_VAOID.nVertexs = 0;
-	cubemapTexture = 0;
+	cubemapTexture[0] = 0;
 
 // Entorn VGI: Variables de control del menú Transforma
 	transf = false;		trasl = false;		rota = false;		escal = false;
@@ -209,19 +209,37 @@ void InitGL()
 // Càrrega VAO Skybox Cube
 	if (skC_VAOID.vaoId == 0) skC_VAOID = loadCubeSkybox_VAO();
 	Set_VAOList(CUBE_SKYBOX, skC_VAOID);
-
-	if (!cubemapTexture)
+	printf("asddfgakfjasd \n");
+	if (!cubemapTexture[0])
 	{	// load Skybox textures
 		// -------------
 		std::vector<std::string> faces =
 		{ ".\\textures\\skybox\\right.jpg",
-			".\\textures\\skybox\\left.jpg",
-			".\\textures\\skybox\\top.jpg",
-			".\\textures\\skybox\\bottom.jpg",
-			".\\textures\\skybox\\front.jpg",
-			".\\textures\\skybox\\back.jpg"
+					".\\textures\\skybox\\left.jpg",
+					".\\textures\\skybox\\top.jpg",
+					".\\textures\\skybox\\bottom.jpg",
+					".\\textures\\skybox\\front.jpg",
+					".\\textures\\skybox\\back.jpg"
 		};
-		cubemapTexture = loadCubemap(faces);
+		cubemapTexture[0] = loadCubemap(faces);
+		std::vector<std::string> faces4 =
+		{ ".\\textures\\skyboxes\\4\\4_right.png",
+			".\\textures\\skyboxes\\4\\4_left.png",
+			".\\textures\\skyboxes\\4\\4_up.png",
+			".\\textures\\skyboxes\\4\\4_down.png",
+			".\\textures\\skyboxes\\4\\4_front.png",
+			".\\textures\\skyboxes\\4\\4_back.png"
+		};
+		cubemapTexture[4] = loadCubemap(faces4);
+		std::vector<std::string> faces5 =
+		{ ".\\textures\\skyboxes\\5\\5_right.png",
+					".\\textures\\skyboxes\\5\\5_left.png",
+					".\\textures\\skyboxes\\5\\5_up.png",
+					".\\textures\\skyboxes\\5\\5_down.png",
+					".\\textures\\skyboxes\\5\\5_front.png",
+					".\\textures\\skyboxes\\5\\5_back.png"
+		};
+		cubemapTexture[5] = loadCubemap(faces5);
 	}
 
 // Entorn VGI: Variables de control dels botons de mouse
@@ -522,7 +540,8 @@ void dibuixa_Escena() {
 	//glUseProgram(shader_programID);
 
 //	Dibuix SkyBox Cúbic.
-	if (SkyBoxCube) dibuixa_Skybox(skC_programID, cubemapTexture, Vis_Polar, ProjectionMatrix, ViewMatrix);
+	//printf("SkyBox= %d \n", SkyBox);
+	dibuixa_Skybox(skC_programID, cubemapTexture[SkyBox], Vis_Polar, ProjectionMatrix, ViewMatrix);
 
 //	Dibuix Coordenades Món i Reixes.
 	dibuixa_Eixos(eixos_programID, eixos, eixos_Id, grid, hgrid, ProjectionMatrix, ViewMatrix);
@@ -567,7 +586,7 @@ void draw_Menu_ABP()
 		break;
 
 	case 1:
-
+		SkyBox = 5;
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -627,6 +646,7 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case 2:
+		SkyBox = 4;
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -1882,7 +1902,6 @@ void LoadVAOsAPB()
 
 
 // Skybox
-	if (SkyBoxCube) {
 		// Càrrega Shader Skybox
 		if (!skC_programID) skC_programID = shader_SkyBoxC.loadFileShaders(".\\shaders\\skybox.VERT", ".\\shaders\\skybox.FRAG");
 
@@ -1893,7 +1912,8 @@ void LoadVAOsAPB()
 		if (!cubemapTexture)
 		{	// load Skybox textures
 			// -------------
-			std::vector<std::string> faces =
+			std::vector<std::string> faces;
+			faces =
 			{ ".\\textures\\skybox\\right.jpg",
 				".\\textures\\skybox\\left.jpg",
 				".\\textures\\skybox\\top.jpg",
@@ -1901,9 +1921,8 @@ void LoadVAOsAPB()
 				".\\textures\\skybox\\front.jpg",
 				".\\textures\\skybox\\back.jpg"
 			};
-			cubemapTexture = loadCubemap(faces);
+			cubemapTexture[SkyBox] = loadCubemap(faces);
 		}
-	}
 
 }
 
