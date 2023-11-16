@@ -12,3 +12,6 @@ Proyecto de VGI para el itinerario ABP del curso 2023-2024.
 **4.** el año de la película a la que señala la luz será la combinación para desbloquear la puerta (no para salir, si no para que se mueva la pared de delante).
 
 **5.** candado con simbolos de colores. los simbolos con los colores correctos estarán por la habitación y el jugador deberá encontrarlos.
+
+## Estilo:
+PSX/PS1 y Low Poly 
