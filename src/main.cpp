@@ -569,7 +569,7 @@ void draw_Menu_ABP()
 	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 	ImGuiCond escalado = 0;
 	switch (gameScene) {
-	case 3:
+	case SCENE_TIMER_GAMEOVER:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -585,7 +585,7 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 
-	case 1:
+	case SCENE_MAIN:
 		SkyBox = 5;
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -624,6 +624,12 @@ void draw_Menu_ABP()
 			gameTimer = time(NULL);
 		}
 
+		if (ImGui::Button("Background image loading")) {
+			gameScene = 13;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "Options");
 
 		ImGui::SliderFloat("Volume (Music)", &volumeMusic, 0.0f, 1.0f);
@@ -645,7 +651,7 @@ void draw_Menu_ABP()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
-	case 2:
+	case SCENE_GAME:
 		SkyBox = 4;
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -666,8 +672,8 @@ void draw_Menu_ABP()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
-	case 10:
-	case 11:
+	case SCENE_DEBUG_TEST:
+	case SCENE_DEBUG_TEX:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -687,7 +693,7 @@ void draw_Menu_ABP()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
-	case 12:
+	case SCENE_PUZLE1:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -706,6 +712,21 @@ void draw_Menu_ABP()
 		ImGui::End();
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
+	case SCENE_BACKGROUND:
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("OpenGL Texture Text", nullptr, flags);
+		ImGui::Image((void*)(intptr_t)texturesID[11], ImVec2(900, 244));
+
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 		break;
 	default:
 		break;
@@ -820,6 +841,7 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 	case SCENE_DEBUG_TEST:
 	case SCENE_DEBUG_TEX:
 	case SCENE_PUZLE1:
+	case SCENE_BACKGROUND:
 		break;	// activa controles teclado en estas escenas
 
 	case SCENE_TIMER_GAMEOVER:
@@ -1941,6 +1963,10 @@ void LoadTexturesABP()
 	texturesID[8] = loadIMA_SOIL(".\\textures\\cadenat\\green.bmp");
 	texturesID[9] = loadIMA_SOIL(".\\textures\\cadenat\\blue.bmp");
 	texturesID[10] = loadIMA_SOIL(".\\textures\\cadenat\\black.bmp");
+
+	//Textures menu
+	texturesID[11] = loadIMA_SOIL(".\\textures\\menu\\menu_bar.png");
+
 }
 
 
