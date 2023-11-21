@@ -5,8 +5,8 @@ GameState::GameState()
 {
 	// Init debug cube variables
 	debug_cube_pos = vec3(0.0f, 0.0f, 0.0f);
-	debug_cube_rotation = vec3(0.0f, 0.0f, 0.0f);
-	debug_cube_scale = vec3(1.0f, 1.0f, 1.0f);
+	debug_cube_rotation = vec3(90.0f, 0.0f, 0.0f);
+	debug_cube_scale = vec3(0.5f, 0.5f, 0.5f);
 	cube_color.r = 1.0;
 	cube_color.g = 0.5;
 	cube_color.b = 0.0;

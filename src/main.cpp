@@ -1985,6 +1985,7 @@ void LoadModelsABP()
 	modelos[7].LoadModel((char*)".\\models\\lamp_standing.obj");
 	modelos[8].LoadModel((char*)".\\models\\shelf_A_big.obj");
 	modelos[9].LoadModel((char*)".\\models\\table_medium_long.obj");
+	modelos[10].LoadModel((char*)".\\models\\gema.obj");
 	printf("Finished loading models.\n");
 	
 }

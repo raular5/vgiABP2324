@@ -139,7 +139,7 @@ void dibuixa_EscenaGL(GLuint sh_programID, bool eix, GLuint axis_Id, CMask3D rei
 		escenaABP3(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
 		break;
 	case 10:
-		escenaDebug(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
+		escenaDebug(sh_programID, MatriuVista, MatriuTG, sw_mat, texturID, textur_map, gameState, modelos);
 		break;
 	case 11:
 		escenaTextures(sh_programID, MatriuVista, MatriuTG, sw_mat, texturID, textur_map, gameState, modelos);
@@ -272,14 +272,15 @@ void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Mat
 		
 		switch (gameState.currentItem) {
 		case ITEM_NONE:
+			//glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE);
 			// Set texture
-			SetTextureParameters(texturID[20], true, true, textur_map, true);
-			glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
-			glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
-			glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_FALSE);	// La textura esta en espejo
-			modelos[0].draw_TriVAO_OBJ(sh_programID);
-			glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_FALSE); //glEnable(GL_TEXTURE_2D);
-			glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_FALSE); //glEnable(GL_MODULATE);
+			//SetTextureParameters(texturID[20], true, true, textur_map, true);
+			//glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+			//glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+			//glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_FALSE);	// La textura esta en espejo
+			modelos[10].draw_TriVAO_OBJ(sh_programID);
+			//glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_FALSE); //glEnable(GL_TEXTURE_2D);
+			//glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_FALSE); //glEnable(GL_MODULATE);
 			break;
 		case ITEM_KEY:
 			dibuixa_Key(sh_programID, MatriuVista, ModelMatrix, sw_mat);
@@ -346,7 +347,7 @@ void escenaABP3(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, 
 
 }
 
-void escenaDebug(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GameState gameState)
+void escenaDebug(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, GameState gameState, COBJModel modelos[NUM_MAX_MODELS])
 {
 	CColor col_object = { 0.0,0.0,0.0,1.0 };
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
@@ -354,17 +355,17 @@ void escenaDebug(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG,
 	SeleccionaColorMaterial(sh_programID, gameState.cube_color, sw_mat);
 
 
-	ModelMatrix = glm::scale(MatriuTG, gameState.debug_cube_scale);
-	ModelMatrix = glm::translate(ModelMatrix, gameState.debug_cube_pos);
+	ModelMatrix = glm::translate(MatriuTG, gameState.debug_cube_pos);
 	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.x), vec3(1.0f, 0.0f, 0.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.y), vec3(0.0f, 1.0f, 0.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.z), vec3(0.0f, 0.0f, 1.0f));
+	ModelMatrix = glm::scale(ModelMatrix, gameState.debug_cube_scale);
 	// Pas ModelView Matrix a shader
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
 	// Pas NormalMatrix a shader
 	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
-	draw_TriEBO_Object(GLUT_CUBE);
+	modelos[10].draw_TriVAO_OBJ(sh_programID);
 
 	// Suelo
 	col_object.r = 0.0f;
@@ -514,6 +515,7 @@ void dibuixa_Key(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG,
 	CColor col_object = { 1.0,1.0,0.0,1.0 };
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
 	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	
 
 	// cabeza
 	ModelMatrix = glm::translate(MatriuTG, vec3(0.0f, 2.5f, 0.0f));
