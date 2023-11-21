@@ -28,6 +28,7 @@
 
 //-------------- VGI: Tipus d'Objectes
 #define ARC 'a'
+#define ABP_CUSTOM 'a'
 #define CAMIO 'm'
 #define CILINDRE 'y'
 #define CUB 'c'
@@ -79,7 +80,8 @@ const double p_far=50000.0;
 
 // -------------- VGI: CONSTANTS TEXTURES
 // Nombre màxim de textures
-#define NUM_MAX_TEXTURES 10
+#define NUM_MAX_TEXTURES 100
+#define NUM_MAX_MODELS 100
 
 // Tipus de textures
 #define CAP ' '

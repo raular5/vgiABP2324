@@ -6,6 +6,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 
+
 // Entorn VGI: Llibreries i constants Constants de l'aplicació EntornVGI
 #include "stdafx.h"
 #include "game.h"
@@ -66,6 +67,13 @@
 	bool vsync = true;
 	int antialiasing = 4;  // 0 per a mes rendiment. 2, 4, 8 per a mes qualitat
 
+//Opcions control escena del joc
+	int gameScene = 1;
+	time_t gameTimer;
+
+//Opcions control Imgui menus
+	ImFont* font1;
+	ImFont* font2;
 
 // Entorn VGI: Variables de l'opció Vista->Pan
 	double fact_pan;	// Factor de desplaçament de la càmara (opció pan).
@@ -81,11 +89,11 @@
 	static int oObjecte = 0;		// ImGui: Variable que controla desplegable TIPUS OBJECTE d'ImGui
 
 // Entorn VGI: Variables de control Skybox Cube
-	bool SkyBoxCube;			// Booleana que controla si es visualitza Skybox [TRUE] o no [FALSE].
+	int SkyBox;			// Int que define el tipo de skybox
 	Shader shader_SkyBoxC;		// Shader Skybox Cub
 	GLuint skC_programID;		// Identificador program Skybox Cube
 	CVAO skC_VAOID;				// Identificador VAO List (vaoId, vboId, nVertexs) per a Skybox Cube
-	GLuint cubemapTexture;		// Identificador textura cubemap.
+	GLuint cubemapTexture[10];		// Identificador textura cubemap.
 	Shader shaderSkyBox;		// Shader SkyBox
 
 // Entorn VGI: Variables de control del menú Transforma
@@ -217,6 +225,7 @@
 
 // EntornVGI: Funcions de mostrar Finestres ImGui
 	void draw_Menu_ImGui();
+	void draw_Menu_ABP();
 	void MostraEntornVGIWindow(bool* p_open);
 	void ShowArxiusOptions();
 	void ShowAboutWindow(bool* p_open);
@@ -270,3 +279,4 @@
 
 // -------- ABP
 	GameState gameState;
+	COBJModel modelos[NUM_MAX_MODELS];

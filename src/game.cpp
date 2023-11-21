@@ -1,4 +1,5 @@
 #include "game.h";
+#include <iostream>
 
 GameState::GameState()
 {
@@ -11,38 +12,38 @@ GameState::GameState()
 	cube_color.b = 0.0;
 	cube_color.a = 0.5f;
 
+	
+
 }
 
 
 void GameState::ChangeDebugCubePos(vec3 pos)
 {
 	debug_cube_pos = pos;
-	/*cube_color.r = fmod(cube_color.r * 1.2f, 1.0f);
-	cube_color.g = fmod(cube_color.g * 1.1f, 1.0f);
-	cube_color.b = fmod(cube_color.b * 1.3f, 1.0f);*/
 }
 
 void GameState::UpdateGame(float delta)
 {
-	if (gameOver)
-		return;	// No actualizar juego si has perdido
-
-	timeAcumm += delta;
-	gameOverCountdownInSeconds -= delta;
-	if (false)//Cambiar a  (gameOverCountdownInSeconds <= 0)	 para que funcione
+	switch (*gameScene)
 	{
-		printf("Game over!\n");
-		gameOver = true;
-		return;
+	case SCENE_DEBUG_TEST:
+		if (gameOver)
+			return;	// No actualizar juego si has perdido
+
+		timeAcumm += delta;
+		gameOverCountdownInSeconds -= delta;
+		if (false)//Cambiar a  (gameOverCountdownInSeconds <= 0)	 para que funcione
+		{
+			printf("Game over!\n");
+			gameOver = true;
+			return;
+		}
+
+		debug_cube_rotation.y += 20.0 * delta;
+		break;
+	default:
+		break;
 	}
-		
-
-	//printf("delta: %f \n", delta);
-	//debug_cube_rotation.x += 5.0 * delta;
-	debug_cube_rotation.y += 20.0 * delta;
-	//debug_cube_pos.z = 2.0f*sin(timeAcumm);
-
-	
 
 }
 
@@ -56,7 +57,22 @@ void GameState::OnKeyDown(GLFWwindow* window, int key, int scancode, int action,
 	if (action != GLFW_PRESS) {
 		return;
 	}
+	
+	if (key == GLFW_KEY_P)
+	{
 
+		
+		if (!audioEngine) {
+			std::cout << "No xuta" << std::endl;
+		}
+		audioEngine->play2D("media\\getout.ogg", true);
+		
+	
+		
+	}
+	if (key == GLFW_KEY_L) {
+			//audioEngine->drop();
+		}
 	// Move item inspector
 	switch (key) {	// Mejorable, poner en el update
 	case GLFW_KEY_D:
@@ -102,6 +118,29 @@ void GameState::OnKeyDown(GLFWwindow* window, int key, int scancode, int action,
 	default:
 		break;
 	}
+
+	// Puzle 1:	
+	if (*gameScene == SCENE_PUZLE1)
+	{
+		switch (key)
+		{
+		case GLFW_KEY_1:
+			puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % puz1_n_Symbols;
+			break;
+		case GLFW_KEY_2:
+			puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % puz1_n_Symbols;
+			break;
+		case GLFW_KEY_3:
+			puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
+			break;
+		case GLFW_KEY_4:
+			puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
+			break;
+		default:
+			break;
+		}
+	}
+	
 }
 
 void GameState::OnKeyUp(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -137,7 +176,25 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	worldPos.x = 0;
 	worldPos.y *= 500;
 	worldPos.z *= 500;
-	ChangeDebugCubePos(worldPos);
+
+	switch (*gameScene)
+	{
+	case SCENE_DEBUG_TEST:
+		ChangeDebugCubePos(worldPos);
+	case SCENE_PUZLE1:
+		if (worldPos.z > -0.5 && worldPos.z < 0.5)
+		{
+			if (worldPos.y > -2 && worldPos.y < -1)
+				puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % puz1_n_Symbols;
+			else if (worldPos.y > -1 && worldPos.y < 0)
+				puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % puz1_n_Symbols;
+			else if (worldPos.y > 0 && worldPos.y < 1)
+				puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
+			else if (worldPos.y > 1 && worldPos.y < 2)
+				puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
+		}
+		break;
+	}
 }
 
 void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action, int mods)

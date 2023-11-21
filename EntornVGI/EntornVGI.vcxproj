@@ -111,12 +111,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\externals\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\externals\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\externals\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\externals\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -146,7 +150,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;glew32.lib;glew32s.lib;SOIL2.lib;nfd_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>irrKlang.lib;glfw3dll.lib;opengl32.lib;glew32.lib;glew32s.lib;SOIL2.lib;nfd_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>MSVCRT;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -188,7 +192,7 @@
       </OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32.lib;glew32s.lib;SOIL2.lib;nfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>irrKlang.lib;glfw3.lib;opengl32.lib;glew32.lib;glew32s.lib;SOIL2.lib;nfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration>
       </LinkTimeCodeGeneration>

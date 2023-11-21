@@ -24,18 +24,19 @@ void dibuixa_EscenaGL(GLuint sh_programID, bool eix, GLuint axis_Id, CMask3D rei
 	bool textur, GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, bool flagInvertY,
 	int nptsU, CPunt3D PC_u[MAX_PATCH_CORBA], GLfloat pasCS, bool sw_PC, bool dib_TFrenet,
 	COBJModel* objecteOBJ,
-	glm::mat4 MatriuVista, glm::mat4 MatriuTG, GameState gameState,int gameScene);
+	glm::mat4 MatriuVista, glm::mat4 MatriuTG, GameState gameState,int gameScene, COBJModel modelos[NUM_MAX_MODELS]);
 
 // Entorn VGI: dibuixa -> Funció que dibuixa objectes simples de la llibreria GLUT segons obj
 void dibuixa(GLuint sh_programID, char obj, glm::mat4 MatriuVista, glm::mat4 MatriuTG);
 
 // Entorn VGI: ABP
-void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, GameState gameState);
+void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, GameState gameState, COBJModel modelos[NUM_MAX_MODELS]);
 void escenaABP(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GameState gameState);
 void escenaABP2(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GameState gameState);
 void escenaABP3(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GameState gameState);
 void escenaDebug(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GameState gameState);
-void escenaTextures(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, GameState gameState);
+void escenaTextures(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, GameState gameState, COBJModel modelos[NUM_MAX_MODELS]);
+void escenaPuzle1(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, GameState gameState);
 void dibuixa_Key(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5]);
 void dibuixa_Candle(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5]);
 void dibuixa_Note(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map);
@@ -54,6 +55,7 @@ void Cabina(GLint shaderId, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_m
 // CString2char: Funció de conversió de variable CString a char * per a noms de fitxers 
 //char* CString2Char(CString entrada);
 
-
+// ABP modelos
+//COBJModel modeloTest;
 
 #endif
