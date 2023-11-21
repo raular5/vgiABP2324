@@ -1433,42 +1433,43 @@ void OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	}
 	else if (m_ButoEAvall && (camera == CAM_NAVEGA) && (projeccio != CAP && projeccio != ORTO)) // Opció Navegació
 	{
-		// Entorn VGI: Canviar orientació en opció de Navegació
-		girn.cx = m_PosEAvall.x - xpos;		girn.cy = m_PosEAvall.y - ypos;
-		angleZ = girn.cx / 2.0;
-		// Entorn VGI: Control per evitar el creixement desmesurat dels angles.
-		if (angleZ >= 360) angleZ = angleZ - 360;
-		if (angleZ < 0)	angleZ = angleZ + 360;
+		//// Entorn VGI: Canviar orientaci� en opci� de Navegaci�
+		//girn.cx = m_PosEAvall.x - xpos;		girn.cy = m_PosEAvall.y - ypos;
+		//angleZ = girn.cx / 2.0;
+		//// Entorn VGI: Control per evitar el creixement desmesurat dels angles.
+		//if (angleZ >= 360) angleZ = angleZ - 360;
+		//if (angleZ < 0)	angleZ = angleZ + 360;
 
-		// Entorn VGI: Segons orientació dels eixos Polars (Vis_Polar)
-		if (Vis_Polar == POLARZ) { // (X,Y,Z)
-			n[0] = n[0] - opvN.x;
-			n[1] = n[1] - opvN.y;
-			n[0] = n[0] * cos(angleZ * PI / 180) - n[1] * sin(angleZ * PI / 180);
-			n[1] = n[0] * sin(angleZ * PI / 180) + n[1] * cos(angleZ * PI / 180);
-			n[0] = n[0] + opvN.x;
-			n[1] = n[1] + opvN.y;
-		}
-		else if (Vis_Polar == POLARY) { //(X,Y,Z) --> (Z,X,Y)
-			n[2] = n[2] - opvN.z;
-			n[0] = n[0] - opvN.x;
-			n[2] = n[2] * cos(angleZ * PI / 180) - n[0] * sin(angleZ * PI / 180);
-			n[0] = n[2] * sin(angleZ * PI / 180) + n[0] * cos(angleZ * PI / 180);
-			n[2] = n[2] + opvN.z;
-			n[0] = n[0] + opvN.x;
-		}
-		else if (Vis_Polar == POLARX) { //(X,Y,Z) --> (Y,Z,X)
-			n[1] = n[1] - opvN.y;
-			n[2] = n[2] - opvN.z;
-			n[1] = n[1] * cos(angleZ * PI / 180) - n[2] * sin(angleZ * PI / 180);
-			n[2] = n[1] * sin(angleZ * PI / 180) + n[2] * cos(angleZ * PI / 180);
-			n[1] = n[1] + opvN.y;
-			n[2] = n[2] + opvN.z;
-		}
+		//// Entorn VGI: Segons orientaci� dels eixos Polars (Vis_Polar)
+		//if (Vis_Polar == POLARZ) { // (X,Y,Z)
+		//	n[0] = n[0] - opvN.x;
+		//	n[1] = n[1] - opvN.y;
+		//	n[0] = n[0] * cos(angleZ * PI / 180) - n[1] * sin(angleZ * PI / 180);
+		//	n[1] = n[0] * sin(angleZ * PI / 180) + n[1] * cos(angleZ * PI / 180);
+		//	n[0] = n[0] + opvN.x;
+		//	n[1] = n[1] + opvN.y;
+		//}
+		//else if (Vis_Polar == POLARY) { //(X,Y,Z) --> (Z,X,Y)
+		//	n[2] = n[2] - opvN.z;
+		//	n[0] = n[0] - opvN.x;
+		//	n[2] = n[2] * cos(angleZ * PI / 180) - n[0] * sin(angleZ * PI / 180);
+		//	n[0] = n[2] * sin(angleZ * PI / 180) + n[0] * cos(angleZ * PI / 180);
+		//	n[2] = n[2] + opvN.z;
+		//	n[0] = n[0] + opvN.x;
+		//}
+		//else if (Vis_Polar == POLARX) { //(X,Y,Z) --> (Y,Z,X)
+		//	n[1] = n[1] - opvN.y;
+		//	n[2] = n[2] - opvN.z;
+		//	n[1] = n[1] * cos(angleZ * PI / 180) - n[2] * sin(angleZ * PI / 180);
+		//	n[2] = n[1] * sin(angleZ * PI / 180) + n[2] * cos(angleZ * PI / 180);
+		//	n[1] = n[1] + opvN.y;
+		//	n[2] = n[2] + opvN.z;
+		//}
 
-		m_PosEAvall.x = xpos;		m_PosEAvall.y = ypos;
-		// Crida a OnPaint() per redibuixar l'escena
-		//OnPaint(window);
+		//m_PosEAvall.x = xpos;		m_PosEAvall.y = ypos;
+		//// Crida a OnPaint() per redibuixar l'escena
+		////OnPaint(window);
+
 	}
 
 	// Entorn VGI: Transformació Geomètrica interactiva pels eixos X,Y boto esquerra del mouse.

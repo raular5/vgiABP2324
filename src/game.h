@@ -1,6 +1,6 @@
 #pragma once
 
-// Entorn VGI: Llibreries i constants Constants de l'aplicació EntornVGI
+// Entorn VGI: Llibreries i constants Constants de l'aplicaciÃ³ EntornVGI
 #include "stdafx.h"
 #include <irrKlang.h>
 
@@ -46,8 +46,8 @@ public:
 
 	// Variables for camera movement
 	double* n;					// Punt cap on mira.
-	CPunt3D* opvN;				// Definició Orígen Punt de Vista (en coordenades món)
-	double* angleZ;				// angle de rotació de la trajectòria.
+	CPunt3D* opvN;				// DefiniciÃ³ OrÃ­gen Punt de Vista (en coordenades mÃ³n)
+	double* angleZ;				// angle de rotaciÃ³ de la trajectÃ²ria.
 
 	// Game Scene
 	int *gameScene;	// current scene
@@ -59,6 +59,7 @@ public:
 	float timeAcumm = 0;	// Useful for animations
 
 	bool isMouseDown = false;
+	bool firstMouseMovement = true;
 	double previousMouse_xpos, previousMouse_ypos;
 
 	irrklang::ISoundEngine* audioEngine = nullptr;
