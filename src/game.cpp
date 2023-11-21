@@ -231,6 +231,16 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	previousMouse_xpos = xpos;
 	previousMouse_ypos = ypos;
 
+	// Inspect item with mouse
+	if (showItemInspector)
+	{
+		item_inspect_rotation.z += 360 * xoffset / width;
+		item_inspect_rotation.y += 360 * yoffset / height;
+		return;
+	}
+
+	// GIRO CAMARA PRIMERA PERSONA CON MOUSE
+
 	GLdouble vdir[3] = { 0, 0, 0 };
 	double modul = 0;
 
@@ -246,7 +256,7 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 
 	//angleZ += fact_pan;
 	(*angleZ) = xoffset * 0.05;
-	printf("%f", *angleZ);
+	printf("%f\n", *angleZ);
 
 	//(*angleZ) = (*angleZ) % 360;
 	n[0] = vdir[0]; // n[0] - opvN.x;
