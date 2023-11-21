@@ -279,3 +279,4 @@
 
 // -------- ABP
 	GameState gameState;
+	COBJModel modelos[NUM_MAX_MODELS];
