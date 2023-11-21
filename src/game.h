@@ -21,6 +21,7 @@
 #define SCENE_DEBUG_TEST		10
 #define SCENE_DEBUG_TEX			11
 #define SCENE_PUZLE1			12
+#define SCENE_BACKGROUND		13
 
 /* ------------------------------------------------------------------------- */
 /*					          FUNCTIONS										 */

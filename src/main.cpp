@@ -65,9 +65,9 @@ void InitGL()
 	objecte = ABP_CUSTOM;		// objecte = TETERA;
 
 // Entorn VGI: Variables de control Skybox Cube
-	SkyBoxCube = true;		skC_programID = 0;
+	SkyBox = 0;		skC_programID = 0;
 	skC_VAOID.vaoId = 0;	skC_VAOID.vboId = 0;	skC_VAOID.nVertexs = 0;
-	cubemapTexture = 0;
+	cubemapTexture[0] = 0;
 
 // Entorn VGI: Variables de control del menú Transforma
 	transf = false;		trasl = false;		rota = false;		escal = false;
@@ -209,19 +209,37 @@ void InitGL()
 // Càrrega VAO Skybox Cube
 	if (skC_VAOID.vaoId == 0) skC_VAOID = loadCubeSkybox_VAO();
 	Set_VAOList(CUBE_SKYBOX, skC_VAOID);
-
-	if (!cubemapTexture)
+	printf("asddfgakfjasd \n");
+	if (!cubemapTexture[0])
 	{	// load Skybox textures
 		// -------------
 		std::vector<std::string> faces =
 		{ ".\\textures\\skybox\\right.jpg",
-			".\\textures\\skybox\\left.jpg",
-			".\\textures\\skybox\\top.jpg",
-			".\\textures\\skybox\\bottom.jpg",
-			".\\textures\\skybox\\front.jpg",
-			".\\textures\\skybox\\back.jpg"
+					".\\textures\\skybox\\left.jpg",
+					".\\textures\\skybox\\top.jpg",
+					".\\textures\\skybox\\bottom.jpg",
+					".\\textures\\skybox\\front.jpg",
+					".\\textures\\skybox\\back.jpg"
 		};
-		cubemapTexture = loadCubemap(faces);
+		cubemapTexture[0] = loadCubemap(faces);
+		std::vector<std::string> faces4 =
+		{ ".\\textures\\skyboxes\\4\\4_right.png",
+			".\\textures\\skyboxes\\4\\4_left.png",
+			".\\textures\\skyboxes\\4\\4_up.png",
+			".\\textures\\skyboxes\\4\\4_down.png",
+			".\\textures\\skyboxes\\4\\4_front.png",
+			".\\textures\\skyboxes\\4\\4_back.png"
+		};
+		cubemapTexture[4] = loadCubemap(faces4);
+		std::vector<std::string> faces5 =
+		{ ".\\textures\\skyboxes\\5\\5_right.png",
+					".\\textures\\skyboxes\\5\\5_left.png",
+					".\\textures\\skyboxes\\5\\5_up.png",
+					".\\textures\\skyboxes\\5\\5_down.png",
+					".\\textures\\skyboxes\\5\\5_front.png",
+					".\\textures\\skyboxes\\5\\5_back.png"
+		};
+		cubemapTexture[5] = loadCubemap(faces5);
 	}
 
 // Entorn VGI: Variables de control dels botons de mouse
@@ -522,7 +540,8 @@ void dibuixa_Escena() {
 	//glUseProgram(shader_programID);
 
 //	Dibuix SkyBox Cúbic.
-	if (SkyBoxCube) dibuixa_Skybox(skC_programID, cubemapTexture, Vis_Polar, ProjectionMatrix, ViewMatrix);
+	//printf("SkyBox= %d \n", SkyBox);
+	dibuixa_Skybox(skC_programID, cubemapTexture[SkyBox], Vis_Polar, ProjectionMatrix, ViewMatrix);
 
 //	Dibuix Coordenades Món i Reixes.
 	dibuixa_Eixos(eixos_programID, eixos, eixos_Id, grid, hgrid, ProjectionMatrix, ViewMatrix);
@@ -550,7 +569,7 @@ void draw_Menu_ABP()
 	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 	ImGuiCond escalado = 0;
 	switch (gameScene) {
-	case 3:
+	case SCENE_TIMER_GAMEOVER:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -566,8 +585,8 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 
-	case 1:
-
+	case SCENE_MAIN:
+		SkyBox = 5;
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -605,6 +624,12 @@ void draw_Menu_ABP()
 			gameTimer = time(NULL);
 		}
 
+		if (ImGui::Button("Background image loading")) {
+			gameScene = 13;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "Options");
 
 		ImGui::SliderFloat("Volume (Music)", &volumeMusic, 0.0f, 1.0f);
@@ -626,7 +651,8 @@ void draw_Menu_ABP()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
-	case 2:
+	case SCENE_GAME:
+		SkyBox = 4;
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -646,8 +672,8 @@ void draw_Menu_ABP()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
-	case 10:
-	case 11:
+	case SCENE_DEBUG_TEST:
+	case SCENE_DEBUG_TEX:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -667,7 +693,7 @@ void draw_Menu_ABP()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
-	case 12:
+	case SCENE_PUZLE1:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -686,6 +712,21 @@ void draw_Menu_ABP()
 		ImGui::End();
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
+	case SCENE_BACKGROUND:
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("OpenGL Texture Text", nullptr, flags);
+		ImGui::Image((void*)(intptr_t)texturesID[11], ImVec2(900, 244));
+
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 		break;
 	default:
 		break;
@@ -800,6 +841,7 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 	case SCENE_DEBUG_TEST:
 	case SCENE_DEBUG_TEX:
 	case SCENE_PUZLE1:
+	case SCENE_BACKGROUND:
 		break;	// activa controles teclado en estas escenas
 
 	case SCENE_TIMER_GAMEOVER:
@@ -1882,7 +1924,6 @@ void LoadVAOsAPB()
 
 
 // Skybox
-	if (SkyBoxCube) {
 		// Càrrega Shader Skybox
 		if (!skC_programID) skC_programID = shader_SkyBoxC.loadFileShaders(".\\shaders\\skybox.VERT", ".\\shaders\\skybox.FRAG");
 
@@ -1893,7 +1934,8 @@ void LoadVAOsAPB()
 		if (!cubemapTexture)
 		{	// load Skybox textures
 			// -------------
-			std::vector<std::string> faces =
+			std::vector<std::string> faces;
+			faces =
 			{ ".\\textures\\skybox\\right.jpg",
 				".\\textures\\skybox\\left.jpg",
 				".\\textures\\skybox\\top.jpg",
@@ -1901,9 +1943,8 @@ void LoadVAOsAPB()
 				".\\textures\\skybox\\front.jpg",
 				".\\textures\\skybox\\back.jpg"
 			};
-			cubemapTexture = loadCubemap(faces);
+			cubemapTexture[SkyBox] = loadCubemap(faces);
 		}
-	}
 
 }
 
@@ -1923,7 +1964,10 @@ void LoadTexturesABP()
 	texturesID[9] = loadIMA_SOIL(".\\textures\\cadenat\\blue.bmp");
 	texturesID[10] = loadIMA_SOIL(".\\textures\\cadenat\\black.bmp");
 
-	// for models
+	//Textures menu
+	texturesID[11] = loadIMA_SOIL(".\\textures\\menu\\menu_bar.png");
+  
+  // for models
 	texturesID[20] = loadIMA_SOIL(".\\textures\\furniturebits_texture.png");
 }
 

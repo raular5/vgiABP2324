@@ -89,11 +89,11 @@
 	static int oObjecte = 0;		// ImGui: Variable que controla desplegable TIPUS OBJECTE d'ImGui
 
 // Entorn VGI: Variables de control Skybox Cube
-	bool SkyBoxCube;			// Booleana que controla si es visualitza Skybox [TRUE] o no [FALSE].
+	int SkyBox;			// Int que define el tipo de skybox
 	Shader shader_SkyBoxC;		// Shader Skybox Cub
 	GLuint skC_programID;		// Identificador program Skybox Cube
 	CVAO skC_VAOID;				// Identificador VAO List (vaoId, vboId, nVertexs) per a Skybox Cube
-	GLuint cubemapTexture;		// Identificador textura cubemap.
+	GLuint cubemapTexture[10];		// Identificador textura cubemap.
 	Shader shaderSkyBox;		// Shader SkyBox
 
 // Entorn VGI: Variables de control del menú Transforma
