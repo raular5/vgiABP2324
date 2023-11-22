@@ -17,6 +17,16 @@ GameState::GameState()
 }
 
 
+bool GameState::puz1_checkMatch()
+{
+	for (int i = 0; i < puz1_n_Symbols; i++)
+	{
+		if (puz1_currentCombination[i] != puz1_correctCombination[i])
+			return false;
+	}
+	return true;
+}
+
 void GameState::ChangeDebugCubePos(vec3 pos)
 {
 	debug_cube_pos = pos;
@@ -139,6 +149,7 @@ void GameState::OnKeyDown(GLFWwindow* window, int key, int scancode, int action,
 		default:
 			break;
 		}
+		puz1_match = puz1_checkMatch();
 	}
 	
 }
@@ -177,6 +188,11 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	worldPos.y *= 500;
 	worldPos.z *= 500;
 
+	// Debug
+	clickPosWorld_x = worldPos.x;
+	clickPosWorld_y = worldPos.y;
+	clickPosWorld_z = worldPos.z;
+
 	switch (*gameScene)
 	{
 	case SCENE_DEBUG_TEST:
@@ -192,9 +208,17 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 				puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
 			else if (worldPos.y > 1 && worldPos.y < 2)
 				puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
+
+			puz1_match = puz1_checkMatch();
 		}
 		break;
+	case SCENE_PUZLE2:
+		if (worldPos.y > 4.5 && worldPos.y < 5.5 && worldPos.z < 0.5 && worldPos.z > -0.5) // Click on gem
+			puz2_hasPickedGem = true;
+		else if (puz2_hasPickedGem && worldPos.y > -5.5 && worldPos.y < -4.5 && worldPos.z < 0.5 && worldPos.z > -0.5) // Click on statue
+			puz2_complete = true;
 	}
+
 }
 
 void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action, int mods)

@@ -619,7 +619,31 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Puzle 1")) {
-			gameScene = 12;
+			gameScene = SCENE_PUZLE1;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Puzle 2")) {
+			gameScene = SCENE_PUZLE2;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Puzle 3")) {
+			gameScene = SCENE_PUZLE3;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Puzle 4")) {
+			gameScene = SCENE_PUZLE4;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Puzle 5")) {
+			gameScene = SCENE_PUZLE5;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
@@ -701,7 +725,63 @@ void draw_Menu_ABP()
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
 		ImGui::Begin("Game timer", nullptr, flags);
 
-		ImGui::Text("Puzzle 1");
+		ImGui::Text("Puzzle 1 - CADENAT AMB SIMBOLS");
+		ImGui::Text("Current combination: %d%d%d%d", gameState.puz1_currentCombination[0], gameState.puz1_currentCombination[1], gameState.puz1_currentCombination[2], gameState.puz1_currentCombination[3]);
+		ImGui::Text("Correct combination: %d%d%d%d", gameState.puz1_correctCombination[0], gameState.puz1_correctCombination[1], gameState.puz1_correctCombination[2], gameState.puz1_correctCombination[3]);
+
+		if (gameState.puz1_match)
+			ImGui::Text("MATCHING COMBINATION");
+
+
+		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
+		//elapsedM = (elapsedTimer / 60) % 60;
+		//elapsedS = elapsedTimer % 60;
+		//ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
+		//if (elapsedM == 0 && elapsedS == 0) {
+		//	gameScene = 3;
+		//}
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
+	case SCENE_PUZLE2:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Game timer", nullptr, flags);
+
+		ImGui::Text("Puzzle 2 - JOYA EN ESTATUA");
+		ImGui::Text("Last click in world coords (x, y, z): %f, %f, %f", gameState.clickPosWorld_x, gameState.clickPosWorld_y, gameState.clickPosWorld_z);
+		if (gameState.puz2_hasPickedGem)
+			ImGui::Text("Gem placed. Puzzle complete.");
+		else if (gameState.puz2_hasPickedGem)
+			ImGui::Text("Gem picked. You can place it in the statue.");
+
+		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
+		//elapsedM = (elapsedTimer / 60) % 60;
+		//elapsedS = elapsedTimer % 60;
+		//ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
+		//if (elapsedM == 0 && elapsedS == 0) {
+		//	gameScene = 3;
+		//}
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
+	case SCENE_PUZLE3:
+	case SCENE_PUZLE4:
+	case SCENE_PUZLE5:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Game timer", nullptr, flags);
+
+		ImGui::Text("Puzzle no implementat");
+		
 		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
 		//elapsedM = (elapsedTimer / 60) % 60;
 		//elapsedS = elapsedTimer % 60;
