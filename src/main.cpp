@@ -47,7 +47,7 @@ void InitGL()
 	OPV_G.R = 15.0;		OPV_G.alfa = 0.0;	OPV_G.beta = 0.0;	// Origen PV en esfèriques per a Vista_Geode
 
 // Entorn VGI: Variables de control per Menú Vista: Pantalla Completa, Pan, dibuixar eixos i grids 
-	fullscreen = true;
+	fullscreen = false;
 	pan = false;
 	eixos = true;	eixos_programID = 0;  eixos_Id = 0;
 	sw_grid = false;
@@ -771,6 +771,32 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case SCENE_PUZLE3:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Game timer", nullptr, flags);
+
+		ImGui::Text("Puzzle 3 - COMBINACIO NUMERICA");
+		ImGui::Text("Current combination: %d%d%d%d", gameState.puz3_currentCombination[0], gameState.puz3_currentCombination[1], gameState.puz3_currentCombination[2], gameState.puz3_currentCombination[3]);
+		ImGui::Text("Correct combination: %d%d%d%d", gameState.puz3_correctCombination[0], gameState.puz3_correctCombination[1], gameState.puz3_correctCombination[2], gameState.puz3_correctCombination[3]);
+
+		if (gameState.puz3_match)
+			ImGui::Text("MATCHING COMBINATION");
+
+
+		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
+		//elapsedM = (elapsedTimer / 60) % 60;
+		//elapsedS = elapsedTimer % 60;
+		//ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
+		//if (elapsedM == 0 && elapsedS == 0) {
+		//	gameScene = 3;
+		//}
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
 	case SCENE_PUZLE4:
 	case SCENE_PUZLE5:
 		ImGui_ImplOpenGL3_NewFrame();
@@ -2050,6 +2076,21 @@ void LoadTexturesABP()
   
   // for models
 	texturesID[20] = loadIMA_SOIL(".\\textures\\furniturebits_texture.png");
+
+	// Textures cadenat numeros
+	texturesID[30] = loadIMA_SOIL(".\\textures\\cadenat\\0.bmp");
+	texturesID[31] = loadIMA_SOIL(".\\textures\\cadenat\\1.bmp");
+	texturesID[32] = loadIMA_SOIL(".\\textures\\cadenat\\2.bmp");
+	texturesID[33] = loadIMA_SOIL(".\\textures\\cadenat\\3.bmp");
+	texturesID[34] = loadIMA_SOIL(".\\textures\\cadenat\\4.bmp");
+	texturesID[35] = loadIMA_SOIL(".\\textures\\cadenat\\5.bmp");
+	texturesID[36] = loadIMA_SOIL(".\\textures\\cadenat\\6.bmp");
+	texturesID[37] = loadIMA_SOIL(".\\textures\\cadenat\\7.bmp");
+	texturesID[38] = loadIMA_SOIL(".\\textures\\cadenat\\8.bmp");
+	texturesID[39] = loadIMA_SOIL(".\\textures\\cadenat\\9.bmp");
+
+	// Puzzle 4
+	texturesID[40] = loadIMA_SOIL(".\\textures\\cadenat\\9.bmp");
 }
 
 void LoadModelsABP()
