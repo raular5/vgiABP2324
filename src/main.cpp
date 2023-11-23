@@ -559,8 +559,76 @@ void dibuixa_Escena() {
 
 }
 
+struct InventorySlot {
+	std::string itemName;
+	std::string imagePath;
+	int quantity;
+
+	InventorySlot(const std::string& name, const std::string& path, int qty) 
+		: itemName(name), imagePath(path), quantity(qty) {}
+};
+
+void RenderUI(std::vector<InventorySlot>& inventory) {
+	// Comienzo del frame de ImGui
+
+
+	ImGui::SetNextWindowPos(ImVec2(600, ImGui::GetIO().DisplaySize.y - 100), ImGuiCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(ImGui::GetIO().DisplaySize.x - 1200, 100), ImGuiCond_Always);
+	ImGui::Begin("Inventario", nullptr,
+		ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
+		ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+
+	ImVec2 minBound = ImGui::GetWindowContentRegionMin();
+	ImVec2 maxBound = ImGui::GetWindowContentRegionMax();
+	ImGui::GetWindowDrawList()->AddImage((void*)(intptr_t)texturesID[11], minBound, maxBound);
+	//ImGui::Image((void*)(intptr_t)texturesID[1], minBound, maxBound);
+
+
+	// Muestra los slots del inventario
+	for (auto& slot : inventory) {
+		ImGui::BeginGroup();
+
+		// Muestra la imagen del ítem en el slot
+		//ImGui::GetWindowDrawList()->AddImage((void*)(intptr_t)texturesID[1], ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
+		ImGui::Image((void*)(intptr_t)loadIMA_SOIL(slot.imagePath.c_str()), ImVec2(100, 84));
+
+		// Muestra el nombre y la cantidad del ítem
+		/*
+			ImGui::Text("%s", slot.itemName.c_str());
+			ImGui::Text("Cantidad: %d", slot.quantity);
+		*/
+		
+
+		// Verifica si el slot está siendo clickeado
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+			// Reduz la cantidad del ítem al clickear
+			if (slot.quantity > 0) {
+				slot.quantity--;
+			}
+		}
+
+		ImGui::EndGroup();
+		ImGui::SameLine();
+	}
+
+	// Termina el inventario
+	ImGui::End();
+
+	// Fin del frame de ImGui
+
+}
+
+
 void draw_Menu_ABP()
 {
+	std::vector<InventorySlot> inventory = {
+	   {"Key",".\\textures\\inventoryItems\\key.png", 1},
+	   {"Poción de salud",".\\textures\\inventoryItems\\potion.png", 5},
+	   {"Espada",".\\textures\\inventoryItems\\sword.png", 1},
+	   { "Key",".\\textures\\inventoryItems\\key.png", 1 }
+	};
+
+
 	bool pulsado = false;
 
 	ImGuiWindowFlags flags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings;
@@ -568,6 +636,9 @@ void draw_Menu_ABP()
 	int elapsedS, elapsedM;
 	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 	ImGuiCond escalado = 0;
+
+	ImVec2 inventoryPosition(900, 100);
+
 	switch (gameScene) {
 	case SCENE_TIMER_GAMEOVER:
 		ImGui_ImplOpenGL3_NewFrame();
@@ -668,6 +739,9 @@ void draw_Menu_ABP()
 		if (elapsedM == 0 && elapsedS == 0) {
 			gameScene = 3;
 		}
+		
+		RenderUI(inventory);
+
 		ImGui::End();
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
