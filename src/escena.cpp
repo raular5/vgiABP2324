@@ -635,26 +635,26 @@ void escenaPuzle4(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 {
 	CColor col_object = { 1.0,1.0,1.0,1.0 };
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
-
-	if (!gameState.puz4_hasMovedFrame)
+	SetTextureParameters(texturID[40], true, true, textur_map, true);
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
+	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	ModelMatrix = MatriuTG;
+	if (gameState.puz4_hasMovedFrame)
 	{
-		SetTextureParameters(texturID[40], true, true, textur_map, true);
-		glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
-		glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
-		glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
-		SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
-		ModelMatrix = glm::translate(MatriuTG, vec3(0.0f, 0.0f, 0.0f));
-		ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(1.0f, 0.0f, 0.0f));
-		ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(0.0f, 1.0f, 0.0f));
-		ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(0.0f, 0.0f, 1.0f));
-		ModelMatrix = glm::scale(ModelMatrix, vec3(0.5f, 2.0f, 3.0f));
-		// Pas ModelView Matrix a shader
-		glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
-		// Pas NormalMatrix a shader
-		NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
-		glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
-		draw_TriEBO_Object(GLUT_CUBE);
+		ModelMatrix = glm::translate(ModelMatrix, vec3(0.0f, -1.0f, 0.0f));
+		ModelMatrix = glm::rotate(ModelMatrix, radians(-45.0f), vec3(1.0f, 0.0f, 0.0f));
 	}
+		
+		
+	ModelMatrix = glm::scale(ModelMatrix, vec3(0.5f, 2.0f, 3.0f));
+	// Pas ModelView Matrix a shader
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+	// Pas NormalMatrix a shader
+	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+	draw_TriEBO_Object(GLUT_CUBE);
 	
 
 	// Key
