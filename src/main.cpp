@@ -1970,6 +1970,11 @@ void LoadTexturesABP()
   
   // for models
 	texturesID[20] = loadIMA_SOIL(".\\textures\\furniturebits_texture.png");
+
+	//Textures habitació
+	texturesID[50] = loadIMA_SOIL(".\\textures\\habitacio\\pared.jpg"); // Paredes
+	texturesID[51] = loadIMA_SOIL(".\\textures\\habitacio\\techo.jpg"); // Techo
+	texturesID[52] = loadIMA_SOIL(".\\textures\\habitacio\\suelo.jpg"); // Suelo
 }
 
 void LoadModelsABP()
@@ -1986,6 +1991,7 @@ void LoadModelsABP()
 	modelos[8].LoadModel((char*)".\\models\\shelf_A_big.obj");
 	modelos[9].LoadModel((char*)".\\models\\table_medium_long.obj");
 	modelos[10].LoadModel((char*)".\\models\\gema.obj");
+	modelos[11].LoadModel((char*)".\\models\\ps1_antique_radio.obj");
 	printf("Finished loading models.\n");
 	
 }
