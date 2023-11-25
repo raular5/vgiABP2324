@@ -12,6 +12,7 @@
 #include "ImGui\imgui_impl_opengl3.h"
 #include "ImGui\nfd.h" // Native File Dialog
 
+
 #include "stdafx.h"
 #include "shader.h"
 #include "visualitzacio.h"
@@ -620,10 +621,40 @@ void draw_Menu_ABP()
 	int elapsedS, elapsedM;
 	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 	ImGuiCond escalado = 0;
-
 	ImVec2 inventoryPosition(900, 100);
+	ImVec2 imageSize(ImGui::GetIO().DisplaySize.x * 1.04f, ImGui::GetIO().DisplaySize.y * 1.04f);
+	float verticalSpacing = 20.0f;
 
 	switch (gameScene) {
+	case SCENE_START:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		// Pantalla completa
+		ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
+
+		ImGui::Begin("Imagen a Pantalla Completa",
+			nullptr,
+			ImGuiWindowFlags_NoTitleBar |
+			ImGuiWindowFlags_NoResize |
+			ImGuiWindowFlags_NoMove |
+			ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoInputs);
+
+		
+		ImGui::Image((void*)(intptr_t)texturesID[80], imageSize);
+
+		ImGui::End();
+
+		// Cambio de imagen al presionar enter
+		if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+			gameScene = 1;
+		}
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
 	case SCENE_TIMER_GAMEOVER:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -641,67 +672,55 @@ void draw_Menu_ABP()
 		break;
 
 	case SCENE_MAIN:
-		SkyBox = 5;
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(-0.25f, -0.25f));
-		ImGui::SetNextWindowSize(ImVec2(300.0f, 450.0f), escalado);
 
+		ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
+		ImGui::Begin("Background", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoInputs);
+		ImGui::Image((void*)(intptr_t)texturesID[81], imageSize);
+		ImGui::End();
+
+
+		ImGui::SetNextWindowPos(ImVec2(200, 300));
+		ImGui::SetNextWindowSize(ImVec2(700.0f, 450.0f), escalado);
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Menu", nullptr, flags);
 
-		ImGui::Begin("Game start window", nullptr, flags);
-		ImGui::PushFont(font2);
-		ImGui::Text("Hello there adventurer!");
-		ImGui::PopFont();
+		ImGui::GetStyle().Colors[ImGuiCol_WindowBg].w = 0.0f;
+		ImGui::GetStyle().WindowBorderSize = 0.0f;
 
+		ImGui::PushFont(fontMenu);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
 		if (ImGui::Button("Start scape room")) {
 			gameScene = 2;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
-
-		if (ImGui::Button("Debug scene for testing")) {
-			gameScene = 10;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
-
-		if (ImGui::Button("Debug scene for textures")) {
-			gameScene = 11;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
-
-		if (ImGui::Button("Puzle 1")) {
-			gameScene = 12;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
-
-		if (ImGui::Button("Background image loading")) {
-			gameScene = 13;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
-
+		ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
+		
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "Options");
 
 		ImGui::SliderFloat("Volume (Music)", &volumeMusic, 0.0f, 1.0f);
 		ImGui::SliderFloat("Volume (Sound effects)", &volumeSfx, 0.0f, 1.0f);
+		
 		ImGui::Checkbox("Fullscreen", &fullscreen);
 		ImGui::Checkbox("Vsync", &vsync);
-
+		
 		if (ImGui::Button("Apply Settings")) {
 			printf("Apply settings\n");
 			wglSwapIntervalEXT(vsync);
 			OnFull_Screen(primary, window);
 
 		}
-
+		ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
 		if (ImGui::Button("Exit Game")) {
 			glfwSetWindowShouldClose(window, true);
 		}
+		ImGui::PopStyleColor();
+		ImGui::PopFont();
 		ImGui::End();
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -926,6 +945,8 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 		else if (camera == CAM_NAVEGA) Teclat_Navega(key, action);
 	}
 }
+
+
 
 void OnKeyUp(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -2034,6 +2055,10 @@ void LoadTexturesABP()
 	texturesID[62] = loadIMA_SOIL(".\\textures\\inventoryItems\\potion.png");
 	texturesID[63] = loadIMA_SOIL(".\\textures\\inventoryItems\\sword.png");
 	texturesID[64] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
+
+	//menu
+	texturesID[80] = loadIMA_SOIL(".\\textures\\menu\\start-scene.png");
+	texturesID[81] = loadIMA_SOIL(".\\textures\\menu\\main-menu.png");
 }
 
 void LoadModelsABP()
@@ -2174,6 +2199,7 @@ int main(void)
 	//Imgui Fonts
 	font1 = io.Fonts->AddFontDefault();
 	font2 = io.Fonts->AddFontFromFileTTF(".\\fonts\\Creepster-Regular.ttf", 30.0f);
+	fontMenu = io.Fonts->AddFontFromFileTTF(".\\fonts\\Crang.ttf", 30.0f);
 
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls

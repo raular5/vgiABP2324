@@ -297,5 +297,3 @@ glm::vec3 ViewSpaceToWorld(vec3 viewSpaceCoords, mat4 ViewMatrix)
 	glm::vec3 worldSpaceCoords = glm::vec3(worldCoords);
 	return worldSpaceCoords;
 }
-
-

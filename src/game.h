@@ -15,6 +15,7 @@
 #define ITEM_CANDLE 3
 
 // Scenes
+#define SCENE_START				0
 #define SCENE_MAIN				1
 #define SCENE_GAME				2
 #define SCENE_TIMER_GAMEOVER	3
