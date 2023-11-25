@@ -2109,6 +2109,8 @@ void LoadModelsABP()
 	modelos[10].LoadModel((char*)".\\models\\gema.obj");
 	modelos[11].LoadModel((char*)".\\models\\lock.obj");
 	modelos[12].LoadModel((char*)".\\models\\cuadro.obj");
+	modelos[13].LoadModel((char*)".\\models\\Death_lowpoly_final.obj");
+	
 	printf("Finished loading models.\n");
 	
 }
