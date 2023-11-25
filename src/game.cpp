@@ -17,6 +17,21 @@ GameState::GameState()
 }
 
 
+bool GameState::puz1_checkMatch()
+{
+	return checkMatch(puz1_currentCombination, puz1_correctCombination, puz1_n_Symbols);
+}
+
+bool GameState::checkMatch(int* currentCombination, int* correctCombination, int n_Symbols)
+{
+	for (int i = 0; i < n_Symbols; i++)
+	{
+		if (currentCombination[i] != correctCombination[i])
+			return false;
+	}
+	return true;
+}
+
 void GameState::ChangeDebugCubePos(vec3 pos)
 {
 	debug_cube_pos = pos;
@@ -139,6 +154,7 @@ void GameState::OnKeyDown(GLFWwindow* window, int key, int scancode, int action,
 		default:
 			break;
 		}
+		puz1_match = puz1_checkMatch();
 	}
 	
 }
@@ -172,10 +188,16 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	vec3 viewSpace = NDCToViewSpace(ndc, *m_ProjectionMatrix);
 	printf("View Space : %f, %f\n", viewSpace.x, viewSpace.y);
 	vec3 worldPos = ViewSpaceToWorld(viewSpace, *m_ViewMatrix);
-	printf("World pos : %f, %f, %f\n", worldPos.x, worldPos.y, worldPos.z);
+	
 	worldPos.x = 0;
 	worldPos.y *= 500;
 	worldPos.z *= 500;
+	printf("World pos : %f, %f, %f\n", worldPos.x, worldPos.y, worldPos.z);
+
+	// Debug
+	clickPosWorld_x = worldPos.x;
+	clickPosWorld_y = worldPos.y;
+	clickPosWorld_z = worldPos.z;
 
 	switch (*gameScene)
 	{
@@ -185,16 +207,44 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 		if (worldPos.z > -0.5 && worldPos.z < 0.5)
 		{
 			if (worldPos.y > -2 && worldPos.y < -1)
-				puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % puz1_n_Symbols;
+				puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % 4;
 			else if (worldPos.y > -1 && worldPos.y < 0)
-				puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % puz1_n_Symbols;
+				puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % 4;
 			else if (worldPos.y > 0 && worldPos.y < 1)
-				puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
+				puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % 4;
 			else if (worldPos.y > 1 && worldPos.y < 2)
-				puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
+				puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % 4;
+
+			puz1_match = puz1_checkMatch();
 		}
 		break;
+	case SCENE_PUZLE2:
+		if (worldPos.y > 4.5 && worldPos.y < 5.5 && worldPos.z < 0.5 && worldPos.z > -0.5) // Click on gem
+			puz2_hasPickedGem = true;
+		else if (puz2_hasPickedGem && worldPos.y > -5.5 && worldPos.y < -4.5 && worldPos.z < 0.5 && worldPos.z > -0.5) // Click on statue
+			puz2_complete = true;
+	case SCENE_PUZLE3:
+		if (worldPos.z > -0.5 && worldPos.z < 0.5)
+		{
+			if (worldPos.y > -2 && worldPos.y < -1)
+				puz3_currentCombination[0] = (puz3_currentCombination[0] + 1) % 10;
+			else if (worldPos.y > -1 && worldPos.y < 0)
+				puz3_currentCombination[1] = (puz3_currentCombination[1] + 1) % 10;
+			else if (worldPos.y > 0 && worldPos.y < 1)
+				puz3_currentCombination[2] = (puz3_currentCombination[2] + 1) % 10;
+			else if (worldPos.y > 1 && worldPos.y < 2)
+				puz3_currentCombination[3] = (puz3_currentCombination[3] + 1) % 10;
+
+			puz3_match = checkMatch(puz3_currentCombination, puz3_correctCombination, puz3_n_Symbols);
+		}
+		break;
+	case SCENE_PUZLE4:
+		if (puz4_hasMovedFrame && worldPos.y > 0 && worldPos.y < 1.25 && worldPos.z < -1.5 && worldPos.z > -2.5) // Click on key
+			puz4_hasPickedKey = true;
+		else if (worldPos.y > -2.5 && worldPos.y < 2.5 && worldPos.z < 2.5 && worldPos.z > -2.5) // Click on frame
+			puz4_hasMovedFrame = !puz4_hasMovedFrame;
 	}
+
 }
 
 void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action, int mods)
