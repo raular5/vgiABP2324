@@ -264,8 +264,7 @@ void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Mat
 {	CColor col_object = { 0.0,0.0,0.0,1.0 };
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
 
-
-
+	dibuixaHabitacio(sh_programID, MatriuVista, MatriuTG, sw_mat, texturID, textur_map, 150.0f, 150.0f, 12.0f);
 
 // Item inspect
 	if (gameState.showItemInspector)
@@ -304,11 +303,7 @@ void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Mat
 			dibuixa_Candle(sh_programID, MatriuVista, ModelMatrix, sw_mat);
 			break;
 		}
-	}
-	
-
-
-	
+	}	
 }
 
 void escenaABP2(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GameState gameState)
@@ -798,6 +793,68 @@ void dibuixa_Key(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG,
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
 	draw_TriEBO_Object(GLUT_CUBE);
 }
+
+void dibuixaHabitacio(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, float width, float height, float depth)
+{
+	CColor col_object = { 1.0, 1.0, 1.0, 1.0 };
+	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
+
+	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+
+	glm::vec3 dimensions[6] = {
+		glm::vec3(width, 0.01f, depth),  // Suelo
+		glm::vec3(width, 0.01f, depth),  // Techo
+		glm::vec3(width, height, 0.01f), // Pared frontal
+		glm::vec3(width, height, 0.01f), // Pared trasera
+		glm::vec3(0.01f, height, depth), // Pared izquierda
+		glm::vec3(0.01f, height, depth)  // Pared derecha
+	};
+
+	glm::vec3 positions[6] = {
+		glm::vec3(0, -height / 2, 0),      // Suelo
+		glm::vec3(0, height / 2, 0),       // Techo
+		glm::vec3(0, 0, depth / 2),        // Pared frontal
+		glm::vec3(0, 0, -depth / 2),       // Pared trasera
+		glm::vec3(-width / 2, 0, 0),       // Pared izquierda
+		glm::vec3(width / 2, 0, 0)         // Pared derecha
+	};
+
+	for (int i = 0; i < 6; ++i) 
+	{
+		ModelMatrix = glm::translate(MatriuTG, positions[i]);
+		ModelMatrix = glm::scale(ModelMatrix, dimensions[i]);
+
+		GLuint currentTextureID;
+		if (i == 3) { // Suelo
+			currentTextureID = texturID[52];
+		}
+		else if (i == 2) 
+		{ // Techo
+			currentTextureID = texturID[51];
+		}
+		else { // Paredes
+			currentTextureID = texturID[50];
+		}
+
+		SetTextureParameters(currentTextureID, true, true, textur_map, true);
+
+		glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE);
+		glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE);
+		glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);
+
+		glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+
+		NormalMatrix = glm::transpose(glm::inverse(MatriuVista * ModelMatrix));
+		glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+
+		draw_TriEBO_Object(GLUT_CUBE);
+
+		glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_FALSE);
+		glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_FALSE);
+	}
+}
+
+
 
 void dibuixa_Note(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map)
 {

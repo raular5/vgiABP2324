@@ -2077,6 +2077,8 @@ void LoadTexturesABP()
   // for models
 	texturesID[20] = loadIMA_SOIL(".\\textures\\furniturebits_texture.png");
 
+
+
 	// Textures cadenat numeros
 	texturesID[30] = loadIMA_SOIL(".\\textures\\cadenat\\0.bmp");
 	texturesID[31] = loadIMA_SOIL(".\\textures\\cadenat\\1.bmp");
@@ -2091,6 +2093,13 @@ void LoadTexturesABP()
 
 	// Puzzle 4
 	texturesID[40] = loadIMA_SOIL(".\\textures\\cadenat\\9.bmp");
+  
+  
+	//Textures habitació
+	texturesID[50] = loadIMA_SOIL(".\\textures\\habitacio\\pared.jpg"); // Paredes
+	texturesID[51] = loadIMA_SOIL(".\\textures\\habitacio\\techo.jpg"); // Techo
+	texturesID[52] = loadIMA_SOIL(".\\textures\\habitacio\\suelo.jpg"); // Suelo
+
 }
 
 void LoadModelsABP()
@@ -2110,7 +2119,8 @@ void LoadModelsABP()
 	modelos[11].LoadModel((char*)".\\models\\lock.obj");
 	modelos[12].LoadModel((char*)".\\models\\cuadro.obj");
 	modelos[13].LoadModel((char*)".\\models\\Death_lowpoly_final.obj");
-	
+	modelos[14].LoadModel((char*)".\\models\\ps1_antique_radio.obj");
+
 	printf("Finished loading models.\n");
 	
 }
