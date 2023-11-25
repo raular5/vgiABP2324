@@ -33,11 +33,23 @@ glm::vec3 ViewSpaceToWorld(vec3 viewSpaceCoords, mat4 ViewMatrix);
 /* ------------------------------------------------------------------------- */
 /*					          CLASE GAMESTATE								 */
 /* ------------------------------------------------------------------------- */
+// Inventario
+struct InventorySlot {
+	std::string itemName;
+	//std::string imagePath;
+	int imageID;
+	int quantity;
+
+	InventorySlot(const std::string& name, const int image, int qty)
+		: itemName(name), imageID(image), quantity(qty) {}
+};
 
 class GameState {
 public:
 
 	GameState();
+
+	std::vector<InventorySlot> inventory;
 
 	
 // CONEXION CON MAIN

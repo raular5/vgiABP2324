@@ -559,17 +559,9 @@ void dibuixa_Escena() {
 
 }
 
-struct InventorySlot {
-	std::string itemName;
-	//std::string imagePath;
-	int imageID;
-	int quantity;
 
-	InventorySlot(const std::string& name, const int image, int qty) 
-		: itemName(name), imageID(image), quantity(qty) {}
-};
 
-void RenderUI(std::vector<InventorySlot>& inventory) {
+void RenderUI() {
 	// Comienzo del frame de ImGui
 
 
@@ -586,7 +578,7 @@ void RenderUI(std::vector<InventorySlot>& inventory) {
 
 
 	// Muestra los slots del inventario
-	for (auto& slot : inventory) {
+	for (auto& slot : gameState.inventory) {
 		ImGui::BeginGroup();
 
 		// Muestra la imagen del ítem en el slot
@@ -621,14 +613,6 @@ void RenderUI(std::vector<InventorySlot>& inventory) {
 
 void draw_Menu_ABP()
 {
-	std::vector<InventorySlot> inventory = {
-	   {"Key",61, 1},
-	   {"Poción de salud",62, 5},
-	   {"Espada",63, 1},
-	   { "Key",61, 1 }
-	};
-
-
 	bool pulsado = false;
 
 	ImGuiWindowFlags flags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings;
@@ -740,7 +724,7 @@ void draw_Menu_ABP()
 			gameScene = 3;
 		}
 		
-		RenderUI(inventory);
+		RenderUI();
 
 		ImGui::End();
 		ImGui::Render();

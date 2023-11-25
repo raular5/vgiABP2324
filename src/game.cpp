@@ -13,6 +13,10 @@ GameState::GameState()
 	cube_color.a = 0.5f;
 
 	
+	inventory.push_back(InventorySlot("Key",61, 1));
+	inventory.push_back(InventorySlot("Poción de salud",62, 5));
+	inventory.push_back(InventorySlot("Espada", 63, 1));
+	inventory.push_back(InventorySlot("Key",61, 1));
 
 }
 
