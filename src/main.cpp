@@ -561,11 +561,12 @@ void dibuixa_Escena() {
 
 struct InventorySlot {
 	std::string itemName;
-	std::string imagePath;
+	//std::string imagePath;
+	int imageID;
 	int quantity;
 
-	InventorySlot(const std::string& name, const std::string& path, int qty) 
-		: itemName(name), imagePath(path), quantity(qty) {}
+	InventorySlot(const std::string& name, const int image, int qty) 
+		: itemName(name), imageID(image), quantity(qty) {}
 };
 
 void RenderUI(std::vector<InventorySlot>& inventory) {
@@ -589,8 +590,7 @@ void RenderUI(std::vector<InventorySlot>& inventory) {
 		ImGui::BeginGroup();
 
 		// Muestra la imagen del ítem en el slot
-		//ImGui::GetWindowDrawList()->AddImage((void*)(intptr_t)texturesID[1], ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
-		ImGui::Image((void*)(intptr_t)loadIMA_SOIL(slot.imagePath.c_str()), ImVec2(100, 84));
+		ImGui::Image((void*)(intptr_t)texturesID[slot.imageID], ImVec2(100, 84));
 
 		// Muestra el nombre y la cantidad del ítem
 		/*
@@ -622,10 +622,10 @@ void RenderUI(std::vector<InventorySlot>& inventory) {
 void draw_Menu_ABP()
 {
 	std::vector<InventorySlot> inventory = {
-	   {"Key",".\\textures\\inventoryItems\\key.png", 1},
-	   {"Poción de salud",".\\textures\\inventoryItems\\potion.png", 5},
-	   {"Espada",".\\textures\\inventoryItems\\sword.png", 1},
-	   { "Key",".\\textures\\inventoryItems\\key.png", 1 }
+	   {"Key",61, 1},
+	   {"Poción de salud",62, 5},
+	   {"Espada",63, 1},
+	   { "Key",61, 1 }
 	};
 
 
@@ -2044,6 +2044,12 @@ void LoadTexturesABP()
   
   // for models
 	texturesID[20] = loadIMA_SOIL(".\\textures\\furniturebits_texture.png");
+
+	// inventario
+	texturesID[61] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
+	texturesID[62] = loadIMA_SOIL(".\\textures\\inventoryItems\\potion.png");
+	texturesID[63] = loadIMA_SOIL(".\\textures\\inventoryItems\\sword.png");
+	texturesID[64] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
 }
 
 void LoadModelsABP()
