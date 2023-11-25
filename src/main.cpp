@@ -601,48 +601,61 @@ void draw_Menu_ABP()
 		ImGui::PopFont();
 
 		if (ImGui::Button("Start scape room")) {
+			gameState.firstMouseMovement = true;
 			gameScene = 2;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Debug scene for testing")) {
+			gameState.firstMouseMovement = false;
 			gameScene = 10;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Debug scene for textures")) {
+			gameState.firstMouseMovement = true;
 			gameScene = 11;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Puzle 1")) {
+			gameState.firstMouseMovement = false;
+
 			gameScene = SCENE_PUZLE1;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Puzle 2")) {
+			gameState.firstMouseMovement = false;
+
 			gameScene = SCENE_PUZLE2;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Puzle 3")) {
+			gameState.firstMouseMovement = false;
+
 			gameScene = SCENE_PUZLE3;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Puzle 4")) {
+			gameState.firstMouseMovement = false;
+
 			gameScene = SCENE_PUZLE4;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Puzle 5")) {
+			gameState.firstMouseMovement = false;
+
 			gameScene = SCENE_PUZLE5;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);

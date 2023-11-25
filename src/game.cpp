@@ -290,31 +290,34 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	}
 
 	// GIRO CAMARA PRIMERA PERSONA CON MOUSE
+	if (firstMouseMovement)
+	{
+		GLdouble vdir[3] = { 0, 0, 0 };
+		double modul = 0;
 
-	GLdouble vdir[3] = { 0, 0, 0 };
-	double modul = 0;
-
-	// Entorn VGI: Controls de moviment de navegació
-	vdir[0] = n[0] - opvN->x;
-	vdir[1] = n[1] - opvN->y;
-	vdir[2] = n[2] - opvN->z;
-	modul = sqrt(vdir[0] * vdir[0] + vdir[1] * vdir[1] + vdir[2] * vdir[2]);
-	vdir[0] = vdir[0] / modul;
-	vdir[1] = vdir[1] / modul;
-	vdir[2] = vdir[2] / modul;
+		// Entorn VGI: Controls de moviment de navegació
+		vdir[0] = n[0] - opvN->x;
+		vdir[1] = n[1] - opvN->y;
+		vdir[2] = n[2] - opvN->z;
+		modul = sqrt(vdir[0] * vdir[0] + vdir[1] * vdir[1] + vdir[2] * vdir[2]);
+		vdir[0] = vdir[0] / modul;
+		vdir[1] = vdir[1] / modul;
+		vdir[2] = vdir[2] / modul;
 
 
-	//angleZ += fact_pan;
-	(*angleZ) = xoffset * 0.05;
-	printf("%f\n", *angleZ);
+		//angleZ += fact_pan;
+		(*angleZ) = xoffset * 0.05;
+		printf("%f\n", *angleZ);
 
-	//(*angleZ) = (*angleZ) % 360;
-	n[0] = vdir[0]; // n[0] - opvN.x;
-	n[1] = vdir[1]; // n[1] - opvN.y;
-	n[0] = n[0] * cos((*angleZ) * PI / 180) - n[1] * sin((*angleZ) * PI / 180);
-	n[1] = n[0] * sin((*angleZ) * PI / 180) + n[1] * cos((*angleZ) * PI / 180);
-	n[0] = n[0] + opvN->x;
-	n[1] = n[1] + opvN->y;
+		//(*angleZ) = (*angleZ) % 360;
+		n[0] = vdir[0]; // n[0] - opvN.x;
+		n[1] = vdir[1]; // n[1] - opvN.y;
+		n[0] = n[0] * cos((*angleZ) * PI / 180) - n[1] * sin((*angleZ) * PI / 180);
+		n[1] = n[0] * sin((*angleZ) * PI / 180) + n[1] * cos((*angleZ) * PI / 180);
+		n[0] = n[0] + opvN->x;
+		n[1] = n[1] + opvN->y;
+	}
+	
 }
 
 	
