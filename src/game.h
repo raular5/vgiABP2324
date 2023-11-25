@@ -95,7 +95,7 @@ public:
 	// Puzle 3: Cadenat amb simbols
 	int puz3_n_Symbols = 4;
 	int puz3_currentCombination[4] = { 0, 0, 0, 0 };
-	int puz3_correctCombination[4] = { 1, 1, 1, 2 };
+	int puz3_correctCombination[4] = { 1, 9, 6, 2 };
 	bool puz3_match = false;
 	bool checkMatch(int* currentCombination, int* correctCombination, int n_Symbols);
 
