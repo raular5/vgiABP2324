@@ -531,6 +531,29 @@ void escenaPuzle1(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
 	modelos[11].draw_TriVAO_OBJ(sh_programID);
 
+	// PARET
+	SetTextureParameters(texturID[50], true, true , textur_map, true);
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
+	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	for (int i = 0; i < 25; i++)
+	{
+		for (int j = 0; j < 25; j++)
+		{
+			
+			ModelMatrix = glm::translate(MatriuTG, vec3(-10.0f, -25.0f + j*2, -25.0f + i*2));
+			ModelMatrix = glm::scale(ModelMatrix, vec3(0.1f, 2.0f, 2.0f));
+			// Pas ModelView Matrix a shader
+			glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+			// Pas NormalMatrix a shader
+			NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+			glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+			draw_TriEBO_Object(GLUT_CUBE);
+		}
+	}
+	
+
 
 }
 
@@ -674,6 +697,28 @@ void escenaPuzle3(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
 	modelos[11].draw_TriVAO_OBJ(sh_programID);
+
+	// PARET
+	SetTextureParameters(texturID[50], true, true, textur_map, true);
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
+	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	for (int i = 0; i < 25; i++)
+	{
+		for (int j = 0; j < 25; j++)
+		{
+
+			ModelMatrix = glm::translate(MatriuTG, vec3(-10.0f, -25.0f + j * 2, -25.0f + i * 2));
+			ModelMatrix = glm::scale(ModelMatrix, vec3(0.1f, 2.0f, 2.0f));
+			// Pas ModelView Matrix a shader
+			glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+			// Pas NormalMatrix a shader
+			NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+			glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+			draw_TriEBO_Object(GLUT_CUBE);
+		}
+	}
 
 }
 
