@@ -22,6 +22,10 @@
 #define SCENE_DEBUG_TEX			11
 #define SCENE_PUZLE1			12
 #define SCENE_BACKGROUND		13
+#define SCENE_PUZLE2			14
+#define SCENE_PUZLE3			15
+#define SCENE_PUZLE4			16
+#define SCENE_PUZLE5			17
 
 /* ------------------------------------------------------------------------- */
 /*					          FUNCTIONS										 */
@@ -61,6 +65,7 @@ public:
 	bool isMouseDown = false;
 	bool firstMouseMovement = true;
 	double previousMouse_xpos, previousMouse_ypos;
+	double clickPosWorld_x, clickPosWorld_y, clickPosWorld_z;
 
 	irrklang::ISoundEngine* audioEngine = nullptr;
 
@@ -80,7 +85,23 @@ public:
 	int puz1_n_Symbols = 4;
 	int puz1_currentCombination[4] = { 0, 0, 0, 0 };
 	int puz1_correctCombination[4] = { 1, 1, 1, 2 };
+	bool puz1_match = false;
+	bool puz1_checkMatch(); // se podria usar tambien para el candado numerico
 
+	// Puzle 2: joya en estatua
+	bool puz2_hasPickedGem = false;
+	bool puz2_complete = false;
+
+	// Puzle 3: Cadenat amb simbols
+	int puz3_n_Symbols = 4;
+	int puz3_currentCombination[4] = { 0, 0, 0, 0 };
+	int puz3_correctCombination[4] = { 1, 9, 6, 2 };
+	bool puz3_match = false;
+	bool checkMatch(int* currentCombination, int* correctCombination, int n_Symbols);
+
+	// Puzle 4: Quadre
+	bool puz4_hasMovedFrame = false;
+	bool puz4_hasPickedKey = false;
 // FUNCIONES
 
 	void ChangeDebugCubePos(vec3 pos);
