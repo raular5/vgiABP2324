@@ -239,9 +239,9 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 		}
 		break;
 	case SCENE_PUZLE4:
-		if (puz4_hasMovedFrame && worldPos.y > 0 && worldPos.y < 1.25 && worldPos.z < -0.5 && worldPos.z > -1.5) // Click on frame
+		if (puz4_hasMovedFrame && worldPos.y > 0 && worldPos.y < 1.25 && worldPos.z < -1.5 && worldPos.z > -2.5) // Click on key
 			puz4_hasPickedKey = true;
-		if (worldPos.y > -0.75 && worldPos.y < 0.75 && worldPos.z < 1.5 && worldPos.z > -1.5) // Click on frame
+		else if (worldPos.y > -2.5 && worldPos.y < 2.5 && worldPos.z < 2.5 && worldPos.z > -2.5) // Click on frame
 			puz4_hasMovedFrame = !puz4_hasMovedFrame;
 	}
 

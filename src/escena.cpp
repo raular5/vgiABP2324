@@ -712,13 +712,13 @@ void escenaPuzle4(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	
 
 	// Key
-	if (!gameState.puz4_hasPickedKey)
+	if (gameState.puz4_hasMovedFrame && !gameState.puz4_hasPickedKey)
 	{
 		glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_FALSE); //glEnable(GL_TEXTURE_2D);
 		glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_FALSE); //glEnable(GL_MODULATE);
 		glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
 		SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
-		ModelMatrix = glm::translate(MatriuTG, vec3(0.0f, 0.5f, -1.0f));
+		ModelMatrix = glm::translate(MatriuTG, vec3(0.0f, 0.5f, -2.0f));
 		ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(1.0f, 0.0f, 0.0f));
 		ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(0.0f, 1.0f, 0.0f));
 		ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(0.0f, 0.0f, 1.0f));
