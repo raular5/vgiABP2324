@@ -1,0 +1,12 @@
+# Blender 4.0.1 MTL File: 'ps1_antique_radio.blend'
+# www.blender.org
+
+newmtl Material
+Ns 334.015991
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:/radio_uv_small.png

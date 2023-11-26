@@ -48,7 +48,7 @@ void InitGL()
 	OPV_G.R = 15.0;		OPV_G.alfa = 0.0;	OPV_G.beta = 0.0;	// Origen PV en esfèriques per a Vista_Geode
 
 // Entorn VGI: Variables de control per Menú Vista: Pantalla Completa, Pan, dibuixar eixos i grids 
-	fullscreen = true;
+	fullscreen = false;
 	pan = false;
 	eixos = true;	eixos_programID = 0;  eixos_Id = 0;
 	sw_grid = false;
@@ -693,6 +693,67 @@ void draw_Menu_ABP()
 
 		ImGui::PushFont(fontMenu);
 
+		if (ImGui::Button("Start scape room")) {
+			gameState.firstMouseMovement = true;
+			gameScene = 2;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Debug scene for testing")) {
+			gameState.firstMouseMovement = false;
+			gameScene = 10;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Debug scene for textures")) {
+			gameState.firstMouseMovement = true;
+			gameScene = 11;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Puzle 1")) {
+			gameState.firstMouseMovement = false;
+
+			gameScene = SCENE_PUZLE1;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Puzle 2")) {
+			gameState.firstMouseMovement = false;
+
+			gameScene = SCENE_PUZLE2;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Puzle 3")) {
+			gameState.firstMouseMovement = false;
+
+			gameScene = SCENE_PUZLE3;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Puzle 4")) {
+			gameState.firstMouseMovement = false;
+
+			gameScene = SCENE_PUZLE4;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Puzle 5")) {
+			gameState.firstMouseMovement = false;
+
+			gameScene = SCENE_PUZLE5;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
 		if (ImGui::Button("Start scape room")) {
 			gameScene = 2;
@@ -778,7 +839,89 @@ void draw_Menu_ABP()
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
 		ImGui::Begin("Game timer", nullptr, flags);
 
-		ImGui::Text("Puzzle 1");
+		ImGui::Text("Puzzle 1 - CADENAT AMB SIMBOLS");
+		ImGui::Text("Current combination: %d%d%d%d", gameState.puz1_currentCombination[0], gameState.puz1_currentCombination[1], gameState.puz1_currentCombination[2], gameState.puz1_currentCombination[3]);
+		ImGui::Text("Correct combination: %d%d%d%d", gameState.puz1_correctCombination[0], gameState.puz1_correctCombination[1], gameState.puz1_correctCombination[2], gameState.puz1_correctCombination[3]);
+
+		if (gameState.puz1_match)
+			ImGui::Text("MATCHING COMBINATION");
+
+
+		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
+		//elapsedM = (elapsedTimer / 60) % 60;
+		//elapsedS = elapsedTimer % 60;
+		//ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
+		//if (elapsedM == 0 && elapsedS == 0) {
+		//	gameScene = 3;
+		//}
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
+	case SCENE_PUZLE2:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Game timer", nullptr, flags);
+
+		ImGui::Text("Puzzle 2 - JOYA EN ESTATUA");
+		ImGui::Text("Last click in world coords (x, y, z): %f, %f, %f", gameState.clickPosWorld_x, gameState.clickPosWorld_y, gameState.clickPosWorld_z);
+		if (gameState.puz2_hasPickedGem)
+			ImGui::Text("Gem placed. Puzzle complete.");
+		else if (gameState.puz2_hasPickedGem)
+			ImGui::Text("Gem picked. You can place it in the statue.");
+
+		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
+		//elapsedM = (elapsedTimer / 60) % 60;
+		//elapsedS = elapsedTimer % 60;
+		//ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
+		//if (elapsedM == 0 && elapsedS == 0) {
+		//	gameScene = 3;
+		//}
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
+	case SCENE_PUZLE3:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Game timer", nullptr, flags);
+
+		ImGui::Text("Puzzle 3 - COMBINACIO NUMERICA");
+		ImGui::Text("Current combination: %d%d%d%d", gameState.puz3_currentCombination[0], gameState.puz3_currentCombination[1], gameState.puz3_currentCombination[2], gameState.puz3_currentCombination[3]);
+		ImGui::Text("Correct combination: %d%d%d%d", gameState.puz3_correctCombination[0], gameState.puz3_correctCombination[1], gameState.puz3_correctCombination[2], gameState.puz3_correctCombination[3]);
+
+		if (gameState.puz3_match)
+			ImGui::Text("MATCHING COMBINATION");
+
+
+		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
+		//elapsedM = (elapsedTimer / 60) % 60;
+		//elapsedS = elapsedTimer % 60;
+		//ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
+		//if (elapsedM == 0 && elapsedS == 0) {
+		//	gameScene = 3;
+		//}
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
+	case SCENE_PUZLE4:
+	case SCENE_PUZLE5:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Game timer", nullptr, flags);
+
+		ImGui::Text("Puzzle 4: Clau amagada");
+		
 		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
 		//elapsedM = (elapsedTimer / 60) % 60;
 		//elapsedS = elapsedTimer % 60;
@@ -2050,7 +2193,30 @@ void LoadTexturesABP()
   // for models
 	texturesID[20] = loadIMA_SOIL(".\\textures\\furniturebits_texture.png");
 
-	// inventario
+
+	// Textures cadenat numeros
+	texturesID[30] = loadIMA_SOIL(".\\textures\\cadenat\\0.bmp");
+	texturesID[31] = loadIMA_SOIL(".\\textures\\cadenat\\1.bmp");
+	texturesID[32] = loadIMA_SOIL(".\\textures\\cadenat\\2.bmp");
+	texturesID[33] = loadIMA_SOIL(".\\textures\\cadenat\\3.bmp");
+	texturesID[34] = loadIMA_SOIL(".\\textures\\cadenat\\4.bmp");
+	texturesID[35] = loadIMA_SOIL(".\\textures\\cadenat\\5.bmp");
+	texturesID[36] = loadIMA_SOIL(".\\textures\\cadenat\\6.bmp");
+	texturesID[37] = loadIMA_SOIL(".\\textures\\cadenat\\7.bmp");
+	texturesID[38] = loadIMA_SOIL(".\\textures\\cadenat\\8.bmp");
+	texturesID[39] = loadIMA_SOIL(".\\textures\\cadenat\\9.bmp");
+
+	// Puzzle 4
+	//texturesID[40] = loadIMA_SOIL(".\\textures\\cadenat\\9.bmp");
+  
+  
+	//Textures habitació
+	texturesID[49] = loadIMA_SOIL(".\\textures\\brick1.jpg");			// Paredes
+	texturesID[50] = loadIMA_SOIL(".\\textures\\brick2.bmp");			// Paredes
+	texturesID[51] = loadIMA_SOIL(".\\textures\\habitacio\\techo.jpg"); // Techo
+	texturesID[52] = loadIMA_SOIL(".\\textures\\habitacio\\suelo.jpg"); // Suelo
+  
+  // inventario
 	texturesID[61] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
 	texturesID[62] = loadIMA_SOIL(".\\textures\\inventoryItems\\potion.png");
 	texturesID[63] = loadIMA_SOIL(".\\textures\\inventoryItems\\sword.png");
@@ -2059,7 +2225,11 @@ void LoadTexturesABP()
 	//menu
 	texturesID[80] = loadIMA_SOIL(".\\textures\\menu\\start-scene.png");
 	texturesID[81] = loadIMA_SOIL(".\\textures\\menu\\main-menu.png");
+
 }
+
+
+
 
 void LoadModelsABP()
 {
@@ -2075,6 +2245,40 @@ void LoadModelsABP()
 	modelos[8].LoadModel((char*)".\\models\\shelf_A_big.obj");
 	modelos[9].LoadModel((char*)".\\models\\table_medium_long.obj");
 	modelos[10].LoadModel((char*)".\\models\\gema.obj");
+	modelos[11].LoadModel((char*)".\\models\\lock.obj");
+	modelos[12].LoadModel((char*)".\\models\\cuadro.obj");
+	modelos[13].LoadModel((char*)".\\models\\Death_lowpoly_final.obj");
+	modelos[14].LoadModel((char*)".\\models\\ps1_antique_radio.obj");
+
+	// PSX Gothic Furniture Pack
+	modelos[MODEL_GOTHIC_BED].LoadModel((char*)".\\models\\bed.obj");
+	modelos[MODEL_GOTHIC_BENCH1].LoadModel((char*)".\\models\\bench1.obj");
+	modelos[MODEL_GOTHIC_BENCH2].LoadModel((char*)".\\models\\bench2.obj");
+	modelos[MODEL_GOTHIC_CANDLESTICK].LoadModel((char*)".\\models\\candlestick.obj");
+	modelos[MODEL_GOTHIC_CHAIR].LoadModel((char*)".\\models\\chair.obj");
+	modelos[MODEL_GOTHIC_DESK].LoadModel((char*)".\\models\\desk.obj");
+	modelos[MODEL_GOTHIC_DINNERTABLE].LoadModel((char*)".\\models\\dinnertable.obj");
+	modelos[MODEL_GOTHIC_DRESSER].LoadModel((char*)".\\models\\dresser.obj");
+
+	// SPOOKY HOUSE PIECES
+	modelos[MODEL_SPOOKY_CABINET].LoadModel((char*)".\\models\\cabinet.obj");
+	modelos[MODEL_SPOOKY_CROSS].LoadModel((char*)".\\models\\cross.obj");
+	modelos[MODEL_SPOOKY_SIDETABLE].LoadModel((char*)".\\models\\sidetable.obj");
+	modelos[MODEL_SPOOKY_PORTRAIT].LoadModel((char*)".\\models\\portrait.obj");
+	modelos[MODEL_SPOOKY_RUG].LoadModel((char*)".\\models\\rug.obj");
+	modelos[MODEL_SPOOKY_PIANO].LoadModel((char*)".\\models\\piano.obj");
+	modelos[MODEL_SPOOKY_PIANO_STOOL].LoadModel((char*)".\\models\\pianostool.obj");
+	modelos[MODEL_SPOOKY_OPEN_BOOK].LoadModel((char*)".\\models\\openbook.obj");
+	modelos[MODEL_SPOOKY_MUSIC_SHEET].LoadModel((char*)".\\models\\musicsheet.obj");
+	modelos[MODEL_SPOOKY_LARGETABLE].LoadModel((char*)".\\models\\largetable.obj");
+	modelos[MODEL_SPOOKY_OILYLAMP].LoadModel((char*)".\\models\\oilylamp.obj");
+	modelos[MODEL_SPOOKY_DINNER_CHAIR].LoadModel((char*)".\\models\\dinnerchair.obj");
+	modelos[MODEL_SPOOKY_CHAIR].LoadModel((char*)".\\models\\chair.obj");
+	modelos[MODEL_SPOOKY_CANDLE].LoadModel((char*)".\\models\\candle.obj");
+	modelos[MODEL_SPOOKY_BOOK1].LoadModel((char*)".\\models\\book1.obj");
+	modelos[MODEL_SPOOKY_BOOK2].LoadModel((char*)".\\models\\book2.obj");
+
+
 	printf("Finished loading models.\n");
 	
 }
