@@ -27,6 +27,43 @@
 #define SCENE_PUZLE4			16
 #define SCENE_PUZLE5			17
 
+// Textures
+#define TEXTURE_CADENAT_SYMBOLS 7
+#define TEXTURE_CADENAT_NUMBERS 30
+#define TEXTURE_PARED 50
+#define TEXTURE_TECHO 51
+#define TEXTURE_SUELO 52
+
+// Models
+#define MODEL_GEMA 10
+#define MODEL_LOCK 11
+#define MODEL_CUADRO 12
+#define MODEL_GOTHIC_BED 15
+#define MODEL_GOTHIC_BENCH1 16
+#define MODEL_GOTHIC_BENCH2 17
+#define MODEL_GOTHIC_CANDLESTICK 18
+#define MODEL_GOTHIC_CHAIR 19
+#define MODEL_GOTHIC_DESK 20
+#define MODEL_GOTHIC_DINNERTABLE 21
+#define MODEL_GOTHIC_DRESSER 22
+
+#define MODEL_SPOOKY_CABINET 23
+#define MODEL_SPOOKY_CROSS 24
+#define MODEL_SPOOKY_SIDETABLE 25
+#define MODEL_SPOOKY_PORTRAIT 26
+#define MODEL_SPOOKY_RUG 27
+#define MODEL_SPOOKY_PIANO 28
+#define MODEL_SPOOKY_PIANO_STOOL 29
+#define MODEL_SPOOKY_OPEN_BOOK 30
+#define MODEL_SPOOKY_MUSIC_SHEET 31
+#define MODEL_SPOOKY_LARGETABLE 32
+#define MODEL_SPOOKY_OILYLAMP 33
+#define MODEL_SPOOKY_DINNER_CHAIR 34
+#define MODEL_SPOOKY_CHAIR 35
+#define MODEL_SPOOKY_CANDLE 36
+#define MODEL_SPOOKY_BOOK1 37
+#define MODEL_SPOOKY_BOOK2 38
+
 /* ------------------------------------------------------------------------- */
 /*					          FUNCTIONS										 */
 /* ------------------------------------------------------------------------- */

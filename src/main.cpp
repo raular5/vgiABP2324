@@ -819,7 +819,7 @@ void draw_Menu_ABP()
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
 		ImGui::Begin("Game timer", nullptr, flags);
 
-		ImGui::Text("Puzzle no implementat");
+		ImGui::Text("Puzzle 4: Clau amagada");
 		
 		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
 		//elapsedM = (elapsedTimer / 60) % 60;
@@ -2105,15 +2105,19 @@ void LoadTexturesABP()
 	texturesID[39] = loadIMA_SOIL(".\\textures\\cadenat\\9.bmp");
 
 	// Puzzle 4
-	texturesID[40] = loadIMA_SOIL(".\\textures\\cadenat\\9.bmp");
+	//texturesID[40] = loadIMA_SOIL(".\\textures\\cadenat\\9.bmp");
   
   
 	//Textures habitació
-	texturesID[50] = loadIMA_SOIL(".\\textures\\habitacio\\pared.jpg"); // Paredes
+	texturesID[49] = loadIMA_SOIL(".\\textures\\brick1.jpg");			// Paredes
+	texturesID[50] = loadIMA_SOIL(".\\textures\\brick2.bmp");			// Paredes
 	texturesID[51] = loadIMA_SOIL(".\\textures\\habitacio\\techo.jpg"); // Techo
 	texturesID[52] = loadIMA_SOIL(".\\textures\\habitacio\\suelo.jpg"); // Suelo
 
 }
+
+
+
 
 void LoadModelsABP()
 {
@@ -2133,6 +2137,35 @@ void LoadModelsABP()
 	modelos[12].LoadModel((char*)".\\models\\cuadro.obj");
 	modelos[13].LoadModel((char*)".\\models\\Death_lowpoly_final.obj");
 	modelos[14].LoadModel((char*)".\\models\\ps1_antique_radio.obj");
+
+	// PSX Gothic Furniture Pack
+	modelos[MODEL_GOTHIC_BED].LoadModel((char*)".\\models\\bed.obj");
+	modelos[MODEL_GOTHIC_BENCH1].LoadModel((char*)".\\models\\bench1.obj");
+	modelos[MODEL_GOTHIC_BENCH2].LoadModel((char*)".\\models\\bench2.obj");
+	modelos[MODEL_GOTHIC_CANDLESTICK].LoadModel((char*)".\\models\\candlestick.obj");
+	modelos[MODEL_GOTHIC_CHAIR].LoadModel((char*)".\\models\\chair.obj");
+	modelos[MODEL_GOTHIC_DESK].LoadModel((char*)".\\models\\desk.obj");
+	modelos[MODEL_GOTHIC_DINNERTABLE].LoadModel((char*)".\\models\\dinnertable.obj");
+	modelos[MODEL_GOTHIC_DRESSER].LoadModel((char*)".\\models\\dresser.obj");
+
+	// SPOOKY HOUSE PIECES
+	modelos[MODEL_SPOOKY_CABINET].LoadModel((char*)".\\models\\cabinet.obj");
+	modelos[MODEL_SPOOKY_CROSS].LoadModel((char*)".\\models\\cross.obj");
+	modelos[MODEL_SPOOKY_SIDETABLE].LoadModel((char*)".\\models\\sidetable.obj");
+	modelos[MODEL_SPOOKY_PORTRAIT].LoadModel((char*)".\\models\\portrait.obj");
+	modelos[MODEL_SPOOKY_RUG].LoadModel((char*)".\\models\\rug.obj");
+	modelos[MODEL_SPOOKY_PIANO].LoadModel((char*)".\\models\\piano.obj");
+	modelos[MODEL_SPOOKY_PIANO_STOOL].LoadModel((char*)".\\models\\pianostool.obj");
+	modelos[MODEL_SPOOKY_OPEN_BOOK].LoadModel((char*)".\\models\\openbook.obj");
+	modelos[MODEL_SPOOKY_MUSIC_SHEET].LoadModel((char*)".\\models\\musicsheet.obj");
+	modelos[MODEL_SPOOKY_LARGETABLE].LoadModel((char*)".\\models\\largetable.obj");
+	modelos[MODEL_SPOOKY_OILYLAMP].LoadModel((char*)".\\models\\oilylamp.obj");
+	modelos[MODEL_SPOOKY_DINNER_CHAIR].LoadModel((char*)".\\models\\dinnerchair.obj");
+	modelos[MODEL_SPOOKY_CHAIR].LoadModel((char*)".\\models\\chair.obj");
+	modelos[MODEL_SPOOKY_CANDLE].LoadModel((char*)".\\models\\candle.obj");
+	modelos[MODEL_SPOOKY_BOOK1].LoadModel((char*)".\\models\\book1.obj");
+	modelos[MODEL_SPOOKY_BOOK2].LoadModel((char*)".\\models\\book2.obj");
+
 
 	printf("Finished loading models.\n");
 	
