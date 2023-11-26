@@ -266,6 +266,26 @@ void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Mat
 
 	dibuixaHabitacio(sh_programID, MatriuVista, MatriuTG, sw_mat, texturID, textur_map, 150.0f, 150.0f, 12.0f);
 
+
+
+	// DRESSER
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_FALSE);	// La textura esta en espejo
+	ModelMatrix = glm::translate(MatriuTG, vec3(-70.0f, 0.0f, -6.0f));
+	ModelMatrix = glm::scale(ModelMatrix, vec3(2.0f, 2.0f, 2.0f));
+	ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(1.0f, 0.0f, 0.0f));
+	ModelMatrix = glm::rotate(ModelMatrix, radians(180.0f), vec3(0.0f, 1.0f, 0.0f));
+	ModelMatrix = glm::rotate(ModelMatrix, radians(90.0f), vec3(0.0f, 0.0f, 1.0f));
+	// Pas ModelView Matrix a shader
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+	// Pas NormalMatrix a shader
+	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+	modelos[MODEL_GOTHIC_DRESSER].draw_TriVAO_OBJ(sh_programID);
+
+
+
 // Item inspect
 	if (gameState.showItemInspector)
 	{

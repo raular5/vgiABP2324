@@ -27,6 +27,16 @@
 #define SCENE_PUZLE4			16
 #define SCENE_PUZLE5			17
 
+// Models
+#define MODEL_GOTHIC_BED 15
+#define MODEL_GOTHIC_BENCH1 16
+#define MODEL_GOTHIC_BENCH2 17
+#define MODEL_GOTHIC_CANDLESTICK 18
+#define MODEL_GOTHIC_CHAIR 19
+#define MODEL_GOTHIC_DESK 20
+#define MODEL_GOTHIC_DINNERTABLE 21
+#define MODEL_GOTHIC_DRESSER 22
+
 /* ------------------------------------------------------------------------- */
 /*					          FUNCTIONS										 */
 /* ------------------------------------------------------------------------- */

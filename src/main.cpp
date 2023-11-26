@@ -2115,6 +2115,9 @@ void LoadTexturesABP()
 
 }
 
+
+
+
 void LoadModelsABP()
 {
 	printf("Loading OBJ models...\n");
@@ -2133,6 +2136,16 @@ void LoadModelsABP()
 	modelos[12].LoadModel((char*)".\\models\\cuadro.obj");
 	modelos[13].LoadModel((char*)".\\models\\Death_lowpoly_final.obj");
 	modelos[14].LoadModel((char*)".\\models\\ps1_antique_radio.obj");
+
+	// PSX Gothic Furniture Pack
+	modelos[MODEL_GOTHIC_BED].LoadModel((char*)".\\models\\bed.obj");
+	modelos[MODEL_GOTHIC_BENCH1].LoadModel((char*)".\\models\\bench1.obj");
+	modelos[MODEL_GOTHIC_BENCH2].LoadModel((char*)".\\models\\bench2.obj");
+	modelos[MODEL_GOTHIC_CANDLESTICK].LoadModel((char*)".\\models\\candlestick.obj");
+	modelos[MODEL_GOTHIC_CHAIR].LoadModel((char*)".\\models\\chair.obj");
+	modelos[MODEL_GOTHIC_DESK].LoadModel((char*)".\\models\\desk.obj");
+	modelos[MODEL_GOTHIC_DINNERTABLE].LoadModel((char*)".\\models\\dinnertable.obj");
+	modelos[MODEL_GOTHIC_DRESSER].LoadModel((char*)".\\models\\dresser.obj");
 
 	printf("Finished loading models.\n");
 	
