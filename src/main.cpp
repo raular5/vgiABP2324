@@ -12,6 +12,7 @@
 #include "ImGui\imgui_impl_opengl3.h"
 #include "ImGui\nfd.h" // Native File Dialog
 
+
 #include "stdafx.h"
 #include "shader.h"
 #include "visualitzacio.h"
@@ -559,6 +560,58 @@ void dibuixa_Escena() {
 
 }
 
+
+
+void RenderUI() {
+	// Comienzo del frame de ImGui
+
+
+	ImGui::SetNextWindowPos(ImVec2(600, ImGui::GetIO().DisplaySize.y - 100), ImGuiCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(ImGui::GetIO().DisplaySize.x - 1200, 100), ImGuiCond_Always);
+	ImGui::Begin("Inventario", nullptr,
+		ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
+		ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+
+	ImVec2 minBound = ImGui::GetWindowContentRegionMin();
+	ImVec2 maxBound = ImGui::GetWindowContentRegionMax();
+	ImGui::GetWindowDrawList()->AddImage((void*)(intptr_t)texturesID[11], minBound, maxBound);
+	//ImGui::Image((void*)(intptr_t)texturesID[1], minBound, maxBound);
+
+
+	// Muestra los slots del inventario
+	for (auto& slot : gameState.inventory) {
+		ImGui::BeginGroup();
+
+		// Muestra la imagen del ítem en el slot
+		ImGui::Image((void*)(intptr_t)texturesID[slot.imageID], ImVec2(100, 84));
+
+		// Muestra el nombre y la cantidad del ítem
+		/*
+			ImGui::Text("%s", slot.itemName.c_str());
+			ImGui::Text("Cantidad: %d", slot.quantity);
+		*/
+		
+
+		// Verifica si el slot está siendo clickeado
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+			// Reduz la cantidad del ítem al clickear
+			if (slot.quantity > 0) {
+				slot.quantity--;
+			}
+		}
+
+		ImGui::EndGroup();
+		ImGui::SameLine();
+	}
+
+	// Termina el inventario
+	ImGui::End();
+
+	// Fin del frame de ImGui
+
+}
+
+
 void draw_Menu_ABP()
 {
 	bool pulsado = false;
@@ -568,7 +621,40 @@ void draw_Menu_ABP()
 	int elapsedS, elapsedM;
 	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 	ImGuiCond escalado = 0;
+	ImVec2 inventoryPosition(900, 100);
+	ImVec2 imageSize(ImGui::GetIO().DisplaySize.x * 1.04f, ImGui::GetIO().DisplaySize.y * 1.04f);
+	float verticalSpacing = 20.0f;
+
 	switch (gameScene) {
+	case SCENE_START:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		// Pantalla completa
+		ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
+
+		ImGui::Begin("Imagen a Pantalla Completa",
+			nullptr,
+			ImGuiWindowFlags_NoTitleBar |
+			ImGuiWindowFlags_NoResize |
+			ImGuiWindowFlags_NoMove |
+			ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoInputs);
+
+		
+		ImGui::Image((void*)(intptr_t)texturesID[80], imageSize);
+
+		ImGui::End();
+
+		// Cambio de imagen al presionar enter
+		if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+			gameScene = 1;
+		}
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
 	case SCENE_TIMER_GAMEOVER:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -586,19 +672,26 @@ void draw_Menu_ABP()
 		break;
 
 	case SCENE_MAIN:
-		SkyBox = 5;
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(-0.25f, -0.25f));
-		ImGui::SetNextWindowSize(ImVec2(300.0f, 450.0f), escalado);
 
+		ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
+		ImGui::Begin("Background", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoInputs);
+		ImGui::Image((void*)(intptr_t)texturesID[81], imageSize);
+		ImGui::End();
+
+
+		ImGui::SetNextWindowPos(ImVec2(200, 300));
+		ImGui::SetNextWindowSize(ImVec2(700.0f, 450.0f), escalado);
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Menu", nullptr, flags);
 
-		ImGui::Begin("Game start window", nullptr, flags);
-		ImGui::PushFont(font2);
-		ImGui::Text("Hello there adventurer!");
-		ImGui::PopFont();
+		ImGui::GetStyle().Colors[ImGuiCol_WindowBg].w = 0.0f;
+		ImGui::GetStyle().WindowBorderSize = 0.0f;
+
+		ImGui::PushFont(fontMenu);
 
 		if (ImGui::Button("Start scape room")) {
 			gameState.firstMouseMovement = true;
@@ -661,29 +754,34 @@ void draw_Menu_ABP()
 			gameTimer = time(NULL);
 		}
 
-		if (ImGui::Button("Background image loading")) {
-			gameScene = 13;
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+		if (ImGui::Button("Start scape room")) {
+			gameScene = 2;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
-
+		ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
+		
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "Options");
 
 		ImGui::SliderFloat("Volume (Music)", &volumeMusic, 0.0f, 1.0f);
 		ImGui::SliderFloat("Volume (Sound effects)", &volumeSfx, 0.0f, 1.0f);
+		
 		ImGui::Checkbox("Fullscreen", &fullscreen);
 		ImGui::Checkbox("Vsync", &vsync);
-
+		
 		if (ImGui::Button("Apply Settings")) {
 			printf("Apply settings\n");
 			wglSwapIntervalEXT(vsync);
 			OnFull_Screen(primary, window);
 
 		}
-
+		ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
 		if (ImGui::Button("Exit Game")) {
 			glfwSetWindowShouldClose(window, true);
 		}
+		ImGui::PopStyleColor();
+		ImGui::PopFont();
 		ImGui::End();
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -705,6 +803,9 @@ void draw_Menu_ABP()
 		if (elapsedM == 0 && elapsedS == 0) {
 			gameScene = 3;
 		}
+		
+		RenderUI();
+
 		ImGui::End();
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -987,6 +1088,8 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 		else if (camera == CAM_NAVEGA) Teclat_Navega(key, action);
 	}
 }
+
+
 
 void OnKeyUp(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -2091,7 +2194,6 @@ void LoadTexturesABP()
 	texturesID[20] = loadIMA_SOIL(".\\textures\\furniturebits_texture.png");
 
 
-
 	// Textures cadenat numeros
 	texturesID[30] = loadIMA_SOIL(".\\textures\\cadenat\\0.bmp");
 	texturesID[31] = loadIMA_SOIL(".\\textures\\cadenat\\1.bmp");
@@ -2113,6 +2215,16 @@ void LoadTexturesABP()
 	texturesID[50] = loadIMA_SOIL(".\\textures\\brick2.bmp");			// Paredes
 	texturesID[51] = loadIMA_SOIL(".\\textures\\habitacio\\techo.jpg"); // Techo
 	texturesID[52] = loadIMA_SOIL(".\\textures\\habitacio\\suelo.jpg"); // Suelo
+  
+  // inventario
+	texturesID[61] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
+	texturesID[62] = loadIMA_SOIL(".\\textures\\inventoryItems\\potion.png");
+	texturesID[63] = loadIMA_SOIL(".\\textures\\inventoryItems\\sword.png");
+	texturesID[64] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
+
+	//menu
+	texturesID[80] = loadIMA_SOIL(".\\textures\\menu\\start-scene.png");
+	texturesID[81] = loadIMA_SOIL(".\\textures\\menu\\main-menu.png");
 
 }
 
@@ -2291,6 +2403,7 @@ int main(void)
 	//Imgui Fonts
 	font1 = io.Fonts->AddFontDefault();
 	font2 = io.Fonts->AddFontFromFileTTF(".\\fonts\\Creepster-Regular.ttf", 30.0f);
+	fontMenu = io.Fonts->AddFontFromFileTTF(".\\fonts\\Crang.ttf", 30.0f);
 
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
