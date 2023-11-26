@@ -987,6 +987,7 @@ void escenaPuzle5(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 
 void dibuixa_Key(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5])
 {
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_FALSE); //glEnable(GL_TEXTURE_2D);
 	CColor col_object = { 1.0,1.0,0.0,1.0 };
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
 	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
@@ -1138,6 +1139,7 @@ void dibuixa_Note(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 
 void dibuixa_Candle(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5])
 {
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_FALSE); //glEnable(GL_TEXTURE_2D);
 	CColor col_object = { 1.0,1.0,0.0,1.0 };
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
 	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
