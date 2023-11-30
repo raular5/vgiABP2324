@@ -2289,6 +2289,7 @@ void LoadTexturesABP()
 	texturesID[52] = loadIMA_SOIL(".\\textures\\habitacio\\suelo.jpg"); // Suelo
   
   // inventario
+	texturesID[61] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
 	texturesID[62] = loadIMA_SOIL(".\\textures\\inventoryItems\\potion.png");
 	texturesID[63] = loadIMA_SOIL(".\\textures\\inventoryItems\\sword.png");
 	texturesID[64] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
