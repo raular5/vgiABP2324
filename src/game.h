@@ -113,7 +113,7 @@ public:
 	float timeAcumm = 0;	// Useful for animations
 
 	bool isMouseDown = false;
-	bool firstMouseMovement = true;
+	bool enableCameraRotation = true;
 	double previousMouse_xpos, previousMouse_ypos;
 	double clickPosWorld_x, clickPosWorld_y, clickPosWorld_z;
 

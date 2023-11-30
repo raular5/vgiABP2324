@@ -481,12 +481,24 @@ void OnPaint(GLFWwindow* window)
 										}
 				else if (Vis_Polar == POLARX) {	vpv[0] = 1.0;	vpv[1] = 0.0;	vpv[2] = 0.0;
 										}
-				ViewMatrix = Vista_Navega(shader_programID, opvN, //false, 
-					n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
-					front_faces, oculta, test_vis, back_line,
-					ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
-					eixos, grid, hgrid);
+				if (gameState.enableCameraRotation) {
+					ViewMatrix = Vista_Navega(shader_programID, opvN, //false, 
+						n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
+						front_faces, oculta, test_vis, back_line,
+						ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+						eixos, grid, hgrid);
 				}
+				else {
+					CPunt3D opvN_fixed  = { 10.0f, 0.0f, 0.0f };
+					GLdouble n_fixed[3] = { 0.0f, 0.0f, 0.0f };
+					ViewMatrix = Vista_Navega(shader_programID, opvN_fixed, //false, 
+						n_fixed, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
+						front_faces, oculta, test_vis, back_line,
+						ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+						eixos, grid, hgrid);
+				}
+			}
+				
 		else if (camera == CAM_GEODE) {
 				ViewMatrix = Vista_Geode(shader_programID, OPV_G, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
 					front_faces, oculta, test_vis, back_line,
@@ -694,28 +706,28 @@ void draw_Menu_ABP()
 		ImGui::PushFont(fontMenu);
 
 		if (ImGui::Button("Start scape room")) {
-			gameState.firstMouseMovement = true;
+			gameState.enableCameraRotation = true;
 			gameScene = 2;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Debug scene for testing")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = false;
 			gameScene = 10;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Debug scene for textures")) {
-			gameState.firstMouseMovement = true;
+			gameState.enableCameraRotation = true;
 			gameScene = 11;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Puzle 1")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = false;
 
 			gameScene = SCENE_PUZLE1;
 			printf("gameScene= %d \n", gameScene);
@@ -723,7 +735,7 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Puzle 2")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = false;
 
 			gameScene = SCENE_PUZLE2;
 			printf("gameScene= %d \n", gameScene);
@@ -731,7 +743,7 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Puzle 3")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = false;
 
 			gameScene = SCENE_PUZLE3;
 			printf("gameScene= %d \n", gameScene);
@@ -739,7 +751,7 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Puzle 4")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = false;
 
 			gameScene = SCENE_PUZLE4;
 			printf("gameScene= %d \n", gameScene);
@@ -747,7 +759,7 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Puzle 5")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = false;
 
 			gameScene = SCENE_PUZLE5;
 			printf("gameScene= %d \n", gameScene);

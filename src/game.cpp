@@ -294,7 +294,7 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	}
 
 	// GIRO CAMARA PRIMERA PERSONA CON MOUSE
-	if (firstMouseMovement)
+	if (enableCameraRotation)
 	{
 		GLdouble vdir[3] = { 0, 0, 0 };
 		double modul = 0;
