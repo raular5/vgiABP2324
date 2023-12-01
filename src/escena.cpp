@@ -1053,22 +1053,25 @@ void dibuixaHabitacio(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Matr
 
 	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
 
+
+
 	glm::vec3 dimensions[6] = {
-		glm::vec3(width, 0.01f, depth),  // Suelo
-		glm::vec3(width, 0.01f, depth),  // Techo
-		glm::vec3(width, height, 0.01f), // Pared frontal
-		glm::vec3(width, height, 0.01f), // Pared trasera
-		glm::vec3(0.01f, height, depth), // Pared izquierda
-		glm::vec3(0.01f, height, depth)  // Pared derecha
+		glm::vec3(width, 0.1f, depth),  // Pared izq 
+		glm::vec3(width, 0.1f, depth),  // pared derecha
+		glm::vec3(width, height, 0.1f), // techo
+		glm::vec3(width, height, 0.1f), // suelo
+		glm::vec3(0.1f, height, depth), // pared delante
+		glm::vec3(0.1f, height, depth)  // pared detras
 	};
 
+
 	glm::vec3 positions[6] = {
-		glm::vec3(0, -height / 2, 0),      // Suelo
-		glm::vec3(0, height / 2, 0),       // Techo
-		glm::vec3(0, 0, depth / 2),        // Pared frontal
-		glm::vec3(0, 0, -depth / 2),       // Pared trasera
-		glm::vec3(-width / 2, 0, 0),       // Pared izquierda
-		glm::vec3(width / 2, 0, 0)         // Pared derecha
+		glm::vec3(0, -height / 2, 0),      // Pared izq 
+		glm::vec3(0, height / 2, 0),       // pared derecha
+		glm::vec3(0, 0, depth / 2),        // techo
+		glm::vec3(0, 0, -depth / 2),       // suelo
+		glm::vec3(-width / 2, 0, 0),       // pared delante
+		glm::vec3(width / 2, 0, 0)         // pared detras
 	};
 
 	for (int i = 0; i < 6; ++i) 
@@ -1085,14 +1088,17 @@ void dibuixaHabitacio(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Matr
 			currentTextureID = texturID[51];
 		}
 		else { // Paredes
+			
 			currentTextureID = texturID[50];
 		}
 
-		SetTextureParameters(currentTextureID, false, false, textur_map, true);
+		
+		SetTextureParameters(currentTextureID, true, false, textur_map, false);
 
 		glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE);
 		glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE);
 		glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);
+		
 
 		glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
 
