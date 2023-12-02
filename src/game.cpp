@@ -206,26 +206,46 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	// DEBUG RAYCAST
 	glm::vec3 rayDirection = getRayDirection(xpos, ypos, width, height, *m_ViewMatrix, *m_ProjectionMatrix);
 
-	vec3 objects_pos[3] = { vec3(0.0f, -4.0f, 0.0f),
-							vec3(0.0f,  0.0f, 0.0f),
-							vec3(0.0f,  4.0f, 0.0f) };
-
-	float objectRadiuses[3] = { 1.0f, 1.0f, 1.0f };
-
-	for (int i = 0; i < 3; i++)
-	{
-		if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, objects_pos[i], objectRadiuses[i])) {
-			printf("Clicked on object %i \n", i);
-		}
-	}
+	
 	
 
 	switch (*gameScene)
 	{
 	case SCENE_DEBUG_TEST:
-		
-		//ChangeDebugCubePos(worldPos);
+	{
+		ObjectBoundaries boundaries[] = {
+			ObjectBoundaries(vec3(0.0f, -4.0f, 0.0f), 1.0f, (char*)"left"),
+			ObjectBoundaries(vec3(0.0f,  0.0f, 0.0f), 1.0f, (char*)"center"),
+			ObjectBoundaries(vec3(0.0f,  4.0f, 0.0f), 1.0f, (char*)"right"),
+
+		};
+
+		for (const ObjectBoundaries& b : boundaries)
+		{
+			if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, b.position, b.radius)) {
+				printf("Clicked on object %s \n", b.name);
+			}
+		}
+	}
 		break;
+	case SCENE_GAME:
+	{
+		ObjectBoundaries boundaries[] = {
+			ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f), 1.0f, (char*)"1"),
+			ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f), 1.0f, (char*)"1"),
+			ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f), 1.0f, (char*)"1"),
+
+		};
+
+		for (const ObjectBoundaries& b : boundaries)
+		{
+			if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, b.position, b.radius)) {
+				printf("Clicked on object %s \n", b.name);
+			}
+		}
+	}
+	break;
+
 	case SCENE_PUZLE1:
 		if (worldPos.z > -0.5 && worldPos.z < 0.5)
 		{
@@ -341,6 +361,16 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 		n[1] = n[1] + opvN->y;
 	}
 	
+	if (*gameScene == SCENE_PUZLE6) {
+		float normalized_x = (2 * xpos / width)  -1.0f;
+		float normalized_y = 1.0f - (2 * ypos / height);
+		vec2 normalized = glm::normalize(vec2(normalized_x, normalized_y));
+		float rot = acos(normalized.x);
+		if (normalized.y < 0)
+			rot = -rot;
+		printf("Rotation mouse: %f\n", rot);
+		puz6_rotation = rot;
+	}
 }
 
 	

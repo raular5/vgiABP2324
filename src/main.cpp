@@ -768,6 +768,14 @@ void draw_Menu_ABP()
 			gameTimer = time(NULL);
 		}
 
+		if (ImGui::Button("Puzle 6")) {
+			gameState.enableCameraRotation = false;
+
+			gameScene = SCENE_PUZLE6;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
 		if (ImGui::Button("Start scape room")) {
 			gameScene = 2;
@@ -927,6 +935,7 @@ void draw_Menu_ABP()
 		break;
 	case SCENE_PUZLE4:
 	case SCENE_PUZLE5:
+	case SCENE_PUZLE6:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
