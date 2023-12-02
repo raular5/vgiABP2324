@@ -541,21 +541,29 @@ void escenaDebug(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG,
 {
 	CColor col_object = { 0.0,0.0,0.0,1.0 };
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
-	// Cubito
+	// Cubo 1
 	SeleccionaColorMaterial(sh_programID, gameState.cube_color, sw_mat);
-
-
-	ModelMatrix = glm::translate(MatriuTG, gameState.debug_cube_pos);
-	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.x), vec3(1.0f, 0.0f, 0.0f));
-	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.y), vec3(0.0f, 1.0f, 0.0f));
-	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.debug_cube_rotation.z), vec3(0.0f, 0.0f, 1.0f));
-	ModelMatrix = glm::scale(ModelMatrix, gameState.debug_cube_scale);
-	// Pas ModelView Matrix a shader
+	ModelMatrix = glm::translate(MatriuTG, vec3(0,0,0));
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
-	// Pas NormalMatrix a shader
 	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
-	modelos[10].draw_TriVAO_OBJ(sh_programID);
+	draw_TriEBO_Object(GLUT_CUBE);
+
+	// Cubo 2
+	SeleccionaColorMaterial(sh_programID, gameState.cube_color, sw_mat);
+	ModelMatrix = glm::translate(MatriuTG, vec3(0, -4, 0));
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+	draw_TriEBO_Object(GLUT_CUBE);
+
+	// Cubo 1
+	SeleccionaColorMaterial(sh_programID, gameState.cube_color, sw_mat);
+	ModelMatrix = glm::translate(MatriuTG, vec3(0, 4, 0));
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+	draw_TriEBO_Object(GLUT_CUBE);
 
 	// Suelo
 	col_object.r = 0.0f;

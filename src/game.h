@@ -71,6 +71,9 @@
 glm::vec3 screenToNDC(float screenX, float screenY, float screenWidth, float screenHeight);
 glm::vec3 NDCToViewSpace(vec3 ndcCoords, mat4 ProjectionMatrix);
 glm::vec3 ViewSpaceToWorld(vec3 viewSpaceCoords, mat4 ViewMatrix);
+glm::vec3 getRayDirection(float mouseX, float mouseY, int screenWidth, int screenHeight, mat4 viewMatrix, mat4 projectionMatrix);
+bool checkRayIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 objectPosition, float objectRadius);
+
 
 /* ------------------------------------------------------------------------- */
 /*					          CLASE GAMESTATE								 */

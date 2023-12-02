@@ -713,7 +713,7 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Debug scene for testing")) {
-			gameState.enableCameraRotation = false;
+			gameState.enableCameraRotation = true;
 			gameScene = 10;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);

@@ -184,29 +184,48 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	previousMouse_xpos = xpos;
 	previousMouse_ypos = ypos;
 
-	printf("Click pos : %f, %f\n", xpos, ypos);
+	//printf("Click pos : %f, %f\n", xpos, ypos);
 
 	// Convert coords
 	vec3 ndc = screenToNDC(xpos, ypos, width, height);
-	printf("NDC : %f, %f\n", ndc.x, ndc.y);
+	//printf("NDC : %f, %f\n", ndc.x, ndc.y);
 	vec3 viewSpace = NDCToViewSpace(ndc, *m_ProjectionMatrix);
-	printf("View Space : %f, %f\n", viewSpace.x, viewSpace.y);
+	//printf("View Space : %f, %f\n", viewSpace.x, viewSpace.y);
 	vec3 worldPos = ViewSpaceToWorld(viewSpace, *m_ViewMatrix);
 	
 	worldPos.x = 0;
 	worldPos.y *= 500;
 	worldPos.z *= 500;
-	printf("World pos : %f, %f, %f\n", worldPos.x, worldPos.y, worldPos.z);
+	//printf("World pos : %f, %f, %f\n", worldPos.x, worldPos.y, worldPos.z);
 
 	// Debug
 	clickPosWorld_x = worldPos.x;
 	clickPosWorld_y = worldPos.y;
 	clickPosWorld_z = worldPos.z;
 
+	// DEBUG RAYCAST
+	glm::vec3 rayDirection = getRayDirection(xpos, ypos, width, height, *m_ViewMatrix, *m_ProjectionMatrix);
+
+	vec3 objects_pos[3] = { vec3(0.0f, -4.0f, 0.0f),
+							vec3(0.0f,  0.0f, 0.0f),
+							vec3(0.0f,  4.0f, 0.0f) };
+
+	float objectRadiuses[3] = { 1.0f, 1.0f, 1.0f };
+
+	for (int i = 0; i < 3; i++)
+	{
+		if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, objects_pos[i], objectRadiuses[i])) {
+			printf("Clicked on object %i \n", i);
+		}
+	}
+	
+
 	switch (*gameScene)
 	{
 	case SCENE_DEBUG_TEST:
-		ChangeDebugCubePos(worldPos);
+		
+		//ChangeDebugCubePos(worldPos);
+		break;
 	case SCENE_PUZLE1:
 		if (worldPos.z > -0.5 && worldPos.z < 0.5)
 		{
@@ -349,4 +368,47 @@ glm::vec3 ViewSpaceToWorld(vec3 viewSpaceCoords, mat4 ViewMatrix)
 	glm::vec4 worldCoords = inverseViewMatrix * glm::vec4(viewSpaceCoords, 1.0);
 	glm::vec3 worldSpaceCoords = glm::vec3(worldCoords);
 	return worldSpaceCoords;
+}
+
+// Raycast
+glm::vec3 getRayDirection(float mouseX, float mouseY, int screenWidth, int screenHeight, mat4 viewMatrix, mat4 projectionMatrix) {
+	// Convert mouse coordinates to NDC
+	float ndcX = (2.0f * mouseX) / screenWidth - 1.0f;
+	float ndcY = 1.0f - (2.0f * mouseY) / screenHeight;
+
+	// Create ray in clip space
+	glm::vec4 rayClip = glm::vec4(ndcX, ndcY, -1.0f, 1.0f);
+
+	// Inverse projection matrix
+	glm::mat4 inverseProjectionMatrix = glm::inverse(projectionMatrix);
+
+	// Inverse view matrix
+	glm::mat4 inverseViewMatrix = glm::inverse(viewMatrix);
+
+	// Transform ray to world space
+	glm::vec4 rayEye = inverseProjectionMatrix * rayClip;
+	rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0, 0.0);
+
+	glm::vec4 rayWorld = inverseViewMatrix * rayEye;
+	glm::vec3 rayDirection = glm::normalize(glm::vec3(rayWorld));
+
+	return rayDirection;
+}
+
+bool checkRayIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 objectPosition, float objectRadius) {
+	// Perform intersection test based on your object's bounding volume (e.g., sphere)
+
+	// Example: Check intersection with a sphere
+	glm::vec3 toObject = objectPosition - rayOrigin;
+	float distance = glm::dot(toObject, rayDirection);
+
+	if (distance < 0) {
+		// The object is behind the ray
+		return false;
+	}
+
+	glm::vec3 pointOnRay = rayOrigin + distance * rayDirection;
+	float distanceToCenter = glm::distance(pointOnRay, objectPosition);
+
+	return distanceToCenter <= objectRadius;
 }
