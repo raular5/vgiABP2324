@@ -624,6 +624,8 @@ void draw_Menu_ABP()
 	ImVec2 inventoryPosition(900, 100);
 	ImVec2 imageSize(ImGui::GetIO().DisplaySize.x * 1.04f, ImGui::GetIO().DisplaySize.y * 1.04f);
 	float verticalSpacing = 20.0f;
+	bool menuActivate = false;
+	static bool showMenu = false;
 
 	switch (gameScene) {
 	case SCENE_START:
@@ -660,13 +662,33 @@ void draw_Menu_ABP()
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		if (false) flags |= ImGuiWindowFlags_NoBackground;
-		ImGui::Begin("Game over", nullptr, flags);
-		ImGui::PushFont(font2);
-		ImGui::Text("Game Over");
-		ImGui::PopFont();
 
+		ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
+		ImGui::Begin("Game-Over", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoInputs);
+		ImGui::Image((void*)(intptr_t)texturesID[82], imageSize);
 		ImGui::End();
+
+
+		ImGui::SetNextWindowPos(ImVec2((ImGui::GetIO().DisplaySize.x / 2)-100, (ImGui::GetIO().DisplaySize.y / 2) + 100));
+		ImGui::SetNextWindowSize(ImVec2(400.0f, 400.0f), escalado);
+		if (false) flags |= ImGuiWindowFlags_NoBackground;
+		ImGui::Begin("Menu", nullptr, flags);
+
+		ImGui::PushFont(fontMenu);
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f)); // Establecer el color del botón a transparente
+		if (ImGui::Button("Return to Menu")) {
+			gameScene = 1;
+		}
+
+		if (ImGui::Button("Exit Game")) {
+			glfwSetWindowShouldClose(window, true);
+
+		}
+		ImGui::PopFont();
+		ImGui::PopStyleColor(1);
+		ImGui::End();
+
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
@@ -681,7 +703,6 @@ void draw_Menu_ABP()
 		ImGui::Begin("Background", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoInputs);
 		ImGui::Image((void*)(intptr_t)texturesID[81], imageSize);
 		ImGui::End();
-
 
 		ImGui::SetNextWindowPos(ImVec2(200, 300));
 		ImGui::SetNextWindowSize(ImVec2(700.0f, 450.0f), escalado);
@@ -783,6 +804,9 @@ void draw_Menu_ABP()
 		ImGui::PopStyleColor();
 		ImGui::PopFont();
 		ImGui::End();
+
+		
+
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
@@ -796,7 +820,7 @@ void draw_Menu_ABP()
 		ImGui::Begin("Game timer", nullptr, flags);
 
 		ImGui::Text("Time till game over");
-		elapsedTimer = 100000 - (time(NULL) - gameTimer);
+		elapsedTimer = 3 - (time(NULL) - gameTimer);
 		elapsedM = (elapsedTimer / 60) % 60;
 		elapsedS = elapsedTimer % 60;
 		ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
@@ -805,6 +829,43 @@ void draw_Menu_ABP()
 		}
 		
 		RenderUI();
+
+		if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+		
+			showMenu = !showMenu;
+		}
+
+		if (showMenu) {
+			ImGui::SetNextWindowPos(ImVec2(0, 0));
+			ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
+			ImGui::Begin("Background", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoInputs);
+			ImGui::Image((void*)(intptr_t)texturesID[81], imageSize);
+			ImGui::End();
+
+
+			ImGui::SetNextWindowPos(ImVec2(200, 300));
+			ImGui::SetNextWindowSize(ImVec2(700.0f, 450.0f), escalado);
+			if (false) flags |= ImGuiWindowFlags_NoBackground;
+			ImGui::Begin("Menu", nullptr, flags);
+
+			ImGui::GetStyle().Colors[ImGuiCol_WindowBg].w = 0.0f;
+			ImGui::GetStyle().WindowBorderSize = 0.0f;
+
+			ImGui::PushFont(fontMenu);
+
+			if (ImGui::Button("Return to Menu")) {
+				gameScene = 1;
+				showMenu = !showMenu;
+			}
+
+			if (ImGui::Button("Exit Game")) {
+				glfwSetWindowShouldClose(window, true);
+
+			}
+			ImGui::PopFont();
+			ImGui::End();
+			
+		}
 
 		ImGui::End();
 		ImGui::Render();
@@ -1041,6 +1102,7 @@ void Menu_Shaders_Opcio_GravarProgram()
 //    - mods: Variable que identifica si la tecla s'ha pulsat directa (mods=0), juntament amb la tecla Shift (mods=1) o la tecla Ctrl (mods=2).
 void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	ImGuiWindowFlags flags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings;
 	
 // TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
 	const double incr = 0.025f;
@@ -1076,7 +1138,9 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 		gameState.OnKeyDown(window, key, scancode, action, mods);
 
 		// EntornVGI: Si tecla pulsada és ESCAPE, tancar finestres i aplicació.
-		if (mods == 0 && key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(window, GL_TRUE);
+		if (mods == 1 && key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+			gameScene = 1;
+		}
 		else if (mods == 0 && key == GLFW_KEY_PRINT_SCREEN && action == GLFW_PRESS) statusB = !statusB;
 		else if ((mods == GLFW_MOD_SHIFT) && (action == GLFW_PRESS)) Teclat_Shift(key, window);	// Shorcuts Shift Key
 		else if ((mods == GLFW_MOD_CONTROL) && (action == GLFW_PRESS)) Teclat_Ctrl(key);	// Shortcuts Ctrl Key
@@ -2225,7 +2289,7 @@ void LoadTexturesABP()
 	//menu
 	texturesID[80] = loadIMA_SOIL(".\\textures\\menu\\start-scene.png");
 	texturesID[81] = loadIMA_SOIL(".\\textures\\menu\\main-menu.png");
-
+	texturesID[82] = loadIMA_SOIL(".\\textures\\menu\\game-over.png");
 }
 
 
