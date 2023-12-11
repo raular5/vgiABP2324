@@ -15,9 +15,11 @@
 
 #include "stdafx.h"
 #include "shader.h"
+#include <algorithm>
 #include "visualitzacio.h"
 #include "escena.h"
 #include "main.h"
+
 
 void InitGL()
 {
@@ -562,12 +564,13 @@ void dibuixa_Escena() {
 
 
 
+
 void RenderUI() {
 	// Comienzo del frame de ImGui
 
 
 	ImGui::SetNextWindowPos(ImVec2(600, ImGui::GetIO().DisplaySize.y - 100), ImGuiCond_Always);
-	ImGui::SetNextWindowSize(ImVec2(ImGui::GetIO().DisplaySize.x - 1200, 100), ImGuiCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(1200, 100), ImGuiCond_Always);
 	ImGui::Begin("Inventario", nullptr,
 		ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
@@ -627,6 +630,8 @@ void draw_Menu_ABP()
 	bool menuActivate = false;
 	static bool showMenu = false;
 
+	
+
 	switch (gameScene) {
 	case SCENE_START:
 		ImGui_ImplOpenGL3_NewFrame();
@@ -670,11 +675,13 @@ void draw_Menu_ABP()
 		ImGui::End();
 
 
-		ImGui::SetNextWindowPos(ImVec2((ImGui::GetIO().DisplaySize.x / 2)-100, (ImGui::GetIO().DisplaySize.y / 2) + 100));
+		ImGui::SetNextWindowPos(ImVec2((ImGui::GetIO().DisplaySize.x / 2)-150, (ImGui::GetIO().DisplaySize.y / 2) + 100));
 		ImGui::SetNextWindowSize(ImVec2(400.0f, 400.0f), escalado);
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
 		ImGui::Begin("Menu", nullptr, flags);
 
+
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
 		ImGui::PushFont(fontMenu);
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f)); // Establecer el color del botón a transparente
 		if (ImGui::Button("Return to Menu")) {
@@ -686,7 +693,7 @@ void draw_Menu_ABP()
 
 		}
 		ImGui::PopFont();
-		ImGui::PopStyleColor(1);
+		ImGui::PopStyleColor(2);
 		ImGui::End();
 
 		ImGui::Render();
@@ -907,7 +914,6 @@ void draw_Menu_ABP()
 		if (gameState.puz1_match)
 			ImGui::Text("MATCHING COMBINATION");
 
-
 		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
 		//elapsedM = (elapsedTimer / 60) % 60;
 		//elapsedS = elapsedTimer % 60;
@@ -929,10 +935,18 @@ void draw_Menu_ABP()
 
 		ImGui::Text("Puzzle 2 - JOYA EN ESTATUA");
 		ImGui::Text("Last click in world coords (x, y, z): %f, %f, %f", gameState.clickPosWorld_x, gameState.clickPosWorld_y, gameState.clickPosWorld_z);
-		if (gameState.puz2_hasPickedGem)
+		RenderUI();
+		if (gameState.puz2_hasPickedGem) {
+			if (!gameState.IsGemInInventory(gameState)) {
+				gameState.inventory.push_back(InventorySlot("Gem", 61, 1));
+				ImGui::Text("Gem picked. You can place it in the statue.");
+			}
+		}
+		if (gameState.puz2_touchStatue && gameState.IsGemInInventory(gameState)) {
+			gameState.RemoveGemFromInventory(gameState);
+			gameState.puz2_complete = true;
 			ImGui::Text("Gem placed. Puzzle complete.");
-		else if (gameState.puz2_hasPickedGem)
-			ImGui::Text("Gem picked. You can place it in the statue.");
+		}
 
 		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
 		//elapsedM = (elapsedTimer / 60) % 60;
@@ -2281,7 +2295,7 @@ void LoadTexturesABP()
 	texturesID[52] = loadIMA_SOIL(".\\textures\\habitacio\\suelo.jpg"); // Suelo
   
   // inventario
-	texturesID[61] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
+	texturesID[61] = loadIMA_SOIL(".\\textures\\inventoryItems\\gem.png");
 	texturesID[62] = loadIMA_SOIL(".\\textures\\inventoryItems\\potion.png");
 	texturesID[63] = loadIMA_SOIL(".\\textures\\inventoryItems\\sword.png");
 	texturesID[64] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
