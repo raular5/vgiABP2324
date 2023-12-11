@@ -134,7 +134,7 @@ public:
 	double previousMouse_xpos, previousMouse_ypos;
 	double clickPosWorld_x, clickPosWorld_y, clickPosWorld_z;
 
-	irrklang::ISoundEngine* audioEngine = nullptr;
+	irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();;
 
 	// Debug cube
 	CColor cube_color;
