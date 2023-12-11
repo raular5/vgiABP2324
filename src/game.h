@@ -3,6 +3,7 @@
 // Entorn VGI: Llibreries i constants Constants de l'aplicació EntornVGI
 #include "stdafx.h"
 #include <irrKlang.h>
+#include <chrono>
 
 /* ------------------------------------------------------------------------- */
 /*							CONSTANTS										 */
