@@ -2298,7 +2298,9 @@ void LoadModelsABP()
 		std::make_tuple(MODEL_SPOOKY_BOOK2, (char*)".\\models\\book2.obj"),
 
 		// Habitació
-		std::make_tuple(39, (char*)".\\models\\habitacio.obj")
+		std::make_tuple(39, (char*)".\\models\\habitacio.obj"),
+		//std::make_tuple(40, (char*)".\\models\\pared.obj")
+
 	};
 
 	printf("Loading OBJ models...\n");
