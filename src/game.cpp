@@ -195,40 +195,205 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	previousMouse_xpos = xpos;
 	previousMouse_ypos = ypos;
 
-	printf("Click pos : %f, %f\n", xpos, ypos);
+	//printf("Click pos : %f, %f\n", xpos, ypos);
 
 	// Convert coords
 	vec3 ndc = screenToNDC(xpos, ypos, width, height);
-	printf("NDC : %f, %f\n", ndc.x, ndc.y);
+	//printf("NDC : %f, %f\n", ndc.x, ndc.y);
 	vec3 viewSpace = NDCToViewSpace(ndc, *m_ProjectionMatrix);
-	printf("View Space : %f, %f\n", viewSpace.x, viewSpace.y);
+	//printf("View Space : %f, %f\n", viewSpace.x, viewSpace.y);
 	vec3 worldPos = ViewSpaceToWorld(viewSpace, *m_ViewMatrix);
 	
 	worldPos.x = 0;
 	worldPos.y *= 500;
 	worldPos.z *= 500;
-	printf("World pos : %f, %f, %f\n", worldPos.x, worldPos.y, worldPos.z);
+	//printf("World pos : %f, %f, %f\n", worldPos.x, worldPos.y, worldPos.z);
 
 	// Debug
 	clickPosWorld_x = worldPos.x;
 	clickPosWorld_y = worldPos.y;
 	clickPosWorld_z = worldPos.z;
 
+	// DEBUG RAYCAST
+	glm::vec3 rayDirection = getRayDirection(xpos, ypos, width, height, *m_ViewMatrix, *m_ProjectionMatrix);
+
+	
+	
+
 	switch (*gameScene)
 	{
 	case SCENE_DEBUG_TEST:
-		ChangeDebugCubePos(worldPos);
+	{
+		ObjectBoundaries boundaries[] = {
+			ObjectBoundaries(vec3(0.0f, -4.0f, 0.0f), 1.0f, (char*)"left"),
+			ObjectBoundaries(vec3(0.0f,  0.0f, 0.0f), 1.0f, (char*)"center"),
+			ObjectBoundaries(vec3(0.0f,  4.0f, 0.0f), 1.0f, (char*)"right"),
+
+		};
+
+		for (const ObjectBoundaries& b : boundaries)
+		{
+			if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, b.position, b.radius)) {
+				printf("Clicked on object %s \n", b.name);
+			}
+		}
+	}
+		break;
+	case SCENE_GAME:
+	{
+		ObjectBoundaries boundaries[] = {
+			ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f), 1.0f, (char*)"1"),
+			ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f), 1.0f, (char*)"1"),
+			ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f), 1.0f, (char*)"1"),
+
+		};
+
+		for (const ObjectBoundaries& b : boundaries)
+		{
+			if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, b.position, b.radius)) {
+				printf("Clicked on object %s \n", b.name);
+			}
+		}
+	}
+	break;
+
 	case SCENE_PUZLE1:
 		if (worldPos.z > -0.5 && worldPos.z < 0.5)
 		{
-			if (worldPos.y > -2 && worldPos.y < -1)
-				puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % 4;
-			else if (worldPos.y > -1 && worldPos.y < 0)
-				puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % 4;
-			else if (worldPos.y > 0 && worldPos.y < 1)
-				puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % 4;
-			else if (worldPos.y > 1 && worldPos.y < 2)
-				puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % 4;
+			if (worldPos.y > -2 && worldPos.y < -1) {
+				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
+
+				if (!audioEngine) {
+					std::cout << "ERROR" << std::endl;
+				}
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.mp3", false, false, true);
+				if (mySound) {
+					mySound->setIsPaused(false); // Iniciar la reproducción
+
+					// Controlar el tiempo transcurrido
+					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
+
+					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
+					float tiempoDeseado = 2.0f; // tiempo en segundos
+
+					while (true) {
+						// Calcular el tiempo transcurrido
+						auto end = std::chrono::steady_clock::now();
+						auto duracion = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+
+						if (duracion >= tiempoDeseado || mySound->isFinished()) {
+							// Detener la reproducción cuando se alcanza el tiempo deseado o el sonido termina
+							mySound->stop();
+							break;
+						}
+
+						// Hacer algo más si es necesario mientras el sonido se reproduce
+					}
+				}
+
+
+
+				puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % puz1_n_Symbols;
+				audioEngine->drop();
+			}
+			else if (worldPos.y > -1 && worldPos.y < 0) {
+				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
+				if (!audioEngine) {
+					std::cout << "ERROR" << std::endl;
+				}
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.mp3", false, false, true);
+				if (mySound) {
+					mySound->setIsPaused(false); // Iniciar la reproducción
+
+					// Controlar el tiempo transcurrido
+					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
+
+					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
+					float tiempoDeseado = 2.0f; // tiempo en segundos
+
+					while (true) {
+						// Calcular el tiempo transcurrido
+						auto end = std::chrono::steady_clock::now();
+						auto duracion = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+
+						if (duracion >= tiempoDeseado || mySound->isFinished()) {
+							// Detener la reproducción cuando se alcanza el tiempo deseado o el sonido termina
+							mySound->stop();
+							break;
+						}
+
+						// Hacer algo más si es necesario mientras el sonido se reproduce
+					}
+				}
+				puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % puz1_n_Symbols;
+				audioEngine->drop();
+			}
+			else if (worldPos.y > 0 && worldPos.y < 1) {
+				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
+				if (!audioEngine) {
+					std::cout << "ERROR" << std::endl;
+				}
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.mp3", false, false, true);
+				if (mySound) {
+					mySound->setIsPaused(false); // Iniciar la reproducción
+
+					// Controlar el tiempo transcurrido
+					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
+
+					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
+					float tiempoDeseado = 2.0f; // tiempo en segundos
+
+					while (true) {
+						// Calcular el tiempo transcurrido
+						auto end = std::chrono::steady_clock::now();
+						auto duracion = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+
+						if (duracion >= tiempoDeseado || mySound->isFinished()) {
+							// Detener la reproducción cuando se alcanza el tiempo deseado o el sonido termina
+							mySound->stop();
+							break;
+						}
+
+						// Hacer algo más si es necesario mientras el sonido se reproduce
+					}
+				}
+				puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
+				audioEngine->drop();
+			}
+			else if (worldPos.y > 1 && worldPos.y < 2) {
+				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
+				if (!audioEngine) {
+					std::cout << "ERROR" << std::endl;
+				}
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.mp3", false, false, true);
+				if (mySound) {
+					mySound->setIsPaused(false); // Iniciar la reproducción
+
+					// Controlar el tiempo transcurrido
+					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
+
+					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
+					float tiempoDeseado = 2.0f; // tiempo en segundos
+
+					while (true) {
+						// Calcular el tiempo transcurrido
+						auto end = std::chrono::steady_clock::now();
+						auto duracion = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+
+						if (duracion >= tiempoDeseado || mySound->isFinished()) {
+							// Detener la reproducción cuando se alcanza el tiempo deseado o el sonido termina
+							mySound->stop();
+							break;
+						}
+
+						// Hacer algo más si es necesario mientras el sonido se reproduce
+					}
+				}
+				puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
+				audioEngine->drop();
+
+			}
+
 
 			puz1_match = puz1_checkMatch();
 		}
@@ -307,7 +472,7 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	}
 
 	// GIRO CAMARA PRIMERA PERSONA CON MOUSE
-	if (firstMouseMovement)
+	if (enableCameraRotation)
 	{
 		GLdouble vdir[3] = { 0, 0, 0 };
 		double modul = 0;
@@ -335,6 +500,16 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 		n[1] = n[1] + opvN->y;
 	}
 	
+	if (*gameScene == SCENE_PUZLE6) {
+		float normalized_x = (2 * xpos / width)  -1.0f;
+		float normalized_y = 1.0f - (2 * ypos / height);
+		vec2 normalized = glm::normalize(vec2(normalized_x, normalized_y));
+		float rot = acos(normalized.x);
+		if (normalized.y < 0)
+			rot = -rot;
+		printf("Rotation mouse: %f\n", rot);
+		puz6_rotation = rot;
+	}
 }
 
 	
@@ -362,4 +537,47 @@ glm::vec3 ViewSpaceToWorld(vec3 viewSpaceCoords, mat4 ViewMatrix)
 	glm::vec4 worldCoords = inverseViewMatrix * glm::vec4(viewSpaceCoords, 1.0);
 	glm::vec3 worldSpaceCoords = glm::vec3(worldCoords);
 	return worldSpaceCoords;
+}
+
+// Raycast
+glm::vec3 getRayDirection(float mouseX, float mouseY, int screenWidth, int screenHeight, mat4 viewMatrix, mat4 projectionMatrix) {
+	// Convert mouse coordinates to NDC
+	float ndcX = (2.0f * mouseX) / screenWidth - 1.0f;
+	float ndcY = 1.0f - (2.0f * mouseY) / screenHeight;
+
+	// Create ray in clip space
+	glm::vec4 rayClip = glm::vec4(ndcX, ndcY, -1.0f, 1.0f);
+
+	// Inverse projection matrix
+	glm::mat4 inverseProjectionMatrix = glm::inverse(projectionMatrix);
+
+	// Inverse view matrix
+	glm::mat4 inverseViewMatrix = glm::inverse(viewMatrix);
+
+	// Transform ray to world space
+	glm::vec4 rayEye = inverseProjectionMatrix * rayClip;
+	rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0, 0.0);
+
+	glm::vec4 rayWorld = inverseViewMatrix * rayEye;
+	glm::vec3 rayDirection = glm::normalize(glm::vec3(rayWorld));
+
+	return rayDirection;
+}
+
+bool checkRayIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 objectPosition, float objectRadius) {
+	// Perform intersection test based on your object's bounding volume (e.g., sphere)
+
+	// Example: Check intersection with a sphere
+	glm::vec3 toObject = objectPosition - rayOrigin;
+	float distance = glm::dot(toObject, rayDirection);
+
+	if (distance < 0) {
+		// The object is behind the ray
+		return false;
+	}
+
+	glm::vec3 pointOnRay = rayOrigin + distance * rayDirection;
+	float distanceToCenter = glm::distance(pointOnRay, objectPosition);
+
+	return distanceToCenter <= objectRadius;
 }

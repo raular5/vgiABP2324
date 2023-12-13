@@ -94,7 +94,7 @@
 	Shader shader_SkyBoxC;		// Shader Skybox Cub
 	GLuint skC_programID;		// Identificador program Skybox Cube
 	CVAO skC_VAOID;				// Identificador VAO List (vaoId, vboId, nVertexs) per a Skybox Cube
-	GLuint cubemapTexture[10];		// Identificador textura cubemap.
+	GLuint cubemapTexture[16];		// Identificador textura cubemap.
 	Shader shaderSkyBox;		// Shader SkyBox
 
 // Entorn VGI: Variables de control del menú Transforma
