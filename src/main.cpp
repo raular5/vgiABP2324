@@ -19,6 +19,8 @@
 #include "escena.h"
 #include "main.h"
 
+#include <tuple>
+
 void InitGL()
 {
 // TODO: agregar aquí el código de construcción
@@ -490,12 +492,24 @@ void OnPaint(GLFWwindow* window)
 										}
 				else if (Vis_Polar == POLARX) {	vpv[0] = 1.0;	vpv[1] = 0.0;	vpv[2] = 0.0;
 										}
-				ViewMatrix = Vista_Navega(shader_programID, opvN, //false, 
-					n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
-					front_faces, oculta, test_vis, back_line,
-					ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
-					eixos, grid, hgrid);
+				if (gameState.enableCameraRotation) {
+					ViewMatrix = Vista_Navega(shader_programID, opvN, //false, 
+						n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
+						front_faces, oculta, test_vis, back_line,
+						ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+						eixos, grid, hgrid);
 				}
+				else {
+					CPunt3D opvN_fixed  = { 10.0f, 0.0f, 0.0f };
+					GLdouble n_fixed[3] = { 0.0f, 0.0f, 0.0f };
+					ViewMatrix = Vista_Navega(shader_programID, opvN_fixed, //false, 
+						n_fixed, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
+						front_faces, oculta, test_vis, back_line,
+						ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+						eixos, grid, hgrid);
+				}
+			}
+				
 		else if (camera == CAM_GEODE) {
 				ViewMatrix = Vista_Geode(shader_programID, OPV_G, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
 					front_faces, oculta, test_vis, back_line,
@@ -749,21 +763,21 @@ void draw_Menu_ABP()
 		ImGui::PushFont(fontMenu);
 
 		if (ImGui::Button("Start scape room")) {
-			gameState.firstMouseMovement = true;
+			gameState.enableCameraRotation = true;
 			gameScene = 2;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Debug scene for testing")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = true;
 			gameScene = 10;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Debug scene for textures")) {
-			gameState.firstMouseMovement = true;
+			gameState.enableCameraRotation = true;
 			gameScene = 11;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
@@ -784,7 +798,7 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Puzle 1")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = false;
 
 			gameScene = SCENE_PUZLE1;
 			printf("gameScene= %d \n", gameScene);
@@ -792,7 +806,7 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Puzle 2")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = false;
 
 			gameScene = SCENE_PUZLE2;
 			printf("gameScene= %d \n", gameScene);
@@ -800,7 +814,7 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Puzle 3")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = false;
 
 			gameScene = SCENE_PUZLE3;
 			printf("gameScene= %d \n", gameScene);
@@ -808,7 +822,7 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Puzle 4")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = false;
 
 			gameScene = SCENE_PUZLE4;
 			printf("gameScene= %d \n", gameScene);
@@ -816,9 +830,17 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Puzle 5")) {
-			gameState.firstMouseMovement = false;
+			gameState.enableCameraRotation = false;
 
 			gameScene = SCENE_PUZLE5;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Puzle 6")) {
+			gameState.enableCameraRotation = false;
+
+			gameScene = SCENE_PUZLE6;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
@@ -983,6 +1005,7 @@ void draw_Menu_ABP()
 		break;
 	case SCENE_PUZLE4:
 	case SCENE_PUZLE5:
+	case SCENE_PUZLE6:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -2303,53 +2326,64 @@ void LoadTexturesABP()
 
 }
 
-
-
-
 void LoadModelsABP()
 {
+	std::tuple<int, char*> models[] = { 
+		std::make_tuple(0, (char*)".\\models\\cactus_small_A.obj"),
+		std::make_tuple(1, (char*)".\\models\\bed_double_A.obj"),
+		std::make_tuple(2, (char*)".\\models\\book_set.obj"),
+		std::make_tuple(3, (char*)".\\models\\chair_A.obj"),
+		std::make_tuple(4, (char*)".\\models\\pictureframe_large_B.obj"),
+		std::make_tuple(5, (char*)".\\models\\chair_stool.obj"),
+		std::make_tuple(6, (char*)".\\models\\couch.obj"),
+		std::make_tuple(7, (char*)".\\models\\lamp_standing.obj"),
+		std::make_tuple(8, (char*)".\\models\\shelf_A_big.obj"),
+		std::make_tuple(9, (char*)".\\models\\table_medium_long.obj"),
+		std::make_tuple(10, (char*)".\\models\\gema.obj"),
+		std::make_tuple(11, (char*)".\\models\\lock.obj"),
+		std::make_tuple(12, (char*)".\\models\\cuadro.obj"),
+		//std::make_tuple(13, (char*)".\\models\\Death_lowpoly_final.obj"),
+		std::make_tuple(14, (char*)".\\models\\ps1_antique_radio.obj"),
+		// PSX Gothic Furniture Pack
+		std::make_tuple(MODEL_GOTHIC_BED, (char*)".\\models\\bed.obj"),
+		std::make_tuple(MODEL_GOTHIC_BENCH1, (char*)".\\models\\bench1.obj"),
+		std::make_tuple(MODEL_GOTHIC_BENCH2, (char*)".\\models\\bench2.obj"),
+		std::make_tuple(MODEL_GOTHIC_CANDLESTICK, (char*)".\\models\\candlestick.obj"),
+		std::make_tuple(MODEL_GOTHIC_CHAIR, (char*)".\\models\\chair.obj"),
+		std::make_tuple(MODEL_GOTHIC_DESK, (char*)".\\models\\desk.obj"),
+		std::make_tuple(MODEL_GOTHIC_DINNERTABLE, (char*)".\\models\\dinnertable.obj"),
+		std::make_tuple(MODEL_GOTHIC_DRESSER, (char*)".\\models\\dresser.obj"),
+
+		// SPOOKY HOUSE PIECES
+		std::make_tuple(MODEL_SPOOKY_CABINET, (char*)".\\models\\cabinet.obj"),
+		std::make_tuple(MODEL_SPOOKY_CROSS, (char*)".\\models\\cross.obj"),
+		std::make_tuple(MODEL_SPOOKY_SIDETABLE, (char*)".\\models\\sidetable.obj"),
+		std::make_tuple(MODEL_SPOOKY_PORTRAIT, (char*)".\\models\\portrait.obj"),
+		std::make_tuple(MODEL_SPOOKY_RUG, (char*)".\\models\\rug.obj"),
+		std::make_tuple(MODEL_SPOOKY_PIANO, (char*)".\\models\\piano.obj"),
+		std::make_tuple(MODEL_SPOOKY_PIANO_STOOL, (char*)".\\models\\pianostool.obj"),
+		std::make_tuple(MODEL_SPOOKY_OPEN_BOOK, (char*)".\\models\\openbook.obj"),
+		std::make_tuple(MODEL_SPOOKY_MUSIC_SHEET, (char*)".\\models\\musicsheet.obj"),
+		std::make_tuple(MODEL_SPOOKY_LARGETABLE, (char*)".\\models\\largetable.obj"),
+		std::make_tuple(MODEL_SPOOKY_OILYLAMP, (char*)".\\models\\oilylamp.obj"),
+		std::make_tuple(MODEL_SPOOKY_DINNER_CHAIR, (char*)".\\models\\dinnerchair.obj"),
+		std::make_tuple(MODEL_SPOOKY_CHAIR, (char*)".\\models\\chair.obj"),
+		std::make_tuple(MODEL_SPOOKY_CANDLE, (char*)".\\models\\candle.obj"),
+		std::make_tuple(MODEL_SPOOKY_BOOK1, (char*)".\\models\\book1.obj"),
+		std::make_tuple(MODEL_SPOOKY_BOOK2, (char*)".\\models\\book2.obj"),
+
+		// Habitació
+		std::make_tuple(39, (char*)".\\models\\habitacio.obj"),
+		//std::make_tuple(40, (char*)".\\models\\pared.obj")
+
+	};
+
 	printf("Loading OBJ models...\n");
-	modelos[4].LoadModel((char*)".\\models\\pictureframe_large_B.obj");
-	modelos[5].LoadModel((char*)".\\models\\chair_stool.obj");
-	modelos[6].LoadModel((char*)".\\models\\couch.obj");
-	modelos[7].LoadModel((char*)".\\models\\lamp_standing.obj");
-	modelos[8].LoadModel((char*)".\\models\\shelf_A_big.obj");
-	modelos[9].LoadModel((char*)".\\models\\table_medium_long.obj");
-	modelos[10].LoadModel((char*)".\\models\\gema.obj");
-	modelos[11].LoadModel((char*)".\\models\\lock.obj");
-	modelos[12].LoadModel((char*)".\\models\\cuadro.obj");
-	modelos[13].LoadModel((char*)".\\models\\Death_lowpoly_final.obj");
-	modelos[14].LoadModel((char*)".\\models\\ps1_antique_radio.obj");
-
-	// PSX Gothic Furniture Pack
-	modelos[MODEL_GOTHIC_BED].LoadModel((char*)".\\models\\bed.obj");
-	modelos[MODEL_GOTHIC_BENCH1].LoadModel((char*)".\\models\\bench1.obj");
-	modelos[MODEL_GOTHIC_BENCH2].LoadModel((char*)".\\models\\bench2.obj");
-	modelos[MODEL_GOTHIC_CANDLESTICK].LoadModel((char*)".\\models\\candlestick.obj");
-	modelos[MODEL_GOTHIC_CHAIR].LoadModel((char*)".\\models\\chair.obj");
-	modelos[MODEL_GOTHIC_DESK].LoadModel((char*)".\\models\\desk.obj");
-	modelos[MODEL_GOTHIC_DINNERTABLE].LoadModel((char*)".\\models\\dinnertable.obj");
-	modelos[MODEL_GOTHIC_DRESSER].LoadModel((char*)".\\models\\dresser.obj");
-
-	// SPOOKY HOUSE PIECES
-	modelos[MODEL_SPOOKY_CABINET].LoadModel((char*)".\\models\\cabinet.obj");
-	modelos[MODEL_SPOOKY_CROSS].LoadModel((char*)".\\models\\cross.obj");
-	modelos[MODEL_SPOOKY_SIDETABLE].LoadModel((char*)".\\models\\sidetable.obj");
-	modelos[MODEL_SPOOKY_PORTRAIT].LoadModel((char*)".\\models\\portrait.obj");
-	modelos[MODEL_SPOOKY_RUG].LoadModel((char*)".\\models\\rug.obj");
-	modelos[MODEL_SPOOKY_PIANO].LoadModel((char*)".\\models\\piano.obj");
-	modelos[MODEL_SPOOKY_PIANO_STOOL].LoadModel((char*)".\\models\\pianostool.obj");
-	modelos[MODEL_SPOOKY_OPEN_BOOK].LoadModel((char*)".\\models\\openbook.obj");
-	modelos[MODEL_SPOOKY_MUSIC_SHEET].LoadModel((char*)".\\models\\musicsheet.obj");
-	modelos[MODEL_SPOOKY_LARGETABLE].LoadModel((char*)".\\models\\largetable.obj");
-	modelos[MODEL_SPOOKY_OILYLAMP].LoadModel((char*)".\\models\\oilylamp.obj");
-	modelos[MODEL_SPOOKY_DINNER_CHAIR].LoadModel((char*)".\\models\\dinnerchair.obj");
-	modelos[MODEL_SPOOKY_CHAIR].LoadModel((char*)".\\models\\chair.obj");
-	modelos[MODEL_SPOOKY_CANDLE].LoadModel((char*)".\\models\\candle.obj");
-	modelos[MODEL_SPOOKY_BOOK1].LoadModel((char*)".\\models\\book1.obj");
-	modelos[MODEL_SPOOKY_BOOK2].LoadModel((char*)".\\models\\book2.obj");
-
-
+	for (std::tuple<int, char*> model : models)
+	{
+		printf("Loading model %s ...\n", std::get<1>(model));
+		modelos[std::get<0>(model)].LoadModel(std::get<1>(model));
+	}
 	printf("Finished loading models.\n");
 	
 }

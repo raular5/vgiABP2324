@@ -29,6 +29,7 @@
 #define SCENE_PUZLE3			15
 #define SCENE_PUZLE4			16
 #define SCENE_PUZLE5			17
+#define SCENE_PUZLE6			18
 
 // Textures
 #define TEXTURE_CADENAT_SYMBOLS 7
@@ -73,6 +74,9 @@
 glm::vec3 screenToNDC(float screenX, float screenY, float screenWidth, float screenHeight);
 glm::vec3 NDCToViewSpace(vec3 ndcCoords, mat4 ProjectionMatrix);
 glm::vec3 ViewSpaceToWorld(vec3 viewSpaceCoords, mat4 ViewMatrix);
+glm::vec3 getRayDirection(float mouseX, float mouseY, int screenWidth, int screenHeight, mat4 viewMatrix, mat4 projectionMatrix);
+bool checkRayIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 objectPosition, float objectRadius);
+
 
 /* ------------------------------------------------------------------------- */
 /*					          CLASE GAMESTATE								 */
@@ -86,6 +90,13 @@ struct InventorySlot {
 
 	InventorySlot(const std::string& name, const int image, int qty)
 		: itemName(name), imageID(image), quantity(qty) {}
+};
+
+struct ObjectBoundaries {
+	char* name;
+	vec3 position;
+	float radius;
+	ObjectBoundaries(const vec3 position, const float radius, char* name) : position(position), radius(radius), name(name) { }
 };
 
 class GameState {
@@ -115,7 +126,7 @@ public:
 	float timeAcumm = 0;	// Useful for animations
 
 	bool isMouseDown = false;
-	bool firstMouseMovement = true;
+	bool enableCameraRotation = true;
 	double previousMouse_xpos, previousMouse_ypos;
 	double clickPosWorld_x, clickPosWorld_y, clickPosWorld_z;
 
@@ -154,6 +165,9 @@ public:
 	// Puzle 4: Quadre
 	bool puz4_hasMovedFrame = false;
 	bool puz4_hasPickedKey = false;
+
+	// Puzle 6
+	float puz6_rotation = 0.0f;
 // FUNCIONES
 
 	void ChangeDebugCubePos(vec3 pos);
@@ -162,6 +176,7 @@ public:
 	void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods);
 	void OnKeyUp(GLFWwindow* window, int key, int scancode, int action, int mods);
 	void OnMouseButton(GLFWwindow* window, int button, int action, int mods);
+	void OnMouseButton_DebugScene(GLFWwindow* window, int button, int action, int mods);
 	void OnMouseButtonRelease(GLFWwindow* window, int button, int action, int mods);
 	void OnMouseMove(GLFWwindow* window, double xpos, double ypos);
 	void OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset);
