@@ -784,14 +784,14 @@ void draw_Menu_ABP()
 		}
 
 		if (ImGui::Button("Game Over Scene")) {
-			gameState.firstMouseMovement = true;
+			gameState.enableCameraRotation = true;
 			gameScene = SCENE_TIMER_GAMEOVER;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
 
 		if (ImGui::Button("Test skyboxes")) {
-			gameState.firstMouseMovement = true;
+			gameState.enableCameraRotation = true;
 			gameScene = SCENE_SKYBOXES;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
