@@ -89,7 +89,7 @@ struct InventorySlot {
 	int quantity;
 
 	InventorySlot(const std::string& name, const int image, int qty)
-		: itemName(name), imageID(image), quantity(qty) {}
+		:itemName(name), imageID(image), quantity(qty) {}
 };
 
 struct ObjectBoundaries {
@@ -103,6 +103,10 @@ class GameState {
 public:
 
 	GameState();
+
+	bool IsGemInInventory(const GameState& gameState);
+
+	void RemoveGemFromInventory(GameState& gameState);
 
 	std::vector<InventorySlot> inventory;
 
@@ -153,7 +157,10 @@ public:
 
 	// Puzle 2: joya en estatua
 	bool puz2_hasPickedGem = false;
+	bool puz2_touchStatue = false;
 	bool puz2_complete = false;
+
+
 
 	// Puzle 3: Cadenat amb simbols
 	int puz3_n_Symbols = 4;

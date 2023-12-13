@@ -12,14 +12,25 @@ GameState::GameState()
 	cube_color.b = 0.0;
 	cube_color.a = 0.5f;
 
-	
-	inventory.push_back(InventorySlot("Key",61, 1));
-	inventory.push_back(InventorySlot("Poción de salud",62, 5));
-	inventory.push_back(InventorySlot("Espada", 63, 1));
-	inventory.push_back(InventorySlot("Key",61, 1));
-
 }
 
+bool GameState::IsGemInInventory(const GameState& gameState) {
+	// Utilizar std::find_if para buscar una instancia de InventorySlot con itemName igual a "Gem"
+	auto gemIterator = std::find_if(gameState.inventory.begin(), gameState.inventory.end(),
+		[](const InventorySlot& slot) { return slot.itemName == "Gem"; });
+
+	// Devolver true si se encontró la gema, false en caso contrario
+	return gemIterator != gameState.inventory.end();
+}
+
+void GameState::RemoveGemFromInventory(GameState& gameState) {
+	auto it = std::find_if(gameState.inventory.begin(), gameState.inventory.end(),
+		[](const InventorySlot& slot) { return slot.itemName == "Gem"; });
+
+	if (it != gameState.inventory.end()) {
+		gameState.inventory.erase(it);
+	}
+}
 
 bool GameState::puz1_checkMatch()
 {
@@ -390,8 +401,10 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	case SCENE_PUZLE2:
 		if (worldPos.y > 4.5 && worldPos.y < 5.5 && worldPos.z < 0.5 && worldPos.z > -0.5) // Click on gem
 			puz2_hasPickedGem = true;
-		else if (puz2_hasPickedGem && worldPos.y > -5.5 && worldPos.y < -4.5 && worldPos.z < 0.5 && worldPos.z > -0.5) // Click on statue
-			puz2_complete = true;
+		else if (puz2_hasPickedGem && worldPos.y > -5.5 && worldPos.y < -4.5 && worldPos.z < 0.5 && worldPos.z > -0.5) {
+			puz2_touchStatue = true;
+		}// Click on statue
+			
 	case SCENE_PUZLE3:
 		if (worldPos.z > -0.5 && worldPos.z < 0.5)
 		{
