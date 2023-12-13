@@ -3,6 +3,7 @@
 // Entorn VGI: Llibreries i constants Constants de l'aplicació EntornVGI
 #include "stdafx.h"
 #include <irrKlang.h>
+#include <chrono>
 
 /* ------------------------------------------------------------------------- */
 /*							CONSTANTS										 */
@@ -19,6 +20,7 @@
 #define SCENE_MAIN				1
 #define SCENE_GAME				2
 #define SCENE_TIMER_GAMEOVER	3
+#define SCENE_SKYBOXES			9
 #define SCENE_DEBUG_TEST		10
 #define SCENE_DEBUG_TEX			11
 #define SCENE_PUZLE1			12

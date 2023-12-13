@@ -243,6 +243,15 @@ void InitGL()
 					".\\textures\\skyboxes\\5\\5_back.png"
 		};
 		cubemapTexture[5] = loadCubemap(faces5);
+		std::vector<std::string> faces2 =
+		{ ".\\textures\\skyboxes\\15\\15_right.png",
+					".\\textures\\skyboxes\\15\\15_left.png",
+					".\\textures\\skyboxes\\15\\15_up.png",
+					".\\textures\\skyboxes\\15\\15_down.png",
+					".\\textures\\skyboxes\\15\\15_front.png",
+					".\\textures\\skyboxes\\15\\15_back.png"
+		};
+		cubemapTexture[2] = loadCubemap(faces2);
 	}
 
 // Entorn VGI: Variables de control dels botons de mouse
@@ -669,18 +678,64 @@ void draw_Menu_ABP()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
-	case SCENE_TIMER_GAMEOVER:
+	case SCENE_SKYBOXES:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		if (false) flags |= ImGuiWindowFlags_NoBackground;
-		ImGui::Begin("Game over", nullptr, flags);
-		ImGui::PushFont(font2);
-		ImGui::Text("Game Over");
-		ImGui::PopFont();
+		// Pantalla completa
+		ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
+
+		ImGui::Begin("Change skybox",
+			nullptr,ImGuiWindowFlags_NoBackground);
+
+		ImGui::Text("Pulsa '-' para cambiar skybox");
+
 
 		ImGui::End();
+
+		// Cambio de imagen al presionar enter
+		if (ImGui::IsKeyPressed(ImGuiKey_Minus)) {
+			if (SkyBox == 15) {
+				SkyBox = 0;
+			}
+			else {
+				SkyBox++;
+			}
+		}
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		break;
+	case SCENE_TIMER_GAMEOVER:
+		SkyBox = 10;
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		// Pantalla completa
+		ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
+
+		ImGui::Begin("Imagen a Pantalla Completa",
+			nullptr,
+			ImGuiWindowFlags_NoTitleBar |
+			ImGuiWindowFlags_NoResize |
+			ImGuiWindowFlags_NoMove |
+			ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoBackground);
+
+		ImGui::Image((void*)(intptr_t)texturesID[100], imageSize);
+
+
+		ImGui::End();
+
+		// Cambio de imagen al presionar enter
+		if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+			gameScene = 1;
+		}
+
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
@@ -724,6 +779,20 @@ void draw_Menu_ABP()
 		if (ImGui::Button("Debug scene for textures")) {
 			gameState.enableCameraRotation = true;
 			gameScene = 11;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Game Over Scene")) {
+			gameState.firstMouseMovement = true;
+			gameScene = SCENE_TIMER_GAMEOVER;
+			printf("gameScene= %d \n", gameScene);
+			gameTimer = time(NULL);
+		}
+
+		if (ImGui::Button("Test skyboxes")) {
+			gameState.firstMouseMovement = true;
+			gameScene = SCENE_SKYBOXES;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}
@@ -809,7 +878,6 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case SCENE_GAME:
-		SkyBox = 4;
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -818,10 +886,12 @@ void draw_Menu_ABP()
 		ImGui::Begin("Game timer", nullptr, flags);
 
 		ImGui::Text("Time till game over");
-		elapsedTimer = 100000 - (time(NULL) - gameTimer);
-		elapsedM = (elapsedTimer / 60) % 60;
+		elapsedTimer = 5 - (time(NULL) - gameTimer);
+
+		elapsedM = (elapsedTimer / 60);
 		elapsedS = elapsedTimer % 60;
 		ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
+
 		if (elapsedM == 0 && elapsedS == 0) {
 			gameScene = 3;
 		}
@@ -1088,6 +1158,8 @@ void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 		break;	// activa controles teclado en estas escenas
 
 	case SCENE_TIMER_GAMEOVER:
+		return;
+	case SCENE_SKYBOXES:
 		return;
 
 	default:
@@ -2248,6 +2320,9 @@ void LoadTexturesABP()
 	//menu
 	texturesID[80] = loadIMA_SOIL(".\\textures\\menu\\start-scene.png");
 	texturesID[81] = loadIMA_SOIL(".\\textures\\menu\\main-menu.png");
+
+	//game over
+	texturesID[100] = loadIMA_SOIL(".\\textures\\menu\\game_over.png");
 
 }
 
