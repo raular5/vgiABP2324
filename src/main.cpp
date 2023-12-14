@@ -801,6 +801,8 @@ void draw_Menu_ABP()
 		ImGui::PushFont(fontMenu);
 
 		if (ImGui::Button("Start scape room")) {
+			gameState.audioEngine->setSoundVolume(0.1f);
+			gameState.audioEngine->play2D("media\\horror_01_drone_01.wav", true, false, true);
 			gameState.enableCameraRotation = true;
 			gameScene = 2;
 			printf("gameScene= %d \n", gameScene);
