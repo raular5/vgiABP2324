@@ -269,7 +269,7 @@ void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Mat
 {
 
 	// Draw boundaries
-	//debugDrawBoundaries(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
+	debugDrawBoundaries(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
 
 
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
