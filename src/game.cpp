@@ -261,141 +261,46 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 		if (worldPos.z > -0.5 && worldPos.z < 0.5)
 		{
 			if (worldPos.y > -2 && worldPos.y < -1) {
-				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
 				puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % puz1_n_Symbols;
 				if (!audioEngine) {
 					std::cout << "ERROR" << std::endl;
 				}
-				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.mp3", false, false, true);
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
 				if (mySound) {
-					mySound->setIsPaused(false); // Iniciar la reproducción
-
-					// Controlar el tiempo transcurrido
-					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
-
-					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
-					float tiempoDeseado = 1.0f; // tiempo en segundos
-
-					while (true) {
-						// Calcular el tiempo transcurrido
-						auto end = std::chrono::steady_clock::now();
-						auto duracion = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
-
-						if (duracion >= tiempoDeseado || mySound->isFinished()) {
-							// Detener la reproducción cuando se alcanza el tiempo deseado o el sonido termina
-							mySound->stop();
-							break;
-						}
-
-						// Hacer algo más si es necesario mientras el sonido se reproduce
-					}
+					//mySound->setIsPaused(false); // Iniciar la reproducción
 				}
-
-
-
-				
-				audioEngine->drop();
 			}
 			else if (worldPos.y > -1 && worldPos.y < 0) {
 				puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % puz1_n_Symbols;
-				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
 				
 				if (!audioEngine) {
 					std::cout << "ERROR" << std::endl;
 				}
-				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.mp3", false, false, true);
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
 				if (mySound) {
-					mySound->setIsPaused(false); // Iniciar la reproducción
-
-					// Controlar el tiempo transcurrido
-					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
-
-					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
-					float tiempoDeseado = 1.0f; // tiempo en segundos
-
-					while (true) {
-						// Calcular el tiempo transcurrido
-						auto end = std::chrono::steady_clock::now();
-						auto duracion = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
-
-						if (duracion >= tiempoDeseado || mySound->isFinished()) {
-							// Detener la reproducción cuando se alcanza el tiempo deseado o el sonido termina
-							mySound->stop();
-							break;
-						}
-
-						// Hacer algo más si es necesario mientras el sonido se reproduce
-					}
+					//mySound->setIsPaused(false); // Iniciar la reproducción
 				}
-				
-				audioEngine->drop();
 			}
 			else if (worldPos.y > 0 && worldPos.y < 1) {
 				puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
-				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
 				
 				if (!audioEngine) {
 					std::cout << "ERROR" << std::endl;
 				}
-				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.mp3", false, false, true);
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
 				if (mySound) {
-					mySound->setIsPaused(false); // Iniciar la reproducción
-
-					// Controlar el tiempo transcurrido
-					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
-
-					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
-					float tiempoDeseado = 1.0f; // tiempo en segundos
-
-					while (true) {
-						// Calcular el tiempo transcurrido
-						auto end = std::chrono::steady_clock::now();
-						auto duracion = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
-
-						if (duracion >= tiempoDeseado || mySound->isFinished()) {
-							// Detener la reproducción cuando se alcanza el tiempo deseado o el sonido termina
-							mySound->stop();
-							break;
-						}
-
-						// Hacer algo más si es necesario mientras el sonido se reproduce
-					}
+					//mySound->setIsPaused(false); // Iniciar la reproducción
 				}
-				
-				audioEngine->drop();
 			}
 			else if (worldPos.y > 1 && worldPos.y < 2) {
-				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
 				puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
 				if (!audioEngine) {
 					std::cout << "ERROR" << std::endl;
 				}
-				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.mp3", false, false, true);
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
 				if (mySound) {
-					mySound->setIsPaused(false); // Iniciar la reproducción
-
-					// Controlar el tiempo transcurrido
-					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
-
-					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
-					float tiempoDeseado = 1.0f; // tiempo en segundos
-
-					while (true) {
-						// Calcular el tiempo transcurrido
-						auto end = std::chrono::steady_clock::now();
-						auto duracion = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
-
-						if (duracion >= tiempoDeseado || mySound->isFinished()) {
-							// Detener la reproducción cuando se alcanza el tiempo deseado o el sonido termina
-							mySound->stop();
-							break;
-						}
-
-						// Hacer algo más si es necesario mientras el sonido se reproduce
-					}
+					//mySound->setIsPaused(false); // Iniciar la reproducción
 				}
-				
-				audioEngine->drop();
 
 			}
 		
@@ -407,72 +312,23 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 		break;
 	case SCENE_PUZLE2:
 		if (worldPos.y > 4.5 && worldPos.y < 5.5 && worldPos.z < 0.5 && worldPos.z > -0.5) { // Click on gem
-			irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
 
 			if (!audioEngine) {
 				std::cout << "ERROR" << std::endl;
 			}
-			irrklang::ISound* mySound = audioEngine->play2D("media\\MUSICA DE TERROR.mp3", false, false, true);
-			if (mySound) {
-				mySound->setIsPaused(false); // Iniciar la reproducción
-
-				// Controlar el tiempo transcurrido
-				auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
-
-				// Esperar el tiempo deseado (por ejemplo, 5 segundos)
-				float tiempoDeseado = 2.0f; // tiempo en segundos
-
-				while (true) {
-					// Calcular el tiempo transcurrido
-					auto end = std::chrono::steady_clock::now();
-					auto duracion = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
-
-					if (duracion >= tiempoDeseado || mySound->isFinished()) {
-						// Detener la reproducción cuando se alcanza el tiempo deseado o el sonido termina
-						mySound->stop();
-						break;
-					}
-
-					// Hacer algo más si es necesario mientras el sonido se reproduce
-				}
-			}
+			irrklang::ISound* mySound = audioEngine->play2D("media\\MUSICA DE TERROR.ogg", false, false, true);
 			
 			puz2_hasPickedGem = true;
-			audioEngine->drop();
 		}
 		else if (puz2_hasPickedGem && worldPos.y > -5.5 && worldPos.y < -4.5 && worldPos.z < 0.5 && worldPos.z > -0.5){ // Click on statue
-			irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
 
 			if (!audioEngine) {
 				std::cout << "ERROR" << std::endl;
 			}
-			irrklang::ISound* mySound = audioEngine->play2D("media\\MUSICA DE TERROR.mp3", false, false, true);
-			if (mySound) {
-				mySound->setIsPaused(false); // Iniciar la reproducción
-
-				// Controlar el tiempo transcurrido
-				auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
-
-				// Esperar el tiempo deseado (por ejemplo, 5 segundos)
-				float tiempoDeseado = 2.0f; // tiempo en segundos
-
-				while (true) {
-					// Calcular el tiempo transcurrido
-					auto end = std::chrono::steady_clock::now();
-					auto duracion = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
-
-					if (duracion >= tiempoDeseado || mySound->isFinished()) {
-						// Detener la reproducción cuando se alcanza el tiempo deseado o el sonido termina
-						mySound->stop();
-						break;
-					}
-
-					// Hacer algo más si es necesario mientras el sonido se reproduce
-				}
-			}
+			irrklang::ISound* mySound = audioEngine->play2D("media\\MUSICA DE TERROR.ogg", false, false, true);
+			
 
 			puz2_complete = true;
-			audioEngine->drop();
 		}
 			
 	case SCENE_PUZLE3:
