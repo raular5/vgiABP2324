@@ -262,7 +262,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 		{
 			if (worldPos.y > -2 && worldPos.y < -1) {
 				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
-
+				puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % puz1_n_Symbols;
 				if (!audioEngine) {
 					std::cout << "ERROR" << std::endl;
 				}
@@ -274,7 +274,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
 
 					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
-					float tiempoDeseado = 2.0f; // tiempo en segundos
+					float tiempoDeseado = 1.0f; // tiempo en segundos
 
 					while (true) {
 						// Calcular el tiempo transcurrido
@@ -293,11 +293,13 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 
 
 
-				puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % puz1_n_Symbols;
+				
 				audioEngine->drop();
 			}
 			else if (worldPos.y > -1 && worldPos.y < 0) {
+				puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % puz1_n_Symbols;
 				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
+				
 				if (!audioEngine) {
 					std::cout << "ERROR" << std::endl;
 				}
@@ -309,7 +311,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
 
 					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
-					float tiempoDeseado = 2.0f; // tiempo en segundos
+					float tiempoDeseado = 1.0f; // tiempo en segundos
 
 					while (true) {
 						// Calcular el tiempo transcurrido
@@ -325,11 +327,13 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 						// Hacer algo más si es necesario mientras el sonido se reproduce
 					}
 				}
-				puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % puz1_n_Symbols;
+				
 				audioEngine->drop();
 			}
 			else if (worldPos.y > 0 && worldPos.y < 1) {
+				puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
 				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
+				
 				if (!audioEngine) {
 					std::cout << "ERROR" << std::endl;
 				}
@@ -341,7 +345,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
 
 					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
-					float tiempoDeseado = 2.0f; // tiempo en segundos
+					float tiempoDeseado = 1.0f; // tiempo en segundos
 
 					while (true) {
 						// Calcular el tiempo transcurrido
@@ -357,11 +361,12 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 						// Hacer algo más si es necesario mientras el sonido se reproduce
 					}
 				}
-				puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
+				
 				audioEngine->drop();
 			}
 			else if (worldPos.y > 1 && worldPos.y < 2) {
 				irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();
+				puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
 				if (!audioEngine) {
 					std::cout << "ERROR" << std::endl;
 				}
@@ -373,7 +378,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 					auto start = std::chrono::steady_clock::now(); // Marcar el inicio de la reproducción
 
 					// Esperar el tiempo deseado (por ejemplo, 5 segundos)
-					float tiempoDeseado = 2.0f; // tiempo en segundos
+					float tiempoDeseado = 1.0f; // tiempo en segundos
 
 					while (true) {
 						// Calcular el tiempo transcurrido
@@ -389,7 +394,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 						// Hacer algo más si es necesario mientras el sonido se reproduce
 					}
 				}
-				puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
+				
 				audioEngine->drop();
 
 			}
