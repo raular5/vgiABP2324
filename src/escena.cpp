@@ -267,6 +267,11 @@ void escenaABP(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, b
 // Habitacion
 void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, GameState gameState, COBJModel modelos[NUM_MAX_MODELS])
 {
+
+	// Draw boundaries
+	debugDrawBoundaries(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
+
+
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
 	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
 	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
@@ -301,6 +306,8 @@ void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Mat
 	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
 	//modelos[40].draw_TriVAO_OBJ(sh_programID);
+
+
 
 }
 /*
@@ -1250,6 +1257,32 @@ void dibuixa_Candle(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Matriu
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
 	draw_TriEBO_Object(GLU_DISK);
 
+}
+
+void debugDrawBoundaries(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GameState gameState)
+{
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_FALSE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_FALSE); //glEnable(GL_MODULATE);
+	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
+
+	CColor col_object = { 1.0,1.0,0.0,1.0 };
+	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	for (ObjectBoundaries b : gameState.boundaries)
+	{
+		
+		ModelMatrix = MatriuTG;
+		ModelMatrix = glm::translate(ModelMatrix, b.position);
+		ModelMatrix = glm::scale(ModelMatrix, vec3(b.radius, b.radius, b.radius));
+		// Pas ModelView Matrix a shader
+		glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+		// Pas NormalMatrix a shader
+		NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+		glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+		draw_TriEBO_Object(GLU_SPHERE);
+
+	}
+
+	
 }
 
 // Mar amb ondulacions

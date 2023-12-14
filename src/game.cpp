@@ -12,6 +12,11 @@ GameState::GameState()
 	cube_color.b = 0.0;
 	cube_color.a = 0.5f;
 
+	
+	boundaries.push_back(ObjectBoundaries(vec3(18.0f, 6.0f, 1.0f), 1.5f, (char*)"Puzle 1"));
+	//boundaries.push_back(ObjectBoundaries(vec3(2.0f, 0.0f, 1.0f), 1.0f, (char*)"Puzle 2"));
+	//boundaries.push_back(ObjectBoundaries(vec3(4.0f, 0.0f, -1.0f), 1.0f, (char*)"Puzle 3"));
+
 }
 
 bool GameState::IsGemInInventory(const GameState& gameState) {
@@ -224,14 +229,14 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	{
 	case SCENE_DEBUG_TEST:
 	{
-		ObjectBoundaries boundaries[] = {
+		ObjectBoundaries boundariesTestScene[] = {
 			ObjectBoundaries(vec3(0.0f, -4.0f, 0.0f), 1.0f, (char*)"left"),
 			ObjectBoundaries(vec3(0.0f,  0.0f, 0.0f), 1.0f, (char*)"center"),
 			ObjectBoundaries(vec3(0.0f,  4.0f, 0.0f), 1.0f, (char*)"right"),
 
 		};
 
-		for (const ObjectBoundaries& b : boundaries)
+		for (const ObjectBoundaries& b : boundariesTestScene)
 		{
 			if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, b.position, b.radius)) {
 				printf("Clicked on object %s \n", b.name);
@@ -241,13 +246,6 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 		break;
 	case SCENE_GAME:
 	{
-		ObjectBoundaries boundaries[] = {
-			ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f), 1.0f, (char*)"1"),
-			ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f), 1.0f, (char*)"1"),
-			ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f), 1.0f, (char*)"1"),
-
-		};
-
 		for (const ObjectBoundaries& b : boundaries)
 		{
 			if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, b.position, b.radius)) {

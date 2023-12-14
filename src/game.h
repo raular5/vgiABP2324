@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <irrKlang.h>
 #include <chrono>
+#include <list>
 
 /* ------------------------------------------------------------------------- */
 /*							CONSTANTS										 */
@@ -175,6 +176,11 @@ public:
 
 	// Puzle 6
 	float puz6_rotation = 0.0f;
+
+	// Habitacion
+	// Hitboxes de los objetos interactuables de la habitación
+	std::list<ObjectBoundaries> boundaries;
+
 // FUNCIONES
 
 	void ChangeDebugCubePos(vec3 pos);
