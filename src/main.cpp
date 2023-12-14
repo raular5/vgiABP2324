@@ -730,10 +730,12 @@ void draw_Menu_ABP()
 		ImGui::End();
 
 
-		ImGui::SetNextWindowPos(ImVec2((ImGui::GetIO().DisplaySize.x / 2)-150, (ImGui::GetIO().DisplaySize.y / 2) + 100));
+
+		/*ImGui::SetNextWindowPos(ImVec2((ImGui::GetIO().DisplaySize.x / 2) - 150, (ImGui::GetIO().DisplaySize.y / 2) + 100));
 		ImGui::SetNextWindowSize(ImVec2(400.0f, 400.0f), escalado);
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
-		ImGui::Begin("Menu", nullptr, flags);
+		ImGui::Begin("Menu", nullptr, flags);*/
+
 //=======
 		// Pantalla completa
 		ImGui::SetNextWindowPos(ImVec2(0, 0));
@@ -926,7 +928,7 @@ void draw_Menu_ABP()
 
 		ImGui::Text("Time till game over");
 //<<<<<<< inventory&menu
-		elapsedTimer = 3 - (time(NULL) - gameTimer);
+		elapsedTimer = 180 - (time(NULL) - gameTimer);
 		elapsedM = (elapsedTimer / 60) % 60;
 //=======
 		//elapsedTimer = 5 - (time(NULL) - gameTimer);
@@ -946,6 +948,12 @@ void draw_Menu_ABP()
 		
 			showMenu = !showMenu;
 		}
+
+		ImGui::End();
+		ImGui::Render();
+
+
+
 
 		if (showMenu) {
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
@@ -976,11 +984,9 @@ void draw_Menu_ABP()
 			}
 			ImGui::PopFont();
 			ImGui::End();
-			
+
 		}
 
-		ImGui::End();
-		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case SCENE_DEBUG_TEST:
