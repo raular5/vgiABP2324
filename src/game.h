@@ -192,6 +192,7 @@ public:
 	void OnMouseButton_DebugScene(GLFWwindow* window, int button, int action, int mods);
 	void OnMouseButtonRelease(GLFWwindow* window, int button, int action, int mods);
 	void OnMouseMove(GLFWwindow* window, double xpos, double ypos);
+	void ChangeScene(int scene);
 	void OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset);
 
 	// Executes every frame. Delta is the time difference between frames (e.g 0.16666 seconds if 60FPS)

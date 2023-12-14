@@ -12,10 +12,11 @@ GameState::GameState()
 	cube_color.b = 0.0;
 	cube_color.a = 0.5f;
 
-	
-	boundaries.push_back(ObjectBoundaries(vec3(18.0f, 6.0f, 1.0f), 1.5f, (char*)"Puzle 1"));
-	//boundaries.push_back(ObjectBoundaries(vec3(2.0f, 0.0f, 1.0f), 1.0f, (char*)"Puzle 2"));
-	//boundaries.push_back(ObjectBoundaries(vec3(4.0f, 0.0f, -1.0f), 1.0f, (char*)"Puzle 3"));
+	//boundaries.push_back(ObjectBoundaries(vec3(0.0f, 0.0f, 1.0f), 1.0f, (char*)"Puzle 1")); // candado simbolos
+	boundaries.push_back(ObjectBoundaries(vec3(0.0f, -15.0f, 0.0f), 1.0f, (char*)"Puzle 2")); // estatua
+	//boundaries.push_back(ObjectBoundaries(vec3(0.0f, 0.0f, 2.0f), 1.0f, (char*)"Puzle 3")); // candado numerico
+	boundaries.push_back(ObjectBoundaries(vec3(18.0f, 6.0f, 1.0f), 1.5f, (char*)"Puzle 4")); // cuadro
+	boundaries.push_back(ObjectBoundaries(vec3(13.5f, -8.0f, 0.5f), 1.5f, (char*)"nota")); // ver nota
 
 }
 
@@ -246,12 +247,23 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 		break;
 	case SCENE_GAME:
 	{
+		char* hit = nullptr;
 		for (const ObjectBoundaries& b : boundaries)
 		{
 			if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, b.position, b.radius)) {
 				printf("Clicked on object %s \n", b.name);
+				hit = b.name;
+				break;
 			}
 		}
+
+		if (hit == nullptr)	break;
+		else if (hit == "Puzle 1") ChangeScene(SCENE_PUZLE1);
+		else if (hit == "Puzle 2") ChangeScene(SCENE_PUZLE2);
+		else if (hit == "Puzle 3") ChangeScene(SCENE_PUZLE3);
+		else if (hit == "Puzle 4") ChangeScene(SCENE_PUZLE4);
+		else if (hit == "Puzle 5") ChangeScene(SCENE_PUZLE5);
+		else if (hit == "Puzle 6") ChangeScene(SCENE_PUZLE6);
 	}
 	break;
 
@@ -436,7 +448,23 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	}
 }
 
-	
+void GameState::ChangeScene(int scene)
+{
+	switch (scene) {
+	case SCENE_PUZLE1:
+	case SCENE_PUZLE2:
+	case SCENE_PUZLE3:
+	case SCENE_PUZLE4:
+	case SCENE_PUZLE5:
+	case SCENE_PUZLE6:
+		enableCameraRotation = false;
+		break;
+	case SCENE_GAME:
+		enableCameraRotation = true;
+		break;
+	}
+	(*gameScene) = scene;
+}
 
 
 // Coord
