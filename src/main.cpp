@@ -1049,17 +1049,6 @@ void draw_Menu_ABP()
 		ImGui::Text("Puzzle 2 - JOYA EN ESTATUA");
 		ImGui::Text("Last click in world coords (x, y, z): %f, %f, %f", gameState.clickPosWorld_x, gameState.clickPosWorld_y, gameState.clickPosWorld_z);
 		RenderUI();
-		if (gameState.puz2_hasPickedGem) {
-			if (!gameState.IsGemInInventory(gameState)) {
-				gameState.inventory.push_back(InventorySlot("Gem", 61, 1));
-				ImGui::Text("Gem picked. You can place it in the statue.");
-			}
-		}
-		if (gameState.puz2_touchStatue && gameState.IsGemInInventory(gameState)) {
-			gameState.RemoveGemFromInventory(gameState);
-			gameState.puz2_complete = true;
-			ImGui::Text("Gem placed. Puzzle complete.");
-		}
 
 		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
 		//elapsedM = (elapsedTimer / 60) % 60;

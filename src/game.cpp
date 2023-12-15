@@ -20,21 +20,21 @@ GameState::GameState()
 
 }
 
-bool GameState::IsGemInInventory(const GameState& gameState) {
+bool GameState::IsGemInInventory() {
 	// Utilizar std::find_if para buscar una instancia de InventorySlot con itemName igual a "Gem"
-	auto gemIterator = std::find_if(gameState.inventory.begin(), gameState.inventory.end(),
+	auto gemIterator = std::find_if(inventory.begin(), inventory.end(),
 		[](const InventorySlot& slot) { return slot.itemName == "Gem"; });
 
 	// Devolver true si se encontró la gema, false en caso contrario
-	return gemIterator != gameState.inventory.end();
+	return gemIterator != inventory.end();
 }
 
-void GameState::RemoveGemFromInventory(GameState& gameState) {
-	auto it = std::find_if(gameState.inventory.begin(), gameState.inventory.end(),
+void GameState::RemoveGemFromInventory() {
+	auto it = std::find_if(inventory.begin(), inventory.end(),
 		[](const InventorySlot& slot) { return slot.itemName == "Gem"; });
 
-	if (it != gameState.inventory.end()) {
-		gameState.inventory.erase(it);
+	if (it != inventory.end()) {
+		inventory.erase(it);
 	}
 }
 
@@ -279,30 +279,28 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 
 
 			puz1_match = puz1_checkMatch();
-			if (puz1_match) { ChangeScene(SCENE_GAME); }
+			if (puz1_match) 
+			{ 
+				inventory.push_back(InventorySlot("Gem", 61, 1));
+				puz1_complete = true;
+				ChangeScene(SCENE_GAME); 
+			}
 		}
 		break;
 	case SCENE_PUZLE2:
-		if (worldPos.y > 4.5 && worldPos.y < 5.5 && worldPos.z < 0.5 && worldPos.z > -0.5) { // Click on gem
-
-			if (!audioEngine) {
-				std::cout << "ERROR" << std::endl;
-			}
-			irrklang::ISound* mySound = audioEngine->play2D("media\\MUSICA DE TERROR.ogg", false, false, true);
-			
-			puz2_hasPickedGem = true;
-		}
+		if (!IsGemInInventory()) ChangeScene(SCENE_GAME);
+		else {
 		//else if (puz2_hasPickedGem && worldPos.y > -0.5 && worldPos.y < 0.5 && worldPos.z < 0.5 && worldPos.z > -0.5){ // Click on statue
-		else if (worldPos.y > -0.5 && worldPos.y < 0.5 && worldPos.z < 0.5 && worldPos.z > -0.5){ // Click on statue
+		//else if (worldPos.y > -0.5 && worldPos.y < 0.5 && worldPos.z < 0.5 && worldPos.z > -0.5){ // Click on statue
 
 			if (!audioEngine) {
 				std::cout << "ERROR" << std::endl;
 			}
 			irrklang::ISound* mySound = audioEngine->play2D("media\\MUSICA DE TERROR.ogg", false, false, true);
 			
-
+			RemoveGemFromInventory();
 			puz2_complete = true;
-			ChangeScene(SCENE_GAME);
+			
 
 		}
 		break;
@@ -332,12 +330,17 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 			}
 
 			puz3_match = checkMatch(puz3_currentCombination, puz3_correctCombination, puz3_n_Symbols);
-			if (puz3_match) { ChangeScene(SCENE_GAME); }
+			if (puz3_match) { 
+				puz3_complete = true;
+				ChangeScene(SCENE_GAME);
+			}
 		}
 		break;
 	case SCENE_PUZLE4:
-		if (puz4_hasMovedFrame && worldPos.y > 0 && worldPos.y < 1.25 && worldPos.z < -1.5 && worldPos.z > -2.5) // Click on key
+		if (puz4_hasMovedFrame && worldPos.y > 0 && worldPos.y < 1.25 && worldPos.z < -1.5 && worldPos.z > -2.5) {// Click on key
 			puz4_hasPickedKey = true;
+			inventory.push_back(InventorySlot("Key", 64, 1));
+		}
 		else if (worldPos.y > -2.5 && worldPos.y < 2.5 && worldPos.z < 2.5 && worldPos.z > -2.5) // Click on frame
 		{
 			if (puz4_hasPickedKey) { ChangeScene(SCENE_GAME); }	// Go back to the game
@@ -397,9 +400,9 @@ void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action,
 		}
 
 		if (hit == nullptr)	break;
-		else if (hit == "Puzle 1") ChangeScene(SCENE_PUZLE1);
+		else if (hit == "Puzle 1" && !puz1_complete) ChangeScene(SCENE_PUZLE1);
 		else if (hit == "Puzle 2") ChangeScene(SCENE_PUZLE2);
-		else if (hit == "Puzle 3") ChangeScene(SCENE_PUZLE3);
+		else if (hit == "Puzle 3" && !puz3_complete) ChangeScene(SCENE_PUZLE3);
 		else if (hit == "Puzle 4") ChangeScene(SCENE_PUZLE4);
 		else if (hit == "Puzle 5") ChangeScene(SCENE_PUZLE5);
 		else if (hit == "Puzle 6") ChangeScene(SCENE_PUZLE6);

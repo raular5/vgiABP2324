@@ -105,9 +105,9 @@ public:
 
 	GameState();
 
-	bool IsGemInInventory(const GameState& gameState);
+	bool IsGemInInventory();
 
-	void RemoveGemFromInventory(GameState& gameState);
+	void RemoveGemFromInventory();
 
 	std::vector<InventorySlot> inventory;
 
@@ -155,6 +155,7 @@ public:
 	int puz1_currentCombination[4] = { 0, 0, 0, 0 };
 	int puz1_correctCombination[4] = { 1, 1, 1, 2 };
 	bool puz1_match = false;
+	bool puz1_complete = false;
 	bool puz1_checkMatch(); // se podria usar tambien para el candado numerico
 
 	// Puzle 2: joya en estatua
@@ -169,6 +170,7 @@ public:
 	int puz3_currentCombination[4] = { 0, 0, 0, 0 };
 	int puz3_correctCombination[4] = { 1, 9, 6, 2 };
 	bool puz3_match = false;
+	bool puz3_complete = false;
 	bool checkMatch(int* currentCombination, int* correctCombination, int n_Symbols);
 
 	// Puzle 4: Quadre
