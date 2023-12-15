@@ -2405,7 +2405,7 @@ void LoadTexturesABP()
   
   
 	//Textures habitació
-	texturesID[49] = loadIMA_SOIL(".\\textures\\brick1.jpg");			// Paredes
+	texturesID[49] = loadIMA_SOIL(".\\models\\wallpaper2.tga.png");		// Paredes
 	texturesID[50] = loadIMA_SOIL(".\\textures\\brick2.bmp");			// Paredes
 	texturesID[51] = loadIMA_SOIL(".\\textures\\habitacio\\techo.jpg"); // Techo
 	texturesID[52] = loadIMA_SOIL(".\\textures\\habitacio\\suelo.jpg"); // Suelo
@@ -2440,7 +2440,8 @@ void LoadModelsABP()
 		std::make_tuple(8, (char*)".\\models\\shelf_A_big.obj"),
 		std::make_tuple(9, (char*)".\\models\\table_medium_long.obj"),
 		std::make_tuple(10, (char*)".\\models\\gema.obj"),
-		std::make_tuple(11, (char*)".\\models\\lock.obj"),
+		//std::make_tuple(11, (char*)".\\models\\lock.obj"),
+		std::make_tuple(11, (char*)".\\models\\candado_num.obj"),
 		std::make_tuple(12, (char*)".\\models\\cuadro.obj"),
 		//std::make_tuple(13, (char*)".\\models\\Death_lowpoly_final.obj"),
 		std::make_tuple(14, (char*)".\\models\\ps1_antique_radio.obj"),

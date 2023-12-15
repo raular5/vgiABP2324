@@ -269,7 +269,7 @@ void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Mat
 {
 
 	// Draw boundaries
-	debugDrawBoundaries(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
+	// debugDrawBoundaries(sh_programID, MatriuVista, MatriuTG, sw_mat, gameState);
 
 
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
@@ -757,14 +757,16 @@ void escenaPuzle1(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 		//glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_FALSE); //glEnable(GL_MODULATE);
 	
 	// CADENAT
-	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_FALSE); //glEnable(GL_TEXTURE_2D);
 	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
 	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_FALSE);	// La textura esta en espejo
-	ModelMatrix = glm::translate(MatriuTG, vec3(-1.0f, 0.0f, 0.0f));
+	col_object = { 0.0f, 1.0f, 0.0f, 1.0f };
+	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	ModelMatrix = glm::translate(MatriuTG, vec3(-5.0f, 0.0f, -2.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(90.0f), vec3(1.0f, 0.0f, 0.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(0.0f, 1.0f, 0.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(0.0f, 0.0f, 1.0f));
-	ModelMatrix = glm::scale(ModelMatrix, vec3(10.0f, 10.0f, 10.0f));
+	ModelMatrix = glm::scale(ModelMatrix, vec3(2.5f, 2.5f, 2.5f));
 	// Pas ModelView Matrix a shader
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
 	// Pas NormalMatrix a shader
@@ -773,6 +775,11 @@ void escenaPuzle1(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	modelos[11].draw_TriVAO_OBJ(sh_programID);
 
 	// PARET
+	col_object = { 1.0f, 1.0f, 1.0f, 1.0f };
+	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_FALSE);	// La textura esta en espejo
 	SetTextureParameters(texturID[49], true, false, textur_map, false);
 	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
 	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
@@ -858,6 +865,24 @@ void escenaPuzle2(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
 	//draw_TriEBO_Object(GLUT_CUBE);
 	modelos[13].draw_TriVAO_OBJ(sh_programID);
+
+	// FONDO HABITACION
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_FALSE);	// La textura esta en espejo
+	ModelMatrix = MatriuTG;
+	//SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	ModelMatrix = glm::translate(MatriuTG, vec3(15.0f, -5.2f, -3.0f));
+	//ModelMatrix = glm::scale(ModelMatrix, vec3(2.0f, 2.0f, 2.0f));
+	ModelMatrix = glm::rotate(ModelMatrix, radians(90.0f), vec3(1.0f, 0.0f, 0.0f));
+	ModelMatrix = glm::rotate(ModelMatrix, radians(270.0f), vec3(0.0f, 1.0f, 0.0f));
+	//ModelMatrix = glm::rotate(ModelMatrix, radians(90.0f), vec3(0.0f, 0.0f, 1.0f));
+	// Pas ModelView Matrix a shader
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+	// Pas NormalMatrix a shader
+	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+	modelos[39].draw_TriVAO_OBJ(sh_programID);
 }
 
 void escenaPuzle3(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG, bool sw_mat[5], GLuint texturID[NUM_MAX_TEXTURES], bool textur_map, GameState gameState, COBJModel modelos[NUM_MAX_MODELS])
@@ -924,14 +949,16 @@ void escenaPuzle3(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	draw_TriEBO_Object(GLUT_CUBE);
 
 	// CADENAT
-	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_FALSE); //glEnable(GL_TEXTURE_2D);
 	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
 	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_FALSE);	// La textura esta en espejo
-	ModelMatrix = glm::translate(MatriuTG, vec3(-1.0f, 0.0f, 0.0f));
+	col_object = { 0.0f, 1.0f, 0.0f, 1.0f };
+	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	ModelMatrix = glm::translate(MatriuTG, vec3(-5.0f, 0.0f, -2.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(90.0f), vec3(1.0f, 0.0f, 0.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(0.0f, 1.0f, 0.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(0.0f), vec3(0.0f, 0.0f, 1.0f));
-	ModelMatrix = glm::scale(ModelMatrix, vec3(10.0f, 10.0f, 10.0f));
+	ModelMatrix = glm::scale(ModelMatrix, vec3(2.5f, 2.5f, 2.5f));
 	// Pas ModelView Matrix a shader
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
 	// Pas NormalMatrix a shader
@@ -940,6 +967,11 @@ void escenaPuzle3(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	modelos[11].draw_TriVAO_OBJ(sh_programID);
 
 	// PARET
+	col_object = { 1.0f, 1.0f, 1.0f, 1.0f };
+	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_FALSE);	// La textura esta en espejo
 	SetTextureParameters(texturID[49], true, false, textur_map, false);
 	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
 	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
@@ -1019,21 +1051,14 @@ void escenaPuzle4(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
 	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
 	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-
-			ModelMatrix = glm::translate(MatriuTG, vec3(-10.0f, -25.0f + j * 10, -25.0f + i * 10));
-			ModelMatrix = glm::scale(ModelMatrix, vec3(0.1f, 10.0f, 10.0f));
-			// Pas ModelView Matrix a shader
-			glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
-			// Pas NormalMatrix a shader
-			NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
-			glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
-			draw_TriEBO_Object(GLUT_CUBE);
-		}
-	}
+	ModelMatrix = glm::translate(MatriuTG, vec3(-1.0f, 0.0f, 0.0f));
+	ModelMatrix = glm::scale(ModelMatrix, vec3(0.1f, 25.0f, 20.0f));
+	// Pas ModelView Matrix a shader
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+	// Pas NormalMatrix a shader
+	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+	draw_TriEBO_Object(GLUT_CUBE);
 	
 
 }

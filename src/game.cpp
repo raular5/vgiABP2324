@@ -276,9 +276,6 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 					std::cout << "ERROR" << std::endl;
 				}
 				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
-				if (mySound) {
-					//mySound->setIsPaused(false); // Iniciar la reproducción
-				}
 			}
 			else if (worldPos.y > -1 && worldPos.y < 0) {
 				puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % puz1_n_Symbols;
@@ -287,9 +284,6 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 					std::cout << "ERROR" << std::endl;
 				}
 				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
-				if (mySound) {
-					//mySound->setIsPaused(false); // Iniciar la reproducción
-				}
 			}
 			else if (worldPos.y > 0 && worldPos.y < 1) {
 				puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
@@ -298,9 +292,6 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 					std::cout << "ERROR" << std::endl;
 				}
 				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
-				if (mySound) {
-					//mySound->setIsPaused(false); // Iniciar la reproducción
-				}
 			}
 			else if (worldPos.y > 1 && worldPos.y < 2) {
 				puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
@@ -308,9 +299,6 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 					std::cout << "ERROR" << std::endl;
 				}
 				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
-				if (mySound) {
-					//mySound->setIsPaused(false); // Iniciar la reproducción
-				}
 
 			}
 		
@@ -318,6 +306,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 
 
 			puz1_match = puz1_checkMatch();
+			if (puz1_match) { ChangeScene(SCENE_GAME); }
 		}
 		break;
 	case SCENE_PUZLE2:
@@ -330,7 +319,8 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 			
 			puz2_hasPickedGem = true;
 		}
-		else if (puz2_hasPickedGem && worldPos.y > -5.5 && worldPos.y < -4.5 && worldPos.z < 0.5 && worldPos.z > -0.5){ // Click on statue
+		//else if (puz2_hasPickedGem && worldPos.y > -0.5 && worldPos.y < 0.5 && worldPos.z < 0.5 && worldPos.z > -0.5){ // Click on statue
+		else if (worldPos.y > -0.5 && worldPos.y < 0.5 && worldPos.z < 0.5 && worldPos.z > -0.5){ // Click on statue
 
 			if (!audioEngine) {
 				std::cout << "ERROR" << std::endl;
@@ -339,28 +329,49 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 			
 
 			puz2_complete = true;
+			ChangeScene(SCENE_GAME);
+
 		}
+		break;
 			
 	case SCENE_PUZLE3:
 		if (worldPos.z > -0.5 && worldPos.z < 0.5)
 		{
 			if (worldPos.y > -2 && worldPos.y < -1)
+			{
 				puz3_currentCombination[0] = (puz3_currentCombination[0] + 1) % 10;
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
+			}
 			else if (worldPos.y > -1 && worldPos.y < 0)
+			{
 				puz3_currentCombination[1] = (puz3_currentCombination[1] + 1) % 10;
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
+			}
 			else if (worldPos.y > 0 && worldPos.y < 1)
+			{
 				puz3_currentCombination[2] = (puz3_currentCombination[2] + 1) % 10;
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
+			}
 			else if (worldPos.y > 1 && worldPos.y < 2)
+			{
 				puz3_currentCombination[3] = (puz3_currentCombination[3] + 1) % 10;
+				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
+			}
 
 			puz3_match = checkMatch(puz3_currentCombination, puz3_correctCombination, puz3_n_Symbols);
+			if (puz3_match) { ChangeScene(SCENE_GAME); }
 		}
 		break;
 	case SCENE_PUZLE4:
 		if (puz4_hasMovedFrame && worldPos.y > 0 && worldPos.y < 1.25 && worldPos.z < -1.5 && worldPos.z > -2.5) // Click on key
 			puz4_hasPickedKey = true;
 		else if (worldPos.y > -2.5 && worldPos.y < 2.5 && worldPos.z < 2.5 && worldPos.z > -2.5) // Click on frame
-			puz4_hasMovedFrame = !puz4_hasMovedFrame;
+		{
+			if (puz4_hasPickedKey) { ChangeScene(SCENE_GAME); }	// Go back to the game
+			else { puz4_hasMovedFrame = !puz4_hasMovedFrame; }
+			
+		}
+			
 	}
 
 }
