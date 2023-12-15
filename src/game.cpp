@@ -199,7 +199,9 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 
 	// Actualiza la última posición del cursor
 	previousMouse_xpos = xpos;
+	previousClick_xpos = xpos;
 	previousMouse_ypos = ypos;
+	previousClick_ypos = ypos;
 
 	//printf("Click pos : %f, %f\n", xpos, ypos);
 
@@ -220,8 +222,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	clickPosWorld_y = worldPos.y;
 	clickPosWorld_z = worldPos.z;
 
-	// DEBUG RAYCAST
-	glm::vec3 rayDirection = getRayDirection(xpos, ypos, width, height, *m_ViewMatrix, *m_ProjectionMatrix);
+	
 
 	
 	
@@ -230,40 +231,12 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	{
 	case SCENE_DEBUG_TEST:
 	{
-		ObjectBoundaries boundariesTestScene[] = {
-			ObjectBoundaries(vec3(0.0f, -4.0f, 0.0f), 1.0f, (char*)"left"),
-			ObjectBoundaries(vec3(0.0f,  0.0f, 0.0f), 1.0f, (char*)"center"),
-			ObjectBoundaries(vec3(0.0f,  4.0f, 0.0f), 1.0f, (char*)"right"),
-
-		};
-
-		for (const ObjectBoundaries& b : boundariesTestScene)
-		{
-			if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, b.position, b.radius)) {
-				printf("Clicked on object %s \n", b.name);
-			}
-		}
+		
 	}
 		break;
 	case SCENE_GAME:
 	{
-		char* hit = nullptr;
-		for (const ObjectBoundaries& b : boundaries)
-		{
-			if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, b.position, b.radius)) {
-				printf("Clicked on object %s \n", b.name);
-				hit = b.name;
-				break;
-			}
-		}
-
-		if (hit == nullptr)	break;
-		else if (hit == "Puzle 1") ChangeScene(SCENE_PUZLE1);
-		else if (hit == "Puzle 2") ChangeScene(SCENE_PUZLE2);
-		else if (hit == "Puzle 3") ChangeScene(SCENE_PUZLE3);
-		else if (hit == "Puzle 4") ChangeScene(SCENE_PUZLE4);
-		else if (hit == "Puzle 5") ChangeScene(SCENE_PUZLE5);
-		else if (hit == "Puzle 6") ChangeScene(SCENE_PUZLE6);
+		
 	}
 	break;
 
@@ -379,6 +352,60 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action, int mods)
 {
 	isMouseDown = false;
+
+	
+
+	double xpos, ypos;
+	glfwGetCursorPos(window, &xpos, &ypos);
+	if (xpos != previousClick_xpos || ypos != previousClick_ypos) return;
+
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+
+	// RAYCAST
+	glm::vec3 rayDirection = getRayDirection(xpos, ypos, width, height, *m_ViewMatrix, *m_ProjectionMatrix);
+
+	switch (*gameScene)
+	{
+	case SCENE_DEBUG_TEST:
+	{
+		ObjectBoundaries boundariesTestScene[] = {
+			ObjectBoundaries(vec3(0.0f, -4.0f, 0.0f), 1.0f, (char*)"left"),
+			ObjectBoundaries(vec3(0.0f,  0.0f, 0.0f), 1.0f, (char*)"center"),
+			ObjectBoundaries(vec3(0.0f,  4.0f, 0.0f), 1.0f, (char*)"right"),
+
+		};
+
+		for (const ObjectBoundaries& b : boundariesTestScene)
+		{
+			if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, b.position, b.radius)) {
+				printf("Clicked on object %s \n", b.name);
+			}
+		}
+	}
+	break;
+	case SCENE_GAME:
+	{
+		char* hit = nullptr;
+		for (const ObjectBoundaries& b : boundaries)
+		{
+			if (checkRayIntersection(glm::vec3(opvN->x, opvN->y, opvN->z), rayDirection, b.position, b.radius)) {
+				printf("Clicked on object %s \n", b.name);
+				hit = b.name;
+				break;
+			}
+		}
+
+		if (hit == nullptr)	break;
+		else if (hit == "Puzle 1") ChangeScene(SCENE_PUZLE1);
+		else if (hit == "Puzle 2") ChangeScene(SCENE_PUZLE2);
+		else if (hit == "Puzle 3") ChangeScene(SCENE_PUZLE3);
+		else if (hit == "Puzle 4") ChangeScene(SCENE_PUZLE4);
+		else if (hit == "Puzle 5") ChangeScene(SCENE_PUZLE5);
+		else if (hit == "Puzle 6") ChangeScene(SCENE_PUZLE6);
+	}
+	break;
+	}
 }
 
 void GameState::OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset)

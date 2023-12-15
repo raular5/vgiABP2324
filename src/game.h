@@ -133,6 +133,7 @@ public:
 	bool isMouseDown = false;
 	bool enableCameraRotation = true;
 	double previousMouse_xpos, previousMouse_ypos;
+	double previousClick_xpos, previousClick_ypos;
 	double clickPosWorld_x, clickPosWorld_y, clickPosWorld_z;
 
 	irrklang::ISoundEngine* audioEngine = irrklang::createIrrKlangDevice();;
