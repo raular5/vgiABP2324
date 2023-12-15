@@ -2476,6 +2476,7 @@ void LoadModelsABP()
 		// Habitació
 		std::make_tuple(39, (char*)".\\models\\habitacio.obj"),
 		//std::make_tuple(40, (char*)".\\models\\pared.obj")
+		std::make_tuple(41, (char*)".\\models\\manivela.obj")
 
 	};
 

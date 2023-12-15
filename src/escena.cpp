@@ -1073,29 +1073,46 @@ void escenaPuzle6(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 	CColor col_object = { 1.0,1.0,1.0,1.0 };
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
 
-	SetTextureParameters(texturID[30 + gameState.puz3_currentCombination[0]], true, true, textur_map, true);
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_FALSE); //glEnable(GL_TEXTURE_2D);
 	//glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
 	//glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
 	//glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
 	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	//ModelMatrix = MatriuTG;
 	ModelMatrix = glm::rotate(MatriuTG, gameState.puz6_rotation, vec3(1.0f, 0.0f, 0.0f));
-	ModelMatrix = glm::translate(ModelMatrix, vec3(0.0f, 2.5f, 0.0f));
-	ModelMatrix = glm::scale(ModelMatrix, vec3(1.0f, 5.0f, 1.0f));
+	ModelMatrix = glm::rotate(ModelMatrix, radians(-90.0f), vec3(1.0f, 0.0f, 0.0f));
+	ModelMatrix = glm::rotate(ModelMatrix, radians(270.0f), vec3(0.0f, 0.0f, 1.0f));
+	//ModelMatrix = glm::translate(ModelMatrix, vec3(0.0f, 2.5f, 0.0f));
+	ModelMatrix = glm::scale(ModelMatrix, vec3(0.5f, 0.5f, 0.5f));
 	// Pas ModelView Matrix a shader
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
 	// Pas NormalMatrix a shader
 	NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
-	draw_TriEBO_Object(GLUT_CUBE);
+	modelos[41].draw_TriVAO_OBJ(sh_programID);
 
-	SetTextureParameters(texturID[30 + gameState.puz3_currentCombination[0]], true, true, textur_map, true);
-	//glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
-	//glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
-	//glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
+	////glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	////glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	////glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
+	//SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	//ModelMatrix = glm::scale(MatriuTG, vec3(2.0f, 1.0f, 1.0f));
+	//ModelMatrix = glm::rotate(ModelMatrix, gameState.puz6_rotation, vec3(1.0f, 0.0f, 0.0f));
+	//ModelMatrix = glm::translate(ModelMatrix, vec3(0.0f, 5.0f, 0.0f));
+	//// Pas ModelView Matrix a shader
+	//glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
+	//// Pas NormalMatrix a shader
+	//NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
+	//glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
+	//draw_TriEBO_Object(GLUT_CUBE);
+
+	// PARET
+	SetTextureParameters(texturID[49], true, false, textur_map, false);
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
 	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
-	ModelMatrix = glm::scale(MatriuTG, vec3(2.0f, 1.0f, 1.0f));
-	ModelMatrix = glm::rotate(ModelMatrix, gameState.puz6_rotation, vec3(1.0f, 0.0f, 0.0f));
-	ModelMatrix = glm::translate(ModelMatrix, vec3(0.0f, 5.0f, 0.0f));
+	ModelMatrix = glm::translate(MatriuTG, vec3(-1.0f, 0.0f, 0.0f));
+	ModelMatrix = glm::scale(ModelMatrix, vec3(0.1f, 25.0f, 20.0f));
 	// Pas ModelView Matrix a shader
 	glUniformMatrix4fv(glGetUniformLocation(sh_programID, "modelMatrix"), 1, GL_FALSE, &ModelMatrix[0][0]);
 	// Pas NormalMatrix a shader
