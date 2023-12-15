@@ -80,8 +80,8 @@ const double p_far=50000.0;
 
 // -------------- VGI: CONSTANTS TEXTURES
 // Nombre màxim de textures
-#define NUM_MAX_TEXTURES 100
-#define NUM_MAX_MODELS 100
+#define NUM_MAX_TEXTURES 200
+#define NUM_MAX_MODELS 200
 
 // Tipus de textures
 #define CAP ' '

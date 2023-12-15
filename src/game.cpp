@@ -14,9 +14,11 @@ GameState::GameState()
 
 	boundaries.push_back(ObjectBoundaries(vec3(10.2f, 8.0f, -1.3f), 1.0f, (char*)"Puzle 1")); // candado simbolos
 	boundaries.push_back(ObjectBoundaries(vec3(0.0f, -15.0f, 0.0f), 1.0f, (char*)"Puzle 2")); // estatua
-	boundaries.push_back(ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f),  1.0f, (char*)"Puzle 3"));  // candado numerico
+	boundaries.push_back(ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f),   1.0f, (char*)"Puzle 3")); // candado numerico
 	boundaries.push_back(ObjectBoundaries(vec3(18.0f, 6.0f, 1.0f),  1.5f, (char*)"Puzle 4")); // cuadro
 	boundaries.push_back(ObjectBoundaries(vec3(13.5f, -8.0f, 0.5f), 1.5f, (char*)"nota"));    // ver nota
+
+	inventory.push_back(InventorySlot("Note", 65, 1, 43));
 
 }
 
@@ -94,89 +96,83 @@ void GameState::OnKeyDown(GLFWwindow* window, int key, int scancode, int action,
 		return;
 	}
 	
-	if (key == GLFW_KEY_P)
-	{
-
-		
-		if (!audioEngine) {
-			std::cout << "No xuta" << std::endl;
-		}
-		audioEngine->play2D("media\\getout.ogg", true);
-		
-	
-		
-	}
-	if (key == GLFW_KEY_L) {
-			//audioEngine->drop();
-		}
-	// Move item inspector
-	switch (key) {	// Mejorable, poner en el update
-	case GLFW_KEY_D:
-		item_inspect_rotation.z += 1;
-		break;
-	case GLFW_KEY_A:
-		item_inspect_rotation.z -= 1;
-		break;
-	case GLFW_KEY_W:
-		item_inspect_rotation.y += 1;
-		break;
-	case GLFW_KEY_S:
-		item_inspect_rotation.y -= 1;
-		break;
-	case GLFW_KEY_Q:
-		item_inspect_scale += (0.5f, 0.5f, 0.5f);
-		break;
-	case GLFW_KEY_E:
-		item_inspect_scale -= (0.5f, 0.5f, 0.5f);
-		break;
-
-	}
-	
-	// Change item in inspector
-	switch (key)
-	{
-	case GLFW_KEY_TAB: // show inspector
-		showItemInspector = !showItemInspector;
-		break;
-
-	case GLFW_KEY_0:
-		currentItem = ITEM_NONE;
-		break;
-	case GLFW_KEY_1:
-		currentItem = ITEM_KEY;
-		break;
-	case GLFW_KEY_2:
-		currentItem = ITEM_NOTE;
-		break;
-	case GLFW_KEY_3:
-		currentItem = ITEM_CANDLE;
-		break;
-	default:
-		break;
-	}
-
-	// Puzle 1:	
-	if (*gameScene == SCENE_PUZLE1)
-	{
-		switch (key)
+	switch (*gameScene) {
+	case SCENE_GAME:
+		if (key == GLFW_KEY_TAB)
 		{
-		case GLFW_KEY_1:
-			puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % puz1_n_Symbols;
+			// Reset state of the scene
+			item_inspect_currentItem = 0;
+			item_inspect_currentModel = inventory[item_inspect_currentItem].modelID;
+			item_inspect_rotation = vec3(0.0f, 0.0f, 0.0f);
+			item_inspect_scale = vec3(1.0f, 1.0f, 1.0f);
+			ChangeScene(SCENE_ITEM_INSPECT);
 			break;
-		case GLFW_KEY_2:
-			puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % puz1_n_Symbols;
+		}
+	case SCENE_ITEM_INSPECT:
+		switch (key) {
+// Move item
+		case GLFW_KEY_D:
+			item_inspect_rotation.z += 1;
 			break;
-		case GLFW_KEY_3:
-			puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
+		case GLFW_KEY_A:
+			item_inspect_rotation.z -= 1;
 			break;
-		case GLFW_KEY_4:
-			puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
+		case GLFW_KEY_W:
+			item_inspect_rotation.y += 1;
+			break;
+		case GLFW_KEY_S:
+			item_inspect_rotation.y -= 1;
+			break;
+		case GLFW_KEY_Q:
+			item_inspect_scale += (0.5f, 0.5f, 0.5f);
+			break;
+		case GLFW_KEY_E:
+			item_inspect_scale -= (0.5f, 0.5f, 0.5f);
+			break;
+// Change item in inspector
+		case GLFW_KEY_RIGHT:
+			item_inspect_currentItem = (item_inspect_currentItem + 1) % inventory.size();
+			item_inspect_currentModel = inventory[item_inspect_currentItem].modelID;
+			break;
+		case GLFW_KEY_LEFT:
+			item_inspect_currentItem = (item_inspect_currentItem - 1) % inventory.size();
+			item_inspect_currentModel = inventory[item_inspect_currentItem].modelID;
+			break;
+		
+		case GLFW_KEY_TAB:
+			ChangeScene(SCENE_GAME);
 			break;
 		default:
 			break;
+
 		}
-		puz1_match = puz1_checkMatch();
+
+
 	}
+	
+
+	//// Puzle 1:	
+	//if (*gameScene == SCENE_PUZLE1)
+	//{
+	//	switch (key)
+	//	{
+	//	case GLFW_KEY_1:
+	//		puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % puz1_n_Symbols;
+	//		break;
+	//	case GLFW_KEY_2:
+	//		puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % puz1_n_Symbols;
+	//		break;
+	//	case GLFW_KEY_3:
+	//		puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
+	//		break;
+	//	case GLFW_KEY_4:
+	//		puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//	puz1_match = puz1_checkMatch();
+	//}
 	
 }
 
@@ -281,7 +277,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 			puz1_match = puz1_checkMatch();
 			if (puz1_match) 
 			{ 
-				inventory.push_back(InventorySlot("Gem", 61, 1));
+				inventory.push_back(InventorySlot("Gem", 61, 1, 10));
 				puz1_complete = true;
 				ChangeScene(SCENE_GAME); 
 			}
@@ -339,7 +335,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	case SCENE_PUZLE4:
 		if (puz4_hasMovedFrame && worldPos.y > 0 && worldPos.y < 1.25 && worldPos.z < -1.5 && worldPos.z > -2.5) {// Click on key
 			puz4_hasPickedKey = true;
-			inventory.push_back(InventorySlot("Key", 64, 1));
+			inventory.push_back(InventorySlot("Key", 64, 1, 42));
 		}
 		else if (worldPos.y > -2.5 && worldPos.y < 2.5 && worldPos.z < 2.5 && worldPos.z > -2.5) // Click on frame
 		{
@@ -414,7 +410,7 @@ void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action,
 void GameState::OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset)
 {
 	//printf("x: %f, y:%f\n", xoffset, yoffset);
-	if (showItemInspector)
+	if (*gameScene == SCENE_ITEM_INSPECT)
 	{
 		if(yoffset > 0)
 			item_inspect_scale *= 1.1f;
@@ -441,7 +437,7 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	previousMouse_ypos = ypos;
 
 	// Inspect item with mouse
-	if (showItemInspector)
+	if (*gameScene == SCENE_ITEM_INSPECT)
 	{
 		item_inspect_rotation.z += 360 * xoffset / width;
 		item_inspect_rotation.y += 360 * yoffset / height;
@@ -466,7 +462,7 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 
 		//angleZ += fact_pan;
 		(*angleZ) = xoffset * 0.05;
-		printf("%f\n", *angleZ);
+		//printf("%f\n", *angleZ);
 
 		//(*angleZ) = (*angleZ) % 360;
 		n[0] = vdir[0]; // n[0] - opvN.x;
@@ -484,7 +480,7 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 		float rot = acos(normalized.x);
 		if (normalized.y < 0)
 			rot = -rot;
-		printf("Rotation mouse: %f\n", rot);
+		//printf("Rotation mouse: %f\n", rot);
 		puz6_rotation = rot;
 	}
 }
@@ -492,6 +488,7 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 void GameState::ChangeScene(int scene)
 {
 	switch (scene) {
+	case SCENE_ITEM_INSPECT:
 	case SCENE_PUZLE1:
 	case SCENE_PUZLE2:
 	case SCENE_PUZLE3:

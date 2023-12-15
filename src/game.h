@@ -21,6 +21,7 @@
 #define SCENE_MAIN				1
 #define SCENE_GAME				2
 #define SCENE_TIMER_GAMEOVER	3
+#define SCENE_ITEM_INSPECT		4
 #define SCENE_SKYBOXES			9
 #define SCENE_DEBUG_TEST		10
 #define SCENE_DEBUG_TEX			11
@@ -88,9 +89,13 @@ struct InventorySlot {
 	//std::string imagePath;
 	int imageID;
 	int quantity;
+	int modelID;
 
 	InventorySlot(const std::string& name, const int image, int qty)
-		:itemName(name), imageID(image), quantity(qty) {}
+		:itemName(name), imageID(image), quantity(qty), modelID(0) {}
+
+	InventorySlot(const std::string& name, const int image, int qty, int model)
+		:itemName(name), imageID(image), quantity(qty), modelID(model) {}
 };
 
 struct ObjectBoundaries {
@@ -146,7 +151,8 @@ public:
 
 	// item inspector
 	bool showItemInspector = false;
-	int currentItem = ITEM_NONE;
+	int item_inspect_currentItem = 0;
+	int item_inspect_currentModel = 0;
 	vec3 item_inspect_rotation = vec3(0.0f, 0.0f, 0.0f);
 	vec3 item_inspect_scale = vec3(1.0f, 1.0f, 1.0f);
 

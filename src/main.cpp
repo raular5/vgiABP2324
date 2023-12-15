@@ -800,6 +800,7 @@ void draw_Menu_ABP()
 
 		ImGui::PushFont(fontMenu);
 
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
 		if (ImGui::Button("Start scape room")) {
 			gameState.audioEngine->setSoundVolume(0.1f);
 			gameState.audioEngine->play2D("media\\horror_01_drone_01.wav", true, false, true);
@@ -809,88 +810,87 @@ void draw_Menu_ABP()
 			gameTimer = time(NULL);
 		}
 
-		if (ImGui::Button("Debug scene for testing")) {
-			gameState.enableCameraRotation = true;
-			gameScene = 10;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
+		//if (ImGui::Button("Debug scene for testing")) {
+		//	gameState.enableCameraRotation = true;
+		//	gameScene = 10;
+		//	printf("gameScene= %d \n", gameScene);
+		//	gameTimer = time(NULL);
+		//}
 
-		if (ImGui::Button("Debug scene for textures")) {
-			gameState.enableCameraRotation = true;
-			gameScene = 11;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
+		//if (ImGui::Button("Debug scene for textures")) {
+		//	gameState.enableCameraRotation = true;
+		//	gameScene = 11;
+		//	printf("gameScene= %d \n", gameScene);
+		//	gameTimer = time(NULL);
+		//}
 
-		if (ImGui::Button("Game Over Scene")) {
-			gameState.enableCameraRotation = true;
-			gameScene = SCENE_TIMER_GAMEOVER;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
+		//if (ImGui::Button("Game Over Scene")) {
+		//	gameState.enableCameraRotation = true;
+		//	gameScene = SCENE_TIMER_GAMEOVER;
+		//	printf("gameScene= %d \n", gameScene);
+		//	gameTimer = time(NULL);
+		//}
 
-		if (ImGui::Button("Test skyboxes")) {
-			gameState.enableCameraRotation = true;
-			gameScene = SCENE_SKYBOXES;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
+		//if (ImGui::Button("Test skyboxes")) {
+		//	gameState.enableCameraRotation = true;
+		//	gameScene = SCENE_SKYBOXES;
+		//	printf("gameScene= %d \n", gameScene);
+		//	gameTimer = time(NULL);
+		//}
 
-		if (ImGui::Button("Puzle 1")) {
-			gameState.enableCameraRotation = false;
+		//if (ImGui::Button("Puzle 1")) {
+		//	gameState.enableCameraRotation = false;
 
-			gameScene = SCENE_PUZLE1;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
+		//	gameScene = SCENE_PUZLE1;
+		//	printf("gameScene= %d \n", gameScene);
+		//	gameTimer = time(NULL);
+		//}
 
-		if (ImGui::Button("Puzle 2")) {
-			gameState.enableCameraRotation = false;
+		//if (ImGui::Button("Puzle 2")) {
+		//	gameState.enableCameraRotation = false;
 
-			gameScene = SCENE_PUZLE2;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
+		//	gameScene = SCENE_PUZLE2;
+		//	printf("gameScene= %d \n", gameScene);
+		//	gameTimer = time(NULL);
+		//}
 
-		if (ImGui::Button("Puzle 3")) {
-			gameState.enableCameraRotation = false;
+		//if (ImGui::Button("Puzle 3")) {
+		//	gameState.enableCameraRotation = false;
 
-			gameScene = SCENE_PUZLE3;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
+		//	gameScene = SCENE_PUZLE3;
+		//	printf("gameScene= %d \n", gameScene);
+		//	gameTimer = time(NULL);
+		//}
 
-		if (ImGui::Button("Puzle 4")) {
-			gameState.enableCameraRotation = false;
+		//if (ImGui::Button("Puzle 4")) {
+		//	gameState.enableCameraRotation = false;
 
-			gameScene = SCENE_PUZLE4;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
+		//	gameScene = SCENE_PUZLE4;
+		//	printf("gameScene= %d \n", gameScene);
+		//	gameTimer = time(NULL);
+		//}
 
-		if (ImGui::Button("Puzle 5")) {
-			gameState.enableCameraRotation = false;
+		//if (ImGui::Button("Puzle 5")) {
+		//	gameState.enableCameraRotation = false;
 
-			gameScene = SCENE_PUZLE5;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
+		//	gameScene = SCENE_PUZLE5;
+		//	printf("gameScene= %d \n", gameScene);
+		//	gameTimer = time(NULL);
+		//}
 
-		if (ImGui::Button("Puzle 6")) {
-			gameState.enableCameraRotation = false;
+		//if (ImGui::Button("Puzle 6")) {
+		//	gameState.enableCameraRotation = false;
 
-			gameScene = SCENE_PUZLE6;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}
+		//	gameScene = SCENE_PUZLE6;
+		//	printf("gameScene= %d \n", gameScene);
+		//	gameTimer = time(NULL);
+		//}
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
-		if (ImGui::Button("Start scape room")) {
+	/*	if (ImGui::Button("Start scape room")) {
 			gameScene = 2;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
-		}
+		}*/
 		ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
 		
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "Options");
@@ -1091,6 +1091,7 @@ void draw_Menu_ABP()
 	case SCENE_PUZLE4:
 	case SCENE_PUZLE5:
 	case SCENE_PUZLE6:
+	case SCENE_ITEM_INSPECT:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -1098,7 +1099,7 @@ void draw_Menu_ABP()
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
 		ImGui::Begin("Game timer", nullptr, flags);
 
-		ImGui::Text("Puzzle 4: Clau amagada");
+		//ImGui::Text("Puzzle 4: Clau amagada");
 		
 		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
 		//elapsedM = (elapsedTimer / 60) % 60;
@@ -2404,6 +2405,7 @@ void LoadTexturesABP()
 	texturesID[62] = loadIMA_SOIL(".\\textures\\inventoryItems\\potion.png");
 	texturesID[63] = loadIMA_SOIL(".\\textures\\inventoryItems\\sword.png");
 	texturesID[64] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
+	texturesID[65] = loadIMA_SOIL(".\\textures\\inventoryItems\\nota_inv.png");
 
 	//menu
 	texturesID[80] = loadIMA_SOIL(".\\textures\\menu\\start-scene.png");
@@ -2431,6 +2433,7 @@ void LoadModelsABP()
 		std::make_tuple(10, (char*)".\\models\\gema.obj"),
 		//std::make_tuple(11, (char*)".\\models\\lock.obj"),
 		std::make_tuple(11, (char*)".\\models\\candado_num.obj"),
+		std::make_tuple(111, (char*)".\\models\\candado_simb.obj"),
 		std::make_tuple(12, (char*)".\\models\\cuadro.obj"),
 		//std::make_tuple(13, (char*)".\\models\\Death_lowpoly_final.obj"),
 		std::make_tuple(14, (char*)".\\models\\ps1_antique_radio.obj"),
@@ -2465,7 +2468,9 @@ void LoadModelsABP()
 		// Habitació
 		std::make_tuple(39, (char*)".\\models\\habitacio.obj"),
 		//std::make_tuple(40, (char*)".\\models\\pared.obj")
-		std::make_tuple(41, (char*)".\\models\\manivela.obj")
+		std::make_tuple(41, (char*)".\\models\\manivela.obj"),
+		std::make_tuple(42, (char*)".\\models\\key.obj"),
+		std::make_tuple(43, (char*)".\\models\\historia.obj")
 
 	};
 
