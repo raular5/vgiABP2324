@@ -716,12 +716,10 @@ void draw_Menu_ABP()
 
 		break;
 	case SCENE_TIMER_GAMEOVER:
-		SkyBox = 10;
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-//<<<<<<< inventory&menu
 
 		ImGui::SetNextWindowPos(ImVec2(0, 0));
 		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
@@ -730,51 +728,29 @@ void draw_Menu_ABP()
 		ImGui::End();
 
 
-
-		/*ImGui::SetNextWindowPos(ImVec2((ImGui::GetIO().DisplaySize.x / 2) - 150, (ImGui::GetIO().DisplaySize.y / 2) + 100));
+		ImGui::SetNextWindowPos(ImVec2((ImGui::GetIO().DisplaySize.x / 2) - 150, (ImGui::GetIO().DisplaySize.y / 2) + 100));
 		ImGui::SetNextWindowSize(ImVec2(400.0f, 400.0f), escalado);
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
-		ImGui::Begin("Menu", nullptr, flags);*/
-
-//=======
-		// Pantalla completa
-		ImGui::SetNextWindowPos(ImVec2(0, 0));
-		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
-
-		ImGui::Begin("Imagen a Pantalla Completa",
-			nullptr,
-			ImGuiWindowFlags_NoTitleBar |
-			ImGuiWindowFlags_NoResize |
-			ImGuiWindowFlags_NoMove |
-			ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoBackground);
-
-		ImGui::Image((void*)(intptr_t)texturesID[100], imageSize);
-//>>>>>>> main
+		ImGui::Begin("Menu", nullptr, flags);
 
 
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
+
 		ImGui::PushFont(fontMenu);
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f)); // Establecer el color del botón a transparente
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));  // Color y opacidad por defecto
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));  // Color y opacidad al pasar el ratón
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(1.0f, 1.0f, 1.0f, 0.1f));  // Color y opacidad al pasar el ratón
 		if (ImGui::Button("Return to Menu")) {
 			gameScene = 1;
 		}
 
 		if (ImGui::Button("Exit Game")) {
 			glfwSetWindowShouldClose(window, true);
-
 		}
+
 		ImGui::PopFont();
-		ImGui::PopStyleColor(2);
+		ImGui::PopStyleColor(3);
 		ImGui::End();
 
-//<<<<<<< inventory&menu
-//=======
-		// Cambio de imagen al presionar enter
-		if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
-			gameScene = 1;
-		}
-
-//>>>>>>> main
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
@@ -951,9 +927,6 @@ void draw_Menu_ABP()
 			showMenu = !showMenu;
 		}
 
-		ImGui::End();
-		ImGui::Render();
-
 
 
 
@@ -988,6 +961,9 @@ void draw_Menu_ABP()
 			ImGui::End();
 
 		}
+
+		ImGui::End();
+		ImGui::Render();
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
