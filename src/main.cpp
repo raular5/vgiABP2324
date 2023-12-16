@@ -927,9 +927,6 @@ void draw_Menu_ABP()
 			showMenu = !showMenu;
 		}
 
-		ImGui::End();
-		ImGui::Render();
-
 
 
 
@@ -964,6 +961,9 @@ void draw_Menu_ABP()
 			ImGui::End();
 
 		}
+
+		ImGui::End();
+		ImGui::Render();
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
