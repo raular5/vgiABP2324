@@ -2377,11 +2377,11 @@ void LoadTexturesABP()
 	texturesID[52] = loadIMA_SOIL(".\\textures\\habitacio\\suelo.jpg"); // Suelo
   
   // inventario
-	texturesID[61] = loadIMA_SOIL(".\\textures\\inventoryItems\\gem.png");
-	texturesID[62] = loadIMA_SOIL(".\\textures\\inventoryItems\\potion.png");
-	texturesID[63] = loadIMA_SOIL(".\\textures\\inventoryItems\\sword.png");
-	texturesID[64] = loadIMA_SOIL(".\\textures\\inventoryItems\\key.png");
-	texturesID[65] = loadIMA_SOIL(".\\textures\\inventoryItems\\nota_inv.png");
+	texturesID[61] = loadIMA_SOIL(".\\textures\\inventoryItems\\gema.png");
+	//texturesID[62] = loadIMA_SOIL(".\\textures\\inventoryItems\\potion.png");
+	//texturesID[63] = loadIMA_SOIL(".\\textures\\inventoryItems\\sword.png");
+	texturesID[64] = loadIMA_SOIL(".\\textures\\inventoryItems\\llave.png");
+	texturesID[65] = loadIMA_SOIL(".\\textures\\inventoryItems\\nota.png");
 
 	//menu
 	texturesID[80] = loadIMA_SOIL(".\\textures\\menu\\start-scene.png");
@@ -2411,7 +2411,7 @@ void LoadModelsABP()
 		std::make_tuple(11, (char*)".\\models\\candado_num.obj"),
 		std::make_tuple(111, (char*)".\\models\\candado_simb.obj"),
 		std::make_tuple(12, (char*)".\\models\\cuadro.obj"),
-		//std::make_tuple(13, (char*)".\\models\\Death_lowpoly_final.obj"),
+		std::make_tuple(13, (char*)".\\models\\estatua.obj"),
 		std::make_tuple(14, (char*)".\\models\\ps1_antique_radio.obj"),
 		// PSX Gothic Furniture Pack
 		std::make_tuple(MODEL_GOTHIC_BED, (char*)".\\models\\bed.obj"),
@@ -2445,7 +2445,7 @@ void LoadModelsABP()
 		std::make_tuple(39, (char*)".\\models\\habitacio.obj"),
 		//std::make_tuple(40, (char*)".\\models\\pared.obj")
 		std::make_tuple(41, (char*)".\\models\\manivela.obj"),
-		std::make_tuple(42, (char*)".\\models\\key.obj"),
+		std::make_tuple(42, (char*)".\\models\\llave.obj"),
 		std::make_tuple(43, (char*)".\\models\\historia.obj")
 
 	};
