@@ -24,20 +24,20 @@
 
 void InitGL()
 {
-// TODO: agregar aquí el código de construcción
+	// TODO: agregar aquí el código de construcción
 	gameState.gameScene = &gameScene;
-//------ Entorn VGI: Inicialització de les variables globals de CEntornVGIView
+	//------ Entorn VGI: Inicialització de les variables globals de CEntornVGIView
 	int i;
 
-// Entorn VGI: Variable de control per a Status Bar (consola) 
+	// Entorn VGI: Variable de control per a Status Bar (consola) 
 	statusB = false;
 
-// Entorn VGI: Variables de control per Menú Càmera: Esfèrica, Navega, Mòbil, Zoom, Satelit, Polars... 
+	// Entorn VGI: Variables de control per Menú Càmera: Esfèrica, Navega, Mòbil, Zoom, Satelit, Polars... 
 	camera = CAM_NAVEGA;
 	//camera = CAM_ESFERICA;
 	mobil = true;	zzoom = true;		zzoomO = false;		satelit = false;
 
-// Entorn VGI: Variables de control de l'opció Càmera->Navega?
+	// Entorn VGI: Variables de control de l'opció Càmera->Navega?
 	n[0] = 0.0;		n[1] = 0.0;		n[2] = 0.0;
 	opvN.x = 10.0;	opvN.y = 0.0;		opvN.z = 0.0;
 	angleZ = 0.0;
@@ -47,10 +47,10 @@ void InitGL()
 	gameState.angleZ = &angleZ;
 	gameState.m_ViewMatrix = &ViewMatrix;
 
-// Entorn VGI: Variables de control de l'opció Càmera->Geode?
+	// Entorn VGI: Variables de control de l'opció Càmera->Geode?
 	OPV_G.R = 15.0;		OPV_G.alfa = 0.0;	OPV_G.beta = 0.0;	// Origen PV en esfèriques per a Vista_Geode
 
-// Entorn VGI: Variables de control per Menú Vista: Pantalla Completa, Pan, dibuixar eixos i grids 
+	// Entorn VGI: Variables de control per Menú Vista: Pantalla Completa, Pan, dibuixar eixos i grids 
 	fullscreen = false;
 	pan = false;
 	eixos = true;	eixos_programID = 0;  eixos_Id = 0;
@@ -58,22 +58,22 @@ void InitGL()
 	grid.x = false;	grid.y = false;		grid.z = false;		grid.w = false;
 	hgrid.x = 0.0;	hgrid.y = 0.0;		hgrid.z = 0.0;		hgrid.w = 0.0;
 
-// Entorn VGI: Variables opció Vista->Pan
+	// Entorn VGI: Variables opció Vista->Pan
 	fact_pan = 1;
 	tr_cpv.x = 0;	tr_cpv.y = 0;	tr_cpv.z = 0;		tr_cpvF.x = 0;	tr_cpvF.y = 0;	tr_cpvF.z = 0;
 
-// Entorn VGI: Variables de control per les opcions de menú Projecció, Objecte
+	// Entorn VGI: Variables de control per les opcions de menú Projecció, Objecte
 	projeccio = PERSPECT;	// projeccio = PERSPECT;
 	ProjectionMatrix = glm::mat4(1.0);	// Inicialitzar a identitat
 	gameState.m_ProjectionMatrix = &ProjectionMatrix;
 	objecte = ABP_CUSTOM;		// objecte = TETERA;
 
-// Entorn VGI: Variables de control Skybox Cube
+	// Entorn VGI: Variables de control Skybox Cube
 	SkyBox = 0;		skC_programID = 0;
 	skC_VAOID.vaoId = 0;	skC_VAOID.vboId = 0;	skC_VAOID.nVertexs = 0;
 	cubemapTexture[0] = 0;
 
-// Entorn VGI: Variables de control del menú Transforma
+	// Entorn VGI: Variables de control del menú Transforma
 	transf = false;		trasl = false;		rota = false;		escal = false;
 	fact_Tras = 1;		fact_Rota = 90;
 	TG.VTras.x = 0.0;	TG.VTras.y = 0.0;	TG.VTras.z = 0;	TGF.VTras.x = 0.0;	TGF.VTras.y = 0.0;	TGF.VTras.z = 0;
@@ -81,31 +81,31 @@ void InitGL()
 	TG.VScal.x = 1;		TG.VScal.y = 1;		TG.VScal.z = 1;	TGF.VScal.x = 1;	TGF.VScal.y = 1;	TGF.VScal.z = 1;
 
 	transX = false;		transY = false;		transZ = false;
-	GTMatrix= glm::mat4(1.0);		// Inicialitzar a identitat
+	GTMatrix = glm::mat4(1.0);		// Inicialitzar a identitat
 
-// Entorn VGI: Variables de control per les opcions de menú Ocultacions
+	// Entorn VGI: Variables de control per les opcions de menú Ocultacions
 	front_faces = true;	test_vis = false;	oculta = true;		back_line = false;
 
-// Entorn VGI: Variables de control del menú Iluminació		
+	// Entorn VGI: Variables de control del menú Iluminació		
 	ilumina = SUAU;			ifixe = false;					ilum2sides = false;
-// Reflexions actives: Ambient [1], Difusa [2] i Especular [3]. No actives: Emission [0]. 
+	// Reflexions actives: Ambient [1], Difusa [2] i Especular [3]. No actives: Emission [0]. 
 	sw_material[0] = false;			sw_material[1] = true;			sw_material[2] = true;			sw_material[3] = true;	sw_material[4] = true;
 	sw_material_old[0] = false;		sw_material_old[1] = true;		sw_material_old[2] = true;		sw_material_old[3] = true;	sw_material_old[4] = true;
 	textura = false;				t_textura = CAP;				textura_map = true;
 	for (i = 0; i < NUM_MAX_TEXTURES; i++) texturesID[i] = -1;
 	tFlag_invert_Y = false;
 
-// Entorn VGI: Variables de control del menú Llums
-// Entorn VGI: Inicialització variables Llums
+	// Entorn VGI: Variables de control del menú Llums
+	// Entorn VGI: Inicialització variables Llums
 	llum_ambient = true;
 	for (i = 1; i < NUM_MAX_LLUMS; i++) llumGL[i].encesa = false;
 	for (i = 0; i < NUM_MAX_LLUMS; i++) {
 		llumGL[i].encesa = false;
 		llumGL[i].difusa[0] = 1.0f;	llumGL[i].difusa[1] = 1.0f;	llumGL[i].difusa[2] = 1.0f;	llumGL[i].difusa[3] = 1.0f;
 		llumGL[i].especular[0] = 1.0f; llumGL[i].especular[1] = 1.0f; llumGL[i].especular[2] = 1.0f; llumGL[i].especular[3] = 1.0f;
-		}
+	}
 
-// LLum 0: Atenuació constant (c=1), sobre l'eix Z, no restringida.
+	// LLum 0: Atenuació constant (c=1), sobre l'eix Z, no restringida.
 	llumGL[0].encesa = true;
 	llumGL[0].difusa[0] = 1.0f;			llumGL[0].difusa[1] = 1.0f;			llumGL[0].difusa[2] = 1.0f;		llumGL[0].difusa[3] = 1.0f;
 	llumGL[0].especular[0] = 1.0f;		llumGL[0].especular[1] = 1.0f;		llumGL[0].especular[2] = 1.0f;	llumGL[0].especular[3] = 1.0f;
@@ -116,7 +116,7 @@ void InitGL()
 	llumGL[0].spotdirection[0] = 0.0;	llumGL[0].spotdirection[1] = 0.0;	llumGL[0].spotdirection[2] = 0.0;
 	llumGL[0].spotcoscutoff = 0.0;		llumGL[0].spotexponent = 0.0;
 
-// LLum 1: Atenuació constant (c=1), sobre l'eix X, no restringida.
+	// LLum 1: Atenuació constant (c=1), sobre l'eix X, no restringida.
 	llumGL[1].encesa = false;
 	llumGL[1].difusa[0] = 1.0f;			llumGL[1].difusa[1] = 1.0f;			llumGL[1].difusa[2] = 1.0f;		llumGL[1].difusa[3] = 1.0f;
 	llumGL[1].especular[0] = 1.0f;		llumGL[1].especular[1] = 1.0f;		llumGL[1].especular[2] = 1.0f;	llumGL[1].especular[3] = 1;
@@ -127,7 +127,7 @@ void InitGL()
 	llumGL[1].spotdirection[0] = 0.0;	llumGL[1].spotdirection[1] = 0.0;	llumGL[1].spotdirection[2] = 0.0;
 	llumGL[1].spotcoscutoff = 0.0;		llumGL[1].spotexponent = 0.0;
 
-// LLum 2: Atenuació constant (c=1), sobre l'eix Y, no restringida.
+	// LLum 2: Atenuació constant (c=1), sobre l'eix Y, no restringida.
 	llumGL[2].encesa = false;
 	llumGL[2].difusa[1] = 1.0f;			llumGL[2].difusa[1] = 1.0f;			llumGL[2].difusa[2] = 1.0f;		llumGL[2].difusa[3] = 1.0f;
 	llumGL[2].especular[1] = 1.0f;		llumGL[2].especular[1] = 1.0f;		llumGL[2].especular[2] = 1.0f;	llumGL[2].especular[3] = 1;
@@ -138,7 +138,7 @@ void InitGL()
 	llumGL[2].spotdirection[0] = 0.0;	llumGL[2].spotdirection[1] = 0.0;	llumGL[2].spotdirection[2] = 0.0;
 	llumGL[2].spotcoscutoff = 0.0;		llumGL[2].spotexponent = 0.0;
 
-// LLum 3: Atenuació constant (c=1), sobre l'eix Y=X, no restringida.
+	// LLum 3: Atenuació constant (c=1), sobre l'eix Y=X, no restringida.
 	llumGL[3].encesa = false;
 	llumGL[3].difusa[0] = 1.0f;			llumGL[2].difusa[1] = 1.0f;			llumGL[3].difusa[2] = 1.0f;		llumGL[3].difusa[3] = 1.0f;
 	llumGL[3].especular[0] = 1.0f;		llumGL[2].especular[1] = 1.0f;		llumGL[3].especular[2] = 1.0f;	llumGL[3].especular[3] = 1;
@@ -149,7 +149,7 @@ void InitGL()
 	llumGL[3].spotdirection[0] = 0.0;	llumGL[3].spotdirection[1] = 0.0;	llumGL[3].spotdirection[2] = 0.0;
 	llumGL[3].spotcoscutoff = 0.0;		llumGL[3].spotexponent = 0.0;
 
-// LLum 4: Atenuació constant (c=1), sobre l'eix -Z, no restringida.
+	// LLum 4: Atenuació constant (c=1), sobre l'eix -Z, no restringida.
 	llumGL[4].encesa = false;
 	llumGL[4].difusa[0] = 1.0f;			llumGL[4].difusa[1] = 1.0f;			llumGL[4].difusa[2] = 1.0f;		llumGL[4].difusa[3] = 1.0f;
 	llumGL[4].especular[0] = 1.0f;		llumGL[4].especular[1] = 1.0f;		llumGL[4].especular[2] = 1.0f;	llumGL[4].especular[3] = 1;
@@ -160,7 +160,7 @@ void InitGL()
 	llumGL[4].spotdirection[0] = 0.0;	llumGL[4].spotdirection[1] = 0.0;	llumGL[4].spotdirection[2] = 0.0;
 	llumGL[4].spotcoscutoff = 0.0;		llumGL[4].spotexponent = 0.0;
 
-// LLum #5:
+	// LLum #5:
 	llumGL[5].encesa = false;
 	llumGL[5].difusa[0] = 1.0f;			llumGL[5].difusa[1] = 1.0f;			llumGL[5].difusa[2] = 1.0f;		llumGL[5].difusa[3] = 1.0f;
 	llumGL[5].especular[0] = 1.0f;		llumGL[5].especular[1] = 1.0f;		llumGL[5].especular[2] = 1.0f;	llumGL[5].especular[3] = 1;
@@ -171,7 +171,7 @@ void InitGL()
 	llumGL[5].spotdirection[0] = 0.0;	llumGL[5].spotdirection[1] = 0.0;	llumGL[5].spotdirection[2] = 0.0;
 	llumGL[5].spotcoscutoff = 0.0;		llumGL[5].spotexponent = 0.0;
 
-// LLum #6: Llum Vaixell, configurada a la funció vaixell() en escena.cpp.
+	// LLum #6: Llum Vaixell, configurada a la funció vaixell() en escena.cpp.
 	llumGL[6].encesa = false;
 	llumGL[6].difusa[0] = 1.0f;			llumGL[6].difusa[1] = 1.0f;			llumGL[6].difusa[2] = 1.0f;		llumGL[6].difusa[3] = 1.0f;
 	llumGL[6].especular[0] = 1.0f;		llumGL[6].especular[1] = 1.0f;		llumGL[6].especular[2] = 1.0f;	llumGL[6].especular[3] = 1;
@@ -182,7 +182,7 @@ void InitGL()
 	llumGL[6].spotdirection[0] = 0.0;	llumGL[6].spotdirection[1] = 0.0;	llumGL[6].spotdirection[2] = 0.0;
 	llumGL[6].spotcoscutoff = 0.0;		llumGL[6].spotexponent = 0.0;
 
-// LLum #7: Llum Far, configurada a la funció faro() en escena.cpp.
+	// LLum #7: Llum Far, configurada a la funció faro() en escena.cpp.
 	llumGL[7].encesa = false;
 	llumGL[7].difusa[0] = 1.0f;			llumGL[7].difusa[1] = 1.0f;			llumGL[7].difusa[2] = 1.0f;		llumGL[7].difusa[3] = 1.0f;
 	llumGL[7].especular[0] = 1.0f;		llumGL[7].especular[1] = 1.0f;		llumGL[7].especular[2] = 1.0f;	llumGL[7].especular[3] = 1;
@@ -193,24 +193,24 @@ void InitGL()
 	llumGL[7].spotdirection[0] = 0.0;	llumGL[7].spotdirection[1] = 0.0;	llumGL[7].spotdirection[2] = 0.0;
 	llumGL[7].spotcoscutoff = 0.0;		llumGL[7].spotexponent = 0.0;
 
-// Entorn VGI: Variables de control del menú Shaders
-	shader = CAP_SHADER;  shader_programID = 0;	
+	// Entorn VGI: Variables de control del menú Shaders
+	shader = CAP_SHADER;  shader_programID = 0;
 	shaderLighting.releaseAllShaders();
 	fprintf(stderr, "Gouraud_shdrML: \n");
 	if (!shader_programID) shader_programID = shaderLighting.loadFileShaders(".\\shaders\\gouraud_shdrML.vert", ".\\shaders\\gouraud_shdrML.frag");
 	shader = GOURAUD_SHADER;
 
 
-// Càrrega SHADERS
-// Càrrega Shader Eixos
+	// Càrrega SHADERS
+	// Càrrega Shader Eixos
 	fprintf(stderr, "Eixos: \n");
 	if (!eixos_programID) eixos_programID = shaderEixos.loadFileShaders(".\\shaders\\eixos.VERT", ".\\shaders\\eixos.FRAG");
 
-// Càrrega Shader Skybox
+	// Càrrega Shader Skybox
 	fprintf(stderr, "SkyBox: \n");
 	if (!skC_programID) skC_programID = shader_SkyBoxC.loadFileShaders(".\\shaders\\skybox.VERT", ".\\shaders\\skybox.FRAG");
 
-// Càrrega VAO Skybox Cube
+	// Càrrega VAO Skybox Cube
 	if (skC_VAOID.vaoId == 0) skC_VAOID = loadCubeSkybox_VAO();
 	Set_VAOList(CUBE_SKYBOX, skC_VAOID);
 	printf("asddfgakfjasd \n");
@@ -255,13 +255,13 @@ void InitGL()
 		cubemapTexture[2] = loadCubemap(faces2);
 	}
 
-// Entorn VGI: Variables de control dels botons de mouse
+	// Entorn VGI: Variables de control dels botons de mouse
 	m_PosEAvall.x = 0;			m_PosEAvall.y = 0;			m_PosDAvall.x = 0;			m_PosDAvall.y = 0;
 	m_ButoEAvall = false;		m_ButoDAvall = false;
 	m_EsfeEAvall.R = 0.0;		m_EsfeEAvall.alfa = 0.0;	m_EsfeEAvall.beta = 0.0;
 	m_EsfeIncEAvall.R = 0.0;	m_EsfeIncEAvall.alfa = 0.0;	m_EsfeIncEAvall.beta = 0.0;
 
-// Entorn VGI: Variables que controlen paràmetres visualització: Mides finestra Windows i PV
+	// Entorn VGI: Variables que controlen paràmetres visualització: Mides finestra Windows i PV
 	w = 1280;			h = 720;			// Mides de la finestra Windows (w-amplada,h-alçada)
 	width_old = 1280;	height_old = 720;	// Mides de la resolució actual de la pantalla (finestra Windows)
 	w_old = 1280;		h_old = 720;		// Mides de la finestra Windows (w-amplada,h-alçada) per restaurar Finestra des de fullscreen
@@ -269,7 +269,7 @@ void InitGL()
 	//OPV.R = 15.0;		OPV.alfa = 0.0;		OPV.beta = 0.0;										// Origen PV en esfèriques
 	Vis_Polar = POLARZ;
 
-// Entorn VGI: Color de fons i de l'objecte
+	// Entorn VGI: Color de fons i de l'objecte
 	fonsR = true;		fonsG = true;		fonsB = true;
 	c_fons.r = clear_colorB.x;		c_fons.g = clear_colorB.y;		c_fons.b = clear_colorB.z;			c_fons.b = clear_colorB.w;
 	//c_fons.r = 0.0;		c_fons.g = 0.0;		c_fons.b = 0.0;			c_fons.b = 1.0;
@@ -280,10 +280,11 @@ void InitGL()
 // Entorn VGI: Objecte OBJ
 	ObOBJ = NULL;		vao_OBJ.vaoId = 0;		vao_OBJ.vboId = 0;		vao_OBJ.nVertexs = 0;
 
-// Entorn VGI: OBJECTE --> Corba B-Spline i Bezier
+	// Entorn VGI: OBJECTE --> Corba B-Spline i Bezier
 	npts_T = 0;
 	for (i = 0; i < MAX_PATCH_CORBA; i = i++)
-	{	PC_t[i].x = 0.0;
+	{
+		PC_t[i].x = 0.0;
 		PC_t[i].y = 0.0;
 		PC_t[i].z = 0.0;
 	}
@@ -291,19 +292,19 @@ void InitGL()
 	pas_CS = PAS_BSPLINE;
 	sw_Punts_Control = false;
 
-// TRIEDRE DE FRENET / DARBOUX: VT: vector Tangent, VNP: Vector Normal Principal, VBN: vector BiNormal
+	// TRIEDRE DE FRENET / DARBOUX: VT: vector Tangent, VNP: Vector Normal Principal, VBN: vector BiNormal
 	dibuixa_TriedreFrenet = false;		dibuixa_TriedreDarboux = false;
 	VT = { 0.0, 0.0, 1.0 };		VNP = { 1.0, 0.0, 0.0 };	VBN = { 0.0, 1.0, 0.0 };
 
-// Entorn VGI: Variables del Timer
+	// Entorn VGI: Variables del Timer
 	t = 0;			anima = false;
 
-// Entorn VGI: Variables de l'objecte FRACTAL
+	// Entorn VGI: Variables de l'objecte FRACTAL
 	t_fractal = CAP;	soroll = 'C';
 	pas = 64;			pas_ini = 64;
 	sw_il = true;		palcolFractal = false;
 
-// Entorn VGI: Altres variables
+	// Entorn VGI: Altres variables
 	mida = 1.0;			nom = "";		buffer = "";
 	initVAOList();	// Inicialtzar llista de VAO'S.
 
@@ -316,7 +317,7 @@ void InitGL()
 
 void InitAPI()
 {
-// Vendor, Renderer, Version, Shading Laguage Version i Extensions suportades per la placa gràfica gravades en fitxer extensions.txt
+	// Vendor, Renderer, Version, Shading Laguage Version i Extensions suportades per la placa gràfica gravades en fitxer extensions.txt
 	std::string nomf = "extensions.txt";
 	char const* nomExt = "";
 	const char* nomfitxer;
@@ -325,33 +326,35 @@ void InitAPI()
 
 	char* str = (char*)glGetString(GL_VENDOR);
 	FILE* f = fopen(nomfitxer, "w");
-	if(f)	{	fprintf(f,"VENDOR: %s\n",str);
-				fprintf(stderr, "VENDOR: %s\n", str);
-				str = (char*)glGetString(GL_RENDERER);
-				fprintf(f, "RENDERER: %s\n", str);
-				fprintf(stderr, "RENDERER: %s\n", str);
-				str = (char*)glGetString(GL_VERSION);
-				fprintf(f, "VERSION: %s\n", str);
-				fprintf(stderr, "VERSION: %s\n", str);
-				str = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
-				fprintf(f, "SHADING_LANGUAGE_VERSION: %s\n", str);
-				fprintf(stderr, "SHADING_LANGUAGE_VERSION: %s\n", str);
-				glGetIntegerv(GL_NUM_EXTENSIONS, &num_Ext);
-				fprintf(f, "EXTENSIONS: \n");
-				fprintf(stderr, "EXTENSIONS: \n");
-				for (int i = 0; i < num_Ext; i++)
-				{	nomExt = (char const*)glGetStringi(GL_EXTENSIONS, i);
-					fprintf(f, "%s \n", nomExt);
-					//fprintf(stderr, "%s", nomExt);	// Displaiar extensions per pantalla
-				}
-				//fprintf(stderr, "\n");				// Displaiar <cr> per pantalla després extensions
+	if (f) {
+		fprintf(f, "VENDOR: %s\n", str);
+		fprintf(stderr, "VENDOR: %s\n", str);
+		str = (char*)glGetString(GL_RENDERER);
+		fprintf(f, "RENDERER: %s\n", str);
+		fprintf(stderr, "RENDERER: %s\n", str);
+		str = (char*)glGetString(GL_VERSION);
+		fprintf(f, "VERSION: %s\n", str);
+		fprintf(stderr, "VERSION: %s\n", str);
+		str = (char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
+		fprintf(f, "SHADING_LANGUAGE_VERSION: %s\n", str);
+		fprintf(stderr, "SHADING_LANGUAGE_VERSION: %s\n", str);
+		glGetIntegerv(GL_NUM_EXTENSIONS, &num_Ext);
+		fprintf(f, "EXTENSIONS: \n");
+		fprintf(stderr, "EXTENSIONS: \n");
+		for (int i = 0; i < num_Ext; i++)
+		{
+			nomExt = (char const*)glGetStringi(GL_EXTENSIONS, i);
+			fprintf(f, "%s \n", nomExt);
+			//fprintf(stderr, "%s", nomExt);	// Displaiar extensions per pantalla
+		}
+		//fprintf(stderr, "\n");				// Displaiar <cr> per pantalla després extensions
 //				str = (char*)glGetString(GL_EXTENSIONS);
 //				fprintf(f, "EXTENSIONS: %s\n", str);
 				//fprintf(stderr, "EXTENSIONS: %s\n", str);
-				fclose(f);
-			}
+		fclose(f);
+	}
 
-// Program
+	// Program
 	glCreateProgram = (PFNGLCREATEPROGRAMPROC)wglGetProcAddress("glCreateProgram");
 	glDeleteProgram = (PFNGLDELETEPROGRAMPROC)wglGetProcAddress("glDeleteProgram");
 	glUseProgram = (PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram");
@@ -383,14 +386,14 @@ void InitAPI()
 	glBindAttribLocation = (PFNGLBINDATTRIBLOCATIONPROC)wglGetProcAddress("glBindAttribLocation");
 	glGetActiveUniform = (PFNGLGETACTIVEUNIFORMPROC)wglGetProcAddress("glGetActiveUniform");
 
-// Shader
+	// Shader
 	glCreateShader = (PFNGLCREATESHADERPROC)wglGetProcAddress("glCreateShader");
 	glDeleteShader = (PFNGLDELETESHADERPROC)wglGetProcAddress("glDeleteShader");
 	glShaderSource = (PFNGLSHADERSOURCEPROC)wglGetProcAddress("glShaderSource");
 	glCompileShader = (PFNGLCOMPILESHADERPROC)wglGetProcAddress("glCompileShader");
 	glGetShaderiv = (PFNGLGETSHADERIVPROC)wglGetProcAddress("glGetShaderiv");
 
-// VBO
+	// VBO
 	glGenBuffers = (PFNGLGENBUFFERSPROC)wglGetProcAddress("glGenBuffers");
 	glBindBuffer = (PFNGLBINDBUFFERPROC)wglGetProcAddress("glBindBuffer");
 	glBufferData = (PFNGLBUFFERDATAPROC)wglGetProcAddress("glBufferData");
@@ -423,129 +426,132 @@ void GetGLVersion(int* major, int* minor)
 
 void OnSize(GLFWwindow* window, int width, int height)
 {
-// TODO: Agregue aquí su código de controlador de mensajes
+	// TODO: Agregue aquí su código de controlador de mensajes
 
-// A resize event occured; cx and cy are the window's new width and height.
-// Find the OpenGL change size function given in the Lab 1 notes and call it here
+	// A resize event occured; cx and cy are the window's new width and height.
+	// Find the OpenGL change size function given in the Lab 1 notes and call it here
 
-// Entorn VGI: MODIFICACIÓ ->Establim les mides de la finestra actual
+	// Entorn VGI: MODIFICACIÓ ->Establim les mides de la finestra actual
 	w = width;	h = height;
 
-// Crida a OnPaint per a redibuixar la pantalla
-//	OnPaint();
+	// Crida a OnPaint per a redibuixar la pantalla
+	//	OnPaint();
 }
 
 
 // OnPaint: Funció de dibuix i visualització en frame buffer del frame
 void OnPaint(GLFWwindow* window)
 {
-// TODO: Agregue aquí su código de controlador de mensajes
+	// TODO: Agregue aquí su código de controlador de mensajes
 	GLdouble vpv[3] = { 0.0, 0.0, 1.0 };
 
 
-// Entorn VGI: Cridem a les funcions de l'escena i la projecció segons s'hagi 
-// seleccionat una projecció o un altra
+	// Entorn VGI: Cridem a les funcions de l'escena i la projecció segons s'hagi 
+	// seleccionat una projecció o un altra
 	switch (projeccio)
 	{
 	case AXONOM:
-// Entorn VGI: PROJECCIÓ AXONOMÈTRICA
-// Entorn VGI: Activació del retall de pantalla
+		// Entorn VGI: PROJECCIÓ AXONOMÈTRICA
+		// Entorn VGI: Activació del retall de pantalla
 		glEnable(GL_SCISSOR_TEST);
 
-// Entorn VGI: Retall
+		// Entorn VGI: Retall
 		glScissor(0, 0, w, h);
 		glViewport(0, 0, w, h);
 
-// Aquí farem les crides per a definir Viewport, Projecció i Càmara: INICI -------------------------
+		// Aquí farem les crides per a definir Viewport, Projecció i Càmara: INICI -------------------------
 
-// Aquí farem les cridesper a definir Viewport, Projecció i Càmara:: FI -------------------------
-// Entorn VGI: Dibuixar Model (escena)
+		// Aquí farem les cridesper a definir Viewport, Projecció i Càmara:: FI -------------------------
+		// Entorn VGI: Dibuixar Model (escena)
 		configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes
 		dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
 
-// Entorn VGI: Transferència del buffer OpenGL a buffer de pantalla
-		//glfwSwapBuffers(window);
+		// Entorn VGI: Transferència del buffer OpenGL a buffer de pantalla
+				//glfwSwapBuffers(window);
 		break;
 
 	case PERSPECT:
-// Entorn VGI: PROJECCIÓ PERSPECTIVA
-		//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
+		// Entorn VGI: PROJECCIÓ PERSPECTIVA
+				//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Set Perspective Calculations To Most Accurate
 		glDisable(GL_SCISSOR_TEST);		// Desactivació del retall de pantalla
 
-// Entorn VGI: Activar shader Visualització Escena
+		// Entorn VGI: Activar shader Visualització Escena
 		glUseProgram(shader_programID);
 
-// Entorn VGI: Definició de Viewport, Projecció i Càmara
+		// Entorn VGI: Definició de Viewport, Projecció i Càmara
 		ProjectionMatrix = Projeccio_Perspectiva(shader_programID, 0, 0, w, h, OPV.R);
 
-// Entorn VGI: Definició de la càmera.
+		// Entorn VGI: Definició de la càmera.
 		if (camera == CAM_ESFERICA) {
-				n[0] = 0;		n[1] = 0;		n[2] = 0;
-				ViewMatrix = Vista_Esferica(shader_programID, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
-					front_faces, oculta, test_vis, back_line,
-					ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
-					eixos, grid, hgrid);
-				}
+			n[0] = 0;		n[1] = 0;		n[2] = 0;
+			ViewMatrix = Vista_Esferica(shader_programID, OPV, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
+				front_faces, oculta, test_vis, back_line,
+				ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+				eixos, grid, hgrid);
+		}
 		else if (camera == CAM_NAVEGA) {
-				if (Vis_Polar == POLARZ) {	vpv[0] = 0.0;	vpv[1] = 0.0;	vpv[2] = 1.0;
-										}
-				else if (Vis_Polar == POLARY) {	vpv[0] = 0.0;	vpv[1] = 1.0;	vpv[2] = 0.0;
-										}
-				else if (Vis_Polar == POLARX) {	vpv[0] = 1.0;	vpv[1] = 0.0;	vpv[2] = 0.0;
-										}
-				if (gameState.enableCameraRotation) {
-					ViewMatrix = Vista_Navega(shader_programID, opvN, //false, 
-						n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
-						front_faces, oculta, test_vis, back_line,
-						ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
-						eixos, grid, hgrid);
-				}
-				else {
-					CPunt3D opvN_fixed  = { 10.0f, 0.0f, 0.0f };
-					GLdouble n_fixed[3] = { 0.0f, 0.0f, 0.0f };
-					ViewMatrix = Vista_Navega(shader_programID, opvN_fixed, //false, 
-						n_fixed, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
-						front_faces, oculta, test_vis, back_line,
-						ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
-						eixos, grid, hgrid);
-				}
+			if (Vis_Polar == POLARZ) {
+				vpv[0] = 0.0;	vpv[1] = 0.0;	vpv[2] = 1.0;
 			}
-				
-		else if (camera == CAM_GEODE) {
-				ViewMatrix = Vista_Geode(shader_programID, OPV_G, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
+			else if (Vis_Polar == POLARY) {
+				vpv[0] = 0.0;	vpv[1] = 1.0;	vpv[2] = 0.0;
+			}
+			else if (Vis_Polar == POLARX) {
+				vpv[0] = 1.0;	vpv[1] = 0.0;	vpv[2] = 0.0;
+			}
+			if (gameState.enableCameraRotation) {
+				ViewMatrix = Vista_Navega(shader_programID, opvN, //false, 
+					n, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
 					front_faces, oculta, test_vis, back_line,
 					ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
 					eixos, grid, hgrid);
-				}
+			}
+			else {
+				CPunt3D opvN_fixed = { 10.0f, 0.0f, 0.0f };
+				GLdouble n_fixed[3] = { 0.0f, 0.0f, 0.0f };
+				ViewMatrix = Vista_Navega(shader_programID, opvN_fixed, //false, 
+					n_fixed, vpv, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, true, pas,
+					front_faces, oculta, test_vis, back_line,
+					ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+					eixos, grid, hgrid);
+			}
+		}
 
-// Entorn VGI: Dibuix de l'Objecte o l'Escena
+		else if (camera == CAM_GEODE) {
+			ViewMatrix = Vista_Geode(shader_programID, OPV_G, Vis_Polar, pan, tr_cpv, tr_cpvF, c_fons, col_obj, objecte, mida, pas,
+				front_faces, oculta, test_vis, back_line,
+				ilumina, llum_ambient, llumGL, ifixe, ilum2sides,
+				eixos, grid, hgrid);
+		}
+
+		// Entorn VGI: Dibuix de l'Objecte o l'Escena
 		configura_Escena();     // Aplicar Transformacions Geometriques segons persiana Transformacio i configurar objectes.
 		dibuixa_Escena();		// Dibuix geometria de l'escena amb comandes GL.
 
-// Entorn VGI: Transferència del buffer OpenGL a buffer de pantalla
-		//glfwSwapBuffers(window);
+		// Entorn VGI: Transferència del buffer OpenGL a buffer de pantalla
+				//glfwSwapBuffers(window);
 		break;
 
 	default:
-// Entorn VGI: Càrrega SHADERS
-// Entorn VGI: Càrrega Shader Eixos
+		// Entorn VGI: Càrrega SHADERS
+		// Entorn VGI: Càrrega Shader Eixos
 		if (!eixos_programID) eixos_programID = shaderEixos.loadFileShaders(".\\shaders\\eixos.VERT", ".\\shaders\\eixos.FRAG");
 
-// Entorn VGI: Càrrega Shader de Gouraud
+		// Entorn VGI: Càrrega Shader de Gouraud
 		if (!shader_programID) shader_programID = shaderLighting.loadFileShaders(".\\shaders\\gouraud_shdrML.vert", ".\\shaders\\gouraud_shdrML.frag");
 
-// Entorn VGI: Creació de la llista que dibuixarà els eixos Coordenades Món. Funció on està codi per dibuixar eixos	
+		// Entorn VGI: Creació de la llista que dibuixarà els eixos Coordenades Món. Funció on està codi per dibuixar eixos	
 		if (!eixos_Id) eixos_Id = deixos();						// Funció que defineix els Eixos Coordenades Món com un VAO.
 
-// Entorn VGI: Crida a la funció Fons Blanc
+		// Entorn VGI: Crida a la funció Fons Blanc
 		FonsB();
 
-// Entorn VGI: Transferència del buffer OpenGL a buffer de pantalla
-		//glfwSwapBuffers(window);
+		// Entorn VGI: Transferència del buffer OpenGL a buffer de pantalla
+				//glfwSwapBuffers(window);
 		break;
-}
+	}
 
-//  Actualitzar la barra d'estat de l'aplicació amb els valors R,A,B,PVx,PVy,PVz
+	//  Actualitzar la barra d'estat de l'aplicació amb els valors R,A,B,PVx,PVy,PVz
 	if (statusB) Barra_Estat();
 }
 
@@ -553,10 +559,10 @@ void OnPaint(GLFWwindow* window)
 //                   primitives OpenGL dins classe Model
 void configura_Escena() {
 
-// Aplicar Transformacions Geometriques segons persiana Transformacio i Quaternions
+	// Aplicar Transformacions Geometriques segons persiana Transformacio i Quaternions
 	GTMatrix = instancia(transf, TG, TGF);
 
-	
+
 }
 
 // dibuixa_Escena: Funcio que crida al dibuix dels diferents elements de l'escana
@@ -568,12 +574,12 @@ void dibuixa_Escena() {
 	//printf("SkyBox= %d \n", SkyBox);
 	dibuixa_Skybox(skC_programID, cubemapTexture[SkyBox], Vis_Polar, ProjectionMatrix, ViewMatrix);
 
-//	Dibuix Coordenades Món i Reixes.
+	//	Dibuix Coordenades Món i Reixes.
 	dibuixa_Eixos(eixos_programID, eixos, eixos_Id, grid, hgrid, ProjectionMatrix, ViewMatrix);
 
-	
 
-//	Dibuix geometria de l'escena amb comandes GL.
+
+	//	Dibuix geometria de l'escena amb comandes GL.
 	dibuixa_EscenaGL(shader_programID, eixos, eixos_Id, grid, hgrid, objecte, col_obj, sw_material,
 		textura, texturesID, textura_map, tFlag_invert_Y,
 		npts_T, PC_t, pas_CS, sw_Punts_Control, dibuixa_TriedreFrenet,
@@ -615,7 +621,7 @@ void RenderUI() {
 			ImGui::Text("%s", slot.itemName.c_str());
 			ImGui::Text("Cantidad: %d", slot.quantity);
 		*/
-		
+
 
 		// Verifica si el slot está siendo clickeado
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
@@ -652,7 +658,16 @@ void draw_Menu_ABP()
 	bool menuActivate = false;
 	static bool showMenu = false;
 
-	
+	static bool showOptions = false;
+	float yOffset = ImGui::GetIO().DisplaySize.y * 0.7f;
+	ImVec2 menuSize = ImVec2(700.0f, 450.0f);
+	ImVec2 menuPos = ImVec2(
+		(ImGui::GetIO().DisplaySize.x - menuSize.x) * 0.5f,
+		yOffset
+	);
+	float buttonWidth = 300;
+	float buttonHeight = 75;
+	float largerVerticalSpacing = 500.0f;
 
 	switch (gameScene) {
 	case SCENE_START:
@@ -671,7 +686,7 @@ void draw_Menu_ABP()
 			ImGuiWindowFlags_NoMove |
 			ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoInputs);
 
-		
+
 		ImGui::Image((void*)(intptr_t)texturesID[80], imageSize);
 
 		ImGui::End();
@@ -694,7 +709,7 @@ void draw_Menu_ABP()
 		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
 
 		ImGui::Begin("Change skybox",
-			nullptr,ImGuiWindowFlags_NoBackground);
+			nullptr, ImGuiWindowFlags_NoBackground);
 
 		ImGui::Text("Pulsa '-' para cambiar skybox");
 
@@ -733,17 +748,18 @@ void draw_Menu_ABP()
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
 		ImGui::Begin("Menu", nullptr, flags);
 
-
-
 		ImGui::PushFont(fontMenu);
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));  // Color y opacidad por defecto
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));  // Color y opacidad al pasar el ratón
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(1.0f, 1.0f, 1.0f, 0.1f));  // Color y opacidad al pasar el ratón
-		if (ImGui::Button("Return to Menu")) {
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.0f, 0.0f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.2f, 0.2f, 0.3f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.5f, 0.0f, 0.0f, 0.3f));
+
+		ImGui::TextColored(ImVec4(0.5, 0, 0, 1), "Retry?");
+
+		if (ImGui::Button("Yes")) {
 			gameScene = 1;
 		}
 
-		if (ImGui::Button("Exit Game")) {
+		if (ImGui::Button("No")) {
 			glfwSetWindowShouldClose(window, true);
 		}
 
@@ -766,8 +782,8 @@ void draw_Menu_ABP()
 		ImGui::Image((void*)(intptr_t)texturesID[81], imageSize);
 		ImGui::End();
 
-		ImGui::SetNextWindowPos(ImVec2(200, 300));
-		ImGui::SetNextWindowSize(ImVec2(700.0f, 450.0f), escalado);
+		ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
 		if (false) flags |= ImGuiWindowFlags_NoBackground;
 		ImGui::Begin("Menu", nullptr, flags);
 
@@ -776,14 +792,45 @@ void draw_Menu_ABP()
 
 		ImGui::PushFont(fontMenu);
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
-		if (ImGui::Button("Start scape room")) {
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.2f, 0.2f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.3f, 0.3f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.7f, 0.7f, 0.7f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.9f, 0.9f, 0.9f, 1.0f));
+
+		ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 6.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 12.0f);
+		ImGui::Dummy(ImVec2(0.0f, largerVerticalSpacing));
+		if (ImGui::Button("Play", ImVec2(buttonWidth, buttonHeight))) {
 			gameState.audioEngine->setSoundVolume(0.1f);
 			gameState.audioEngine->play2D("media\\horror_01_drone_01.wav", true, false, true);
 			gameState.enableCameraRotation = true;
 			gameScene = 2;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
+		}
+
+		ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
+		if (ImGui::Button("Options", ImVec2(buttonWidth, buttonHeight))) {
+			showOptions = !showOptions;
+		}
+
+		if (showOptions) {
+			ImGui::SliderFloat("Volume (Music)", &volumeMusic, 0.0f, 1.0f);
+			ImGui::SliderFloat("Volume (Sound effects)", &volumeSfx, 0.0f, 1.0f);
+
+			ImGui::Checkbox("Fullscreen", &fullscreen);
+			ImGui::Checkbox("Vsync", &vsync);
+
+			if (ImGui::Button("Apply Settings", ImVec2(buttonWidth, buttonHeight)))
+			{
+				printf("Apply settings\n");
+				wglSwapIntervalEXT(vsync);
+				OnFull_Screen(primary, window);
+
+				showOptions = false;
+			}
 		}
 
 		//if (ImGui::Button("Debug scene for testing")) {
@@ -867,31 +914,18 @@ void draw_Menu_ABP()
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
 		}*/
-		ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
-		
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "Options");
 
-		ImGui::SliderFloat("Volume (Music)", &volumeMusic, 0.0f, 1.0f);
-		ImGui::SliderFloat("Volume (Sound effects)", &volumeSfx, 0.0f, 1.0f);
-		
-		ImGui::Checkbox("Fullscreen", &fullscreen);
-		ImGui::Checkbox("Vsync", &vsync);
-		
-		if (ImGui::Button("Apply Settings")) {
-			printf("Apply settings\n");
-			wglSwapIntervalEXT(vsync);
-			OnFull_Screen(primary, window);
-
-		}
 		ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
-		if (ImGui::Button("Exit Game")) {
+		if (ImGui::Button("Exit Game", ImVec2(buttonWidth, buttonHeight))) {
 			glfwSetWindowShouldClose(window, true);
 		}
-		ImGui::PopStyleColor();
+		ImGui::PopStyleColor(6);
+		ImGui::PopStyleVar(2);
 		ImGui::PopFont();
+
 		ImGui::End();
 
-		
+
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -905,25 +939,25 @@ void draw_Menu_ABP()
 		ImGui::Begin("Game timer", nullptr, flags);
 
 		ImGui::Text("Time till game over");
-//<<<<<<< inventory&menu
+		//<<<<<<< inventory&menu
 		elapsedTimer = 180 - (time(NULL) - gameTimer);
 		elapsedM = (elapsedTimer / 60) % 60;
-//=======
-		//elapsedTimer = 5 - (time(NULL) - gameTimer);
+		//=======
+				//elapsedTimer = 5 - (time(NULL) - gameTimer);
 
-		//elapsedM = (elapsedTimer / 60);
-//>>>>>>> main
+				//elapsedM = (elapsedTimer / 60);
+		//>>>>>>> main
 		elapsedS = elapsedTimer % 60;
 		ImGui::Text("%02d:%02d\n", elapsedM, elapsedS);
 
 		if (elapsedM == 0 && elapsedS == 0) {
 			gameScene = 3;
 		}
-		
+
 		RenderUI();
 
 		if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
-		
+
 			showMenu = !showMenu;
 		}
 
@@ -948,15 +982,50 @@ void draw_Menu_ABP()
 
 			ImGui::PushFont(fontMenu);
 
-			if (ImGui::Button("Return to Menu")) {
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.2f, 0.2f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.3f, 0.3f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.7f, 0.7f, 0.7f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.9f, 0.9f, 0.9f, 1.0f));
+
+			ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 6.0f);
+			ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 12.0f);
+
+			if (ImGui::Button("Return to Menu", ImVec2(buttonWidth, buttonHeight))) {
 				gameScene = 1;
 				showMenu = !showMenu;
 			}
 
-			if (ImGui::Button("Exit Game")) {
+			ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
+			if (ImGui::Button("Options", ImVec2(buttonWidth, buttonHeight))) {
+				showOptions = !showOptions;
+			}
+
+			if (showOptions) {
+				ImGui::SliderFloat("Volume (Music)", &volumeMusic, 0.0f, 1.0f);
+				ImGui::SliderFloat("Volume (Sound effects)", &volumeSfx, 0.0f, 1.0f);
+
+				ImGui::Checkbox("Fullscreen", &fullscreen);
+				ImGui::Checkbox("Vsync", &vsync);
+
+				if (ImGui::Button("Apply Settings", ImVec2(buttonWidth, buttonHeight)))
+				{
+					printf("Apply settings\n");
+					wglSwapIntervalEXT(vsync);
+					OnFull_Screen(primary, window);
+
+					showOptions = false;
+				}
+			}
+
+			ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
+			if (ImGui::Button("Exit Game", ImVec2(buttonWidth, buttonHeight))) {
 				glfwSetWindowShouldClose(window, true);
 
 			}
+			ImGui::PopStyleColor(6);
+			ImGui::PopStyleVar(2);
 			ImGui::PopFont();
 			ImGui::End();
 
@@ -1076,7 +1145,7 @@ void draw_Menu_ABP()
 		ImGui::Begin("Game timer", nullptr, flags);
 
 		//ImGui::Text("Puzzle 4: Clau amagada");
-		
+
 		//elapsedTimer = 100000 - (time(NULL) - gameTimer);
 		//elapsedM = (elapsedTimer / 60) % 60;
 		//elapsedS = elapsedTimer % 60;
@@ -1127,7 +1196,7 @@ void MostraEntornVGIWindow(bool* p_open)
 
 void ShowArxiusOptions()
 {
-	
+
 }
 
 
@@ -1145,7 +1214,7 @@ int shortCut_Camera()
 
 // Entorn VGI: Funció que retorna opció de menú TIPUS PROJECCIO segons variable projecte (si modificada per teclat)
 int shortCut_Projeccio()
-{	
+{
 	return 0;
 }
 
@@ -1167,7 +1236,7 @@ int shortCut_Iluminacio()
 // You may then seABP_CUSTOMh for keywords in the code when you are interested by a specific feature.
 void ShowEntornVGIWindow(bool* p_open)
 {
-	
+
 }
 
 void Menu_Shaders_Opcio_CarregarVSFS()
@@ -1197,8 +1266,8 @@ void Menu_Shaders_Opcio_GravarProgram()
 void OnKeyDown(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	ImGuiWindowFlags flags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings;
-	
-// TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
+
+	// TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
 	const double incr = 0.025f;
 	double modul = 0;
 	GLdouble vdir[3] = { 0, 0, 0 };
@@ -1273,50 +1342,50 @@ void Teclat_Shift(int key, GLFWwindow* window)
 	CColor color_Mar = { 0.0,0.0,0.0,1.0 };
 
 	switch (key)
-	{	
-// ----------- POP UP Fitxers
+	{
+		// ----------- POP UP Fitxers
 
-		// Tecla Obrir Fitxer OBJ (ABP: no funciona, lo dejo para ver como lo podemos arreglar y usar para cargar modelos 3d)
-		case GLFW_KEY_F2:
-			// Entorn VGI: Obrir diàleg de lectura de fitxer (fitxers (*.OBJ)
-			nomFitxer = NULL;
-			result = NFD_OpenDialog(NULL, NULL, &nomFitxer);
+				// Tecla Obrir Fitxer OBJ (ABP: no funciona, lo dejo para ver como lo podemos arreglar y usar para cargar modelos 3d)
+	case GLFW_KEY_F2:
+		// Entorn VGI: Obrir diàleg de lectura de fitxer (fitxers (*.OBJ)
+		nomFitxer = NULL;
+		result = NFD_OpenDialog(NULL, NULL, &nomFitxer);
 
-			if (result == NFD_OKAY) {
-				puts("Success!");
-				puts(nomFitxer);
+		if (result == NFD_OKAY) {
+			puts("Success!");
+			puts(nomFitxer);
 
-				objecte = OBJOBJ;	textura = true;		tFlag_invert_Y = false;
-				//char* nomfitx = nomFitxer;
-				if (ObOBJ == NULL) ObOBJ = ::new COBJModel;
-				else { // Si instància ja s'ha utilitzat en un objecte OBJ
-					ObOBJ->netejaVAOList_OBJ();		// Netejar VAO, EBO i VBO
-					ObOBJ->netejaTextures_OBJ();	// Netejar buffers de textures
-					}
+			objecte = OBJOBJ;	textura = true;		tFlag_invert_Y = false;
+			//char* nomfitx = nomFitxer;
+			if (ObOBJ == NULL) ObOBJ = ::new COBJModel;
+			else { // Si instància ja s'ha utilitzat en un objecte OBJ
+				ObOBJ->netejaVAOList_OBJ();		// Netejar VAO, EBO i VBO
+				ObOBJ->netejaTextures_OBJ();	// Netejar buffers de textures
+			}
 
-				//int error = ObOBJ->LoadModel(nomfitx);			// Carregar objecte OBJ amb textura com a varis VAO's
-				int error = ObOBJ->LoadModel(nomFitxer);			// Carregar objecte OBJ amb textura com a varis VAO's
+			//int error = ObOBJ->LoadModel(nomfitx);			// Carregar objecte OBJ amb textura com a varis VAO's
+			int error = ObOBJ->LoadModel(nomFitxer);			// Carregar objecte OBJ amb textura com a varis VAO's
 
-				//	Pas de paràmetres textura al shader
-				if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "textur"), textura);
-				if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "flag_invert_y"), tFlag_invert_Y);
-				free(nomFitxer);
-				}
-			break;
-
-
-
-// ----------- POP UP Vista
-// 
-		// Tecla Full Screen?
-		case GLFW_KEY_F:
-			fullscreen = !fullscreen;
-			OnFull_Screen(primary, window);
-			break;
-
-		default:
-			break;
+			//	Pas de paràmetres textura al shader
+			if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "textur"), textura);
+			if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "flag_invert_y"), tFlag_invert_Y);
+			free(nomFitxer);
 		}
+		break;
+
+
+
+		// ----------- POP UP Vista
+		// 
+				// Tecla Full Screen?
+	case GLFW_KEY_F:
+		fullscreen = !fullscreen;
+		OnFull_Screen(primary, window);
+		break;
+
+	default:
+		break;
+	}
 }
 
 
@@ -1357,11 +1426,11 @@ void Teclat_Ctrl(int key)
 		if (ilumina != PLANA) {
 			ilumina = PLANA;
 			test_vis = false;		oculta = true;
-/*			// Elimina shader anterior
-			shaderLighting.DeleteProgram();
-			// Càrrega Flat shader
-			shader_programID = shaderLighting.loadFileShaders(".\\shaders\\flat_shdrML.vert", ".\\shaders\\flat_shdrML.frag");
-*/
+			/*			// Elimina shader anterior
+						shaderLighting.DeleteProgram();
+						// Càrrega Flat shader
+						shader_programID = shaderLighting.loadFileShaders(".\\shaders\\flat_shdrML.vert", ".\\shaders\\flat_shdrML.frag");
+			*/
 		}
 		break;
 
@@ -1373,37 +1442,37 @@ void Teclat_Ctrl(int key)
 		}
 		break;
 
-	// Tecla Iluminació --> Reflexió Material --> Emissió?
+		// Tecla Iluminació --> Reflexió Material --> Emissió?
 	case GLFW_KEY_F6:
 		sw_material[0] = !sw_material[0];
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "sw_intensity[0]"), sw_material[0]); // Pas màscara llums al shader
 		break;
 
-	// Tecla Iluminació --> Reflexió Material -> Ambient?
+		// Tecla Iluminació --> Reflexió Material -> Ambient?
 	case GLFW_KEY_F7:
 		sw_material[1] = !sw_material[1];
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "sw_intensity[1]"), sw_material[1]); // Pas màscara llums al shader
 		break;
 
-	// Tecla Iluminació --> Reflexió Material -> Difusa?
+		// Tecla Iluminació --> Reflexió Material -> Difusa?
 	case GLFW_KEY_F8:
 		sw_material[2] = !sw_material[2];
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "sw_intensity[2]"), sw_material[2]); // Pas màscara llums al shader
 		break;
 
-	// Tecla Iluminació --> Reflexió Material -> Especular?
+		// Tecla Iluminació --> Reflexió Material -> Especular?
 	case GLFW_KEY_F9:
 		sw_material[3] = !sw_material[3];
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "sw_intensity[3]"), sw_material[3]); // Pas màscara llums al shader
 		break;
 
-// Tecla Iluminació --> Reflexió Material -> Especular?
+		// Tecla Iluminació --> Reflexió Material -> Especular?
 	case GLFW_KEY_F10:
 		sw_material[4] = !sw_material[4];
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "sw_intensity[4]"), sw_material[4]); // Pas màscara llums al shader
 		break;
 
-	// Tecla Iluminació --> Textura?.
+		// Tecla Iluminació --> Textura?.
 	case GLFW_KEY_I:
 		textura = !textura;
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "texture"), textura); //	Pas de textura al shader
@@ -1411,36 +1480,36 @@ void Teclat_Ctrl(int key)
 
 
 
-// ----------- POP UP Llums
-	// Tecla Llums --> Llum Ambient?.
+		// ----------- POP UP Llums
+			// Tecla Llums --> Llum Ambient?.
 	case GLFW_KEY_A:
 		llum_ambient = !llum_ambient;
 		sw_il = true;
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "sw_intensity[1]"), (llum_ambient && sw_material[1])); // Pas màscara llums al shader
 		break;
 
-	// Tecla Llums --> Llum #0? (+Z)
+		// Tecla Llums --> Llum #0? (+Z)
 	case GLFW_KEY_0:
 		llumGL[0].encesa = !llumGL[0].encesa;
 		sw_il = true;
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "sw_lights[0]"), llumGL[0].encesa); // Pas màscara Llum #0 al shader
 		break;
 
-	// Tecla Llums --> Llum #1? (+X)
+		// Tecla Llums --> Llum #1? (+X)
 	case GLFW_KEY_1:
 		llumGL[1].encesa = !llumGL[1].encesa;
 		sw_il = true;
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "sw_lights[1]"), llumGL[1].encesa);
 		break;
 
-	// Tecla Llums --> Llum #2? (+Y)
+		// Tecla Llums --> Llum #2? (+Y)
 	case GLFW_KEY_2:
 		llumGL[2].encesa = !llumGL[2].encesa;
 		sw_il = true;
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "sw_lights[2]"), llumGL[2].encesa);
 		break;
 
-	// Tecla Llums --> Llum #3? (Z=Y=X)
+		// Tecla Llums --> Llum #3? (Z=Y=X)
 	case GLFW_KEY_3:
 		llumGL[3].encesa = !llumGL[3].encesa;
 		sw_il = true;
@@ -1448,14 +1517,14 @@ void Teclat_Ctrl(int key)
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "sw_lights[3]"), llumGL[3].encesa);
 		break;
 
-	// Tecla Llums --> Llum #4? (-Z)
+		// Tecla Llums --> Llum #4? (-Z)
 	case GLFW_KEY_4:
 		llumGL[4].encesa = !llumGL[4].encesa;
 		sw_il = true;
 		if (!shader_programID) glUniform1i(glGetUniformLocation(shader_programID, "sw_lights[4]"), llumGL[4].encesa);
 		break;
 
-	// Tecla Shaders --> Fitxers Shaders
+		// Tecla Shaders --> Fitxers Shaders
 	case GLFW_KEY_F12:
 
 		break;
@@ -1465,11 +1534,11 @@ void Teclat_Ctrl(int key)
 	}
 }
 
-void Teclat_Alt(int key) 
+void Teclat_Alt(int key)
 {
 	switch (key)
 	{
-	// Tecla Full Screen?
+		// Tecla Full Screen?
 	case GLFW_KEY_ENTER:
 		fullscreen = !fullscreen;
 		OnFull_Screen(primary, window);
@@ -1480,7 +1549,7 @@ void Teclat_Alt(int key)
 // Teclat_ColorObjecte: Teclat pels canvis de color de l'objecte per teclat.
 void Teclat_ColorObjecte(int key, int action)
 {
-	
+
 }
 
 
@@ -1502,12 +1571,12 @@ void Teclat_Navega(int key, int action)
 	vdir[0] = vdir[0] / modul;
 	vdir[1] = vdir[1] / modul;
 	vdir[2] = vdir[2] / modul;
-	
+
 	if (action == GLFW_PRESS)
 	{
 		switch (key)
 		{
-		// Tecla cursor amunt
+			// Tecla cursor amunt
 		case GLFW_KEY_UP:
 			if (Vis_Polar == POLARZ) {  // (X,Y,Z)
 				opvN.x += fact_pan * vdir[0];
@@ -1529,7 +1598,7 @@ void Teclat_Navega(int key, int action)
 			}
 			break;
 
-		// Tecla cursor avall
+			// Tecla cursor avall
 		case GLFW_KEY_DOWN:
 			if (Vis_Polar == POLARZ) { // (X,Y,Z)
 				opvN.x -= fact_pan * vdir[0];
@@ -1551,7 +1620,7 @@ void Teclat_Navega(int key, int action)
 			}
 			break;
 
-		// Tecla cursor esquerra
+			// Tecla cursor esquerra
 		case GLFW_KEY_LEFT:
 			angleZ += fact_pan;
 			if (Vis_Polar == POLARZ) { // (X,Y,Z)
@@ -1580,7 +1649,7 @@ void Teclat_Navega(int key, int action)
 			}
 			break;
 
-		// Tecla cursor dret
+			// Tecla cursor dret
 		case GLFW_KEY_RIGHT:
 			angleZ = 360 - fact_pan;
 			if (Vis_Polar == POLARZ) { // (X,Y,Z)
@@ -1609,7 +1678,7 @@ void Teclat_Navega(int key, int action)
 			}
 			break;
 
-		// Tecla Inicio
+			// Tecla Inicio
 		case GLFW_KEY_HOME:
 			if (Vis_Polar == POLARZ) {
 				opvN.z += fact_pan;
@@ -1625,7 +1694,7 @@ void Teclat_Navega(int key, int action)
 			}
 			break;
 
-		// Tecla Fin
+			// Tecla Fin
 		case GLFW_KEY_END:
 			if (Vis_Polar == POLARZ) {
 				opvN.z -= fact_pan;
@@ -1641,13 +1710,13 @@ void Teclat_Navega(int key, int action)
 			}
 			break;
 
-		// Tecla PgUp
+			// Tecla PgUp
 		case GLFW_KEY_PAGE_UP:
 			fact_pan /= 2;
 			if (fact_pan < 0.125) fact_pan = 0.125;
 			break;
 
-		// Tecla PgDown
+			// Tecla PgDown
 		case GLFW_KEY_PAGE_DOWN:
 			fact_pan *= 2;
 			if (fact_pan > 2048) fact_pan = 2048;
@@ -1663,33 +1732,33 @@ void Teclat_Navega(int key, int action)
 // Teclat_Pan: Teclat pels moviments de Pan.
 void Teclat_Pan(int key, int action)
 {
-	
+
 }
 
 // Teclat_TransEscala: Teclat pels canvis del valor d'escala per X,Y,Z.
 void Teclat_TransEscala(int key, int action)
 {
-	
+
 }
 
 // Teclat_TransRota: Teclat pels canvis del valor del vector de l'angle de rotació per X,Y,Z.
 void Teclat_TransRota(int key, int action)
 {
-	
+
 }
 
 
 // Teclat_TransTraslada: Teclat pels canvis del valor de traslació per X,Y,Z.
 void Teclat_TransTraslada(int key, int action)
 {
-	
+
 }
 
 
 // Teclat_Grid: Teclat pels desplaçaments dels gridXY, gridXZ i gridYZ.
 void Teclat_Grid(int key, int action)
 {
-	
+
 }
 
 
@@ -1703,26 +1772,26 @@ void Teclat_Grid(int key, int action)
 //					- action: Acció de la tecla: GLFW_PRESS (si s'ha apretat), GLFW_REPEAT, si s'ha repetit pressió i GL_RELEASE, si es deixa d'apretar.
 void OnMouseButton(GLFWwindow* window, int button, int action, int mods)
 {
-// TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
-// Get the cursor position when the mouse key has been pressed or released.
+	// TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
+	// Get the cursor position when the mouse key has been pressed or released.
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
 
-	
 
-// EntornVGI.ImGui: Test si events de mouse han sigut filtrats per ImGui (io.WantCaptureMouse)
-// (1) ALWAYS forward mouse data to ImGui! This is automatic with default backends. With your own backend:
+
+	// EntornVGI.ImGui: Test si events de mouse han sigut filtrats per ImGui (io.WantCaptureMouse)
+	// (1) ALWAYS forward mouse data to ImGui! This is automatic with default backends. With your own backend:
 	ImGuiIO& io = ImGui::GetIO();
 	io.AddMouseButtonEvent(button, action);
 
-// (2) ONLY forward mouse data to your underlying app/game.
+	// (2) ONLY forward mouse data to your underlying app/game.
 	if (!io.WantCaptureMouse) { //<Tractament mouse de l'aplicació>}
 		// OnLButtonDown
 		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 		{
 			// ABP DEBUG
 			gameState.OnMouseButton(window, button, action, mods);
-			
+
 
 			// Entorn VGI: Detectem en quina posició s'ha apretat el botó esquerra del
 			//				mouse i ho guardem a la variable m_PosEAvall i activem flag m_ButoEAvall
@@ -1732,7 +1801,7 @@ void OnMouseButton(GLFWwindow* window, int button, int action, int mods)
 		}
 		// OnLButtonUp: Funció que es crida quan deixem d'apretar el botó esquerra del mouse.
 		else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
-		{	
+		{
 			gameState.OnMouseButtonRelease(window, button, action, mods);
 
 			// Entorn VGI: Desactivem flag m_ButoEAvall quan deixem d'apretar botó esquerra del mouse.
@@ -1777,7 +1846,7 @@ void OnMouseButton(GLFWwindow* window, int button, int action, int mods)
 //					- ypos: Posició Y del cursor del mouse(coord.pantalla) quan el botó s'ha apretat.
 void OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
-// TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
+	// TODO: Agregue aquí su código de controlador de mensajes o llame al valor predeterminado
 	gameState.OnMouseMove(window, xpos, ypos);
 	double modul = 0;
 	GLdouble vdir[3] = { 0, 0, 0 };
@@ -1786,8 +1855,8 @@ void OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 	// TODO: Add your message handler code here and/or call default
 	if (m_ButoEAvall && mobil && projeccio != CAP)
 	{
-// Entorn VGI: Determinació dels angles (en graus) segons l'increment
-//				horitzontal i vertical de la posició del mouse.
+		// Entorn VGI: Determinació dels angles (en graus) segons l'increment
+		//				horitzontal i vertical de la posició del mouse.
 		gir.cx = m_PosEAvall.x - xpos;		gir.cy = m_PosEAvall.y - ypos;
 		m_PosEAvall.x = xpos;				m_PosEAvall.y = ypos;
 		if (camera == CAM_ESFERICA)
@@ -1960,7 +2029,7 @@ void OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 		// Crida a OnPaint() per redibuixar l'escena
 		//OnPaint(window);
 	}
-	else if (m_ButoDAvall &&  (camera == CAM_NAVEGA) && (projeccio != CAP && projeccio != ORTO))
+	else if (m_ButoDAvall && (camera == CAM_NAVEGA) && (projeccio != CAP && projeccio != ORTO))
 	{	// Avançar en opció de Navegació
 		if ((m_PosDAvall.x != xpos) && (m_PosDAvall.y != ypos))
 		{
@@ -1986,7 +2055,7 @@ void OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 		}
 	}
 
-// Entorn VGI: Transformació Geomètrica interactiva per l'eix Z amb boto dret del mouse.
+	// Entorn VGI: Transformació Geomètrica interactiva per l'eix Z amb boto dret del mouse.
 	else if (m_ButoDAvall && transZ && transf)
 	{
 		// Calcular increment
@@ -2033,8 +2102,8 @@ void OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset)
 	double modul = 0;
 	GLdouble vdir[3] = { 0, 0, 0 };
 
-// EntornVGI.ImGui: Test si events de mouse han sigut filtrats per ImGui (io.WantCaptureMouse)
-// (1) ALWAYS forward mouse data to ImGui! This is automatic with default backends. With your own backend:
+	// EntornVGI.ImGui: Test si events de mouse han sigut filtrats per ImGui (io.WantCaptureMouse)
+	// (1) ALWAYS forward mouse data to ImGui! This is automatic with default backends. With your own backend:
 	ImGuiIO& io = ImGui::GetIO();
 	//io.AddMouseButtonEvent(button, true);
 
@@ -2042,11 +2111,13 @@ void OnMouseWheel(GLFWwindow* window, double xoffset, double yoffset)
 	if (!io.WantCaptureMouse) { // <Tractament mouse de l'aplicació>}
 		// Funció de zoom quan està activada la funció pan o les T. Geomètriques
 		if ((zzoom) || (transX) || (transY) || (transZ))
-		{	OPV.R = OPV.R + yoffset / 4;
+		{
+			OPV.R = OPV.R + yoffset / 4;
 			if (OPV.R < 1) OPV.R = 1;
 		}
 		else if (camera == CAM_NAVEGA && !io.WantCaptureMouse)
-		{	vdir[0] = n[0] - opvN.x;
+		{
+			vdir[0] = n[0] - opvN.x;
 			vdir[1] = n[1] - opvN.y;
 			vdir[2] = n[2] - opvN.z;
 			modul = sqrt(vdir[0] * vdir[0] + vdir[1] * vdir[1] + vdir[2] * vdir[2]);
@@ -2158,39 +2229,39 @@ int llegir_ptsC(const char* nomf)
 
 
 // Entorn VGI. OnFull_Screen: Funció per a pantalla completa
-void OnFull_Screen(GLFWmonitor* monitor, GLFWwindow *window)
-{   
+void OnFull_Screen(GLFWmonitor* monitor, GLFWwindow* window)
+{
 	//int winPosX, winPosY;
 	//winPosX = 0;	winPosY = 0;
 
 	//fullscreen = !fullscreen;
 
 	if (fullscreen) {	// backup window position and window size
-						glfwGetWindowPos(window, &winPosX_old, &winPosY_old);
-						glfwGetWindowSize(window, &width_old, &height_old);
+		glfwGetWindowPos(window, &winPosX_old, &winPosY_old);
+		glfwGetWindowSize(window, &width_old, &height_old);
 
-						// Get resolution of monitor
-						const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		// Get resolution of monitor
+		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
-						w = mode->width;	h = mode->height;
-						// Switch to full screen
-						glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-					}
-	else {	// Restore last window size and position
-			glfwSetWindowMonitor(window, nullptr, winPosX_old, winPosY_old, width_old, height_old, mode->refreshRate);
-		}
+		w = mode->width;	h = mode->height;
+		// Switch to full screen
+		glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 	}
+	else {	// Restore last window size and position
+		glfwSetWindowMonitor(window, nullptr, winPosX_old, winPosY_old, width_old, height_old, mode->refreshRate);
+	}
+}
 
 // -------------------- TRACTAMENT ERRORS
 // error_callback: Displaia error que es pugui produir
 void error_callback(int code, const char* description)
 {
-    //const char* descripcio;
-    //int codi = glfwGetError(&descripcio);
+	//const char* descripcio;
+	//int codi = glfwGetError(&descripcio);
 
  //   display_error_message(code, description);
 	fprintf(stderr, "Codi Error: %i", code);
-	fprintf(stderr, "Descripcio: %s\n",description);
+	fprintf(stderr, "Descripcio: %s\n", description);
 }
 
 
@@ -2306,28 +2377,28 @@ void LoadVAOsAPB()
 	Set_VAOList(GLUT_USER6, loadgluDisk_EBO(0.0f, 1.5f, 8, 1)); // Càrrega disk com a VAO
 
 
-// Skybox
-		// Càrrega Shader Skybox
-		if (!skC_programID) skC_programID = shader_SkyBoxC.loadFileShaders(".\\shaders\\skybox.VERT", ".\\shaders\\skybox.FRAG");
+	// Skybox
+			// Càrrega Shader Skybox
+	if (!skC_programID) skC_programID = shader_SkyBoxC.loadFileShaders(".\\shaders\\skybox.VERT", ".\\shaders\\skybox.FRAG");
 
-		// Càrrega VAO Skybox Cube
-		if (skC_VAOID.vaoId == 0) skC_VAOID = loadCubeSkybox_VAO();
-		Set_VAOList(CUBE_SKYBOX, skC_VAOID);
+	// Càrrega VAO Skybox Cube
+	if (skC_VAOID.vaoId == 0) skC_VAOID = loadCubeSkybox_VAO();
+	Set_VAOList(CUBE_SKYBOX, skC_VAOID);
 
-		if (!cubemapTexture)
-		{	// load Skybox textures
-			// -------------
-			std::vector<std::string> faces;
-			faces =
-			{ ".\\textures\\skybox\\right.jpg",
-				".\\textures\\skybox\\left.jpg",
-				".\\textures\\skybox\\top.jpg",
-				".\\textures\\skybox\\bottom.jpg",
-				".\\textures\\skybox\\front.jpg",
-				".\\textures\\skybox\\back.jpg"
-			};
-			cubemapTexture[SkyBox] = loadCubemap(faces);
-		}
+	if (!cubemapTexture)
+	{	// load Skybox textures
+		// -------------
+		std::vector<std::string> faces;
+		faces =
+		{ ".\\textures\\skybox\\right.jpg",
+			".\\textures\\skybox\\left.jpg",
+			".\\textures\\skybox\\top.jpg",
+			".\\textures\\skybox\\bottom.jpg",
+			".\\textures\\skybox\\front.jpg",
+			".\\textures\\skybox\\back.jpg"
+		};
+		cubemapTexture[SkyBox] = loadCubemap(faces);
+	}
 
 }
 
@@ -2349,8 +2420,8 @@ void LoadTexturesABP()
 
 	//Textures menu
 	texturesID[11] = loadIMA_SOIL(".\\textures\\menu\\menu_bar.png");
-  
-  // for models
+
+	// for models
 	texturesID[20] = loadIMA_SOIL(".\\textures\\furniturebits_texture.png");
 
 
@@ -2368,15 +2439,15 @@ void LoadTexturesABP()
 
 	// Puzzle 4
 	//texturesID[40] = loadIMA_SOIL(".\\textures\\cadenat\\9.bmp");
-  
-  
+
+
 	//Textures habitació
 	texturesID[49] = loadIMA_SOIL(".\\models\\wallpaper2.tga.png");		// Paredes
 	texturesID[50] = loadIMA_SOIL(".\\textures\\brick2.bmp");			// Paredes
 	texturesID[51] = loadIMA_SOIL(".\\textures\\habitacio\\techo.jpg"); // Techo
 	texturesID[52] = loadIMA_SOIL(".\\textures\\habitacio\\suelo.jpg"); // Suelo
-  
-  // inventario
+
+	// inventario
 	texturesID[61] = loadIMA_SOIL(".\\textures\\inventoryItems\\gema.png");
 	//texturesID[62] = loadIMA_SOIL(".\\textures\\inventoryItems\\potion.png");
 	//texturesID[63] = loadIMA_SOIL(".\\textures\\inventoryItems\\sword.png");
@@ -2395,7 +2466,7 @@ void LoadTexturesABP()
 
 void LoadModelsABP()
 {
-	std::tuple<int, char*> models[] = { 
+	std::tuple<int, char*> models[] = {
 		std::make_tuple(0, (char*)".\\models\\cactus_small_A.obj"),
 		std::make_tuple(1, (char*)".\\models\\bed_double_A.obj"),
 		std::make_tuple(2, (char*)".\\models\\book_set.obj"),
@@ -2457,38 +2528,39 @@ void LoadModelsABP()
 		modelos[std::get<0>(model)].LoadModel(std::get<1>(model));
 	}
 	printf("Finished loading models.\n");
-	
+
 }
 
 int main(void)
 {
-//    GLFWwindow* window;
-// Entorn VGI. Timer: Variables
+	//    GLFWwindow* window;
+	// Entorn VGI. Timer: Variables
 	float time = elapsedTime;
 	float now;
 	float delta;
 
-// glfw: initialize and configure
-// ------------------------------
+	// glfw: initialize and configure
+	// ------------------------------
 	if (!glfwInit())
-	{	fprintf(stderr, "Failed to initialize GLFW\n");
+	{
+		fprintf(stderr, "Failed to initialize GLFW\n");
 		getchar();
 		return -1;
 	}
 
-// Retrieving main monitor
-    primary = glfwGetPrimaryMonitor();
+	// Retrieving main monitor
+	primary = glfwGetPrimaryMonitor();
 
-// To get current video mode of a monitor
-    mode = glfwGetVideoMode(primary);
+	// To get current video mode of a monitor
+	mode = glfwGetVideoMode(primary);
 
-// Retrieving monito++rs
-//    int countM;
-//   GLFWmonitor** monitors = glfwGetMonitors(&countM);
+	// Retrieving monito++rs
+	//    int countM;
+	//   GLFWmonitor** monitors = glfwGetMonitors(&countM);
 
-// Retrieving video modes of the monitor
-    int countVM;
-    const GLFWvidmode* modes = glfwGetVideoModes(primary, &countVM);
+	// Retrieving video modes of the monitor
+	int countVM;
+	const GLFWvidmode* modes = glfwGetVideoModes(primary, &countVM);
 
 	const unsigned char* version = (unsigned char*)glGetString(GL_VERSION);
 
@@ -2496,24 +2568,25 @@ int main(void)
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
 
-// Create a windowed mode window and its OpenGL context */
+	// Create a windowed mode window and its OpenGL context */
 	glfwWindowHint(GLFW_SAMPLES, antialiasing);	// enable AA
-    window = glfwCreateWindow(1280, 720, "Escape room - Projecte ABP VGI 2023", NULL, NULL);
-    if (!window)
-    {	fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
+	window = glfwCreateWindow(1280, 720, "Escape room - Projecte ABP VGI 2023", NULL, NULL);
+	if (!window)
+	{
+		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		getchar();
 		glfwTerminate();
-        return -1;
-    }
+		return -1;
+	}
 
 
-// Make the window's context current
-    glfwMakeContextCurrent(window);
+	// Make the window's context current
+	glfwMakeContextCurrent(window);
 
-// Llegir resolució actual de pantalla
+	// Llegir resolució actual de pantalla
 	glfwGetWindowSize(window, &width_old, &height_old);
 
-// Initialize GLEW
+	// Initialize GLEW
 	if (GLEW_VERSION_3_3) glewExperimental = GL_TRUE; // Needed for core profile
 	if (glewInit() != GLEW_OK) {
 		glGetError();	// Esborrar codi error generat per bug a llibreria GLEW
@@ -2526,7 +2599,7 @@ int main(void)
 	int major, minor;
 	GetGLVersion(&major, &minor);
 
-// ------------- Entorn VGI: Configure OpenGL context	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
+	// ------------- Entorn VGI: Configure OpenGL context	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor); // GL4.3
 
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Si funcions deprecades són eliminades (no ARB_COMPATIBILITY)
@@ -2537,28 +2610,30 @@ int main(void)
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE); // comment this line in a release build! 
 
 
-// ------------ - Entorn VGI : Enable OpenGL debug context if context allows for DEBUG CONTEXT (GL4.3)
+	// ------------ - Entorn VGI : Enable OpenGL debug context if context allows for DEBUG CONTEXT (GL4.3)
 	if (GLEW_VERSION_4_3)
-	{	GLint flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+	{
+		GLint flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
 		if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
-		{	glEnable(GL_DEBUG_OUTPUT);
+		{
+			glEnable(GL_DEBUG_OUTPUT);
 			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS); // makes sure errors are displayed synchronously
 			glDebugMessageCallback(glDebugOutput, nullptr);
 			glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 		}
 	}
 
-// Ensure we can capture the escape key being pressed below
+	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
-// Initialize Application control varibles
+	// Initialize Application control varibles
 	InitGL();
 
-// Make the game fullscreen if the variable is enabled :) (ABP)
+	// Make the game fullscreen if the variable is enabled :) (ABP)
 	OnFull_Screen(primary, window);
 
-// ------------- Entorn VGI: Callbacks
-// Set GLFW event callbacks. I removed glfwSetWindowSizeCallback for conciseness
+	// ------------- Entorn VGI: Callbacks
+	// Set GLFW event callbacks. I removed glfwSetWindowSizeCallback for conciseness
 	glfwSetWindowSizeCallback(window, OnSize);										// - Windows Size in screen Coordinates
 	glfwSetFramebufferSizeCallback(window, OnSize);									// - Windows Size in Pixel Coordinates
 	glfwSetMouseButtonCallback(window, (GLFWmousebuttonfun)OnMouseButton);			// - Directly redirect GLFW mouse button events
@@ -2569,10 +2644,10 @@ int main(void)
 	glfwSetErrorCallback(error_callback);											// Error callback
 	glfwSetWindowRefreshCallback(window, (GLFWwindowrefreshfun)OnPaint);			// - Callback to refresh the screen
 
-// Entorn VGI; Timer: Lectura temps
+	// Entorn VGI; Timer: Lectura temps
 	float previous = glfwGetTime();
 
-// Entorn VGI.ImGui: Setup Dear ImGui context
+	// Entorn VGI.ImGui: Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -2592,65 +2667,65 @@ int main(void)
 // Entorn VGI.ImGui: Setup Platform/Renderer backends
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 130");
-// Entorn VGI.ImGui: End Setup Dear ImGui context
+	// Entorn VGI.ImGui: End Setup Dear ImGui context
 
 
-// -- Custom for ABP --
+	// -- Custom for ABP --
 	LoadVAOsAPB();	// Load Object VAOs
 	LoadTexturesABP();
 	LoadModelsABP();
 	c_fons.r = 0;	c_fons.g = 0;	c_fons.b = 0;	c_fons.a = 0;	// Set black background color
 	wglSwapIntervalEXT(vsync);	// Enable or disable vsync
 
-// Loop until the user closes the window
-    while (!glfwWindowShouldClose(window))
-    {  
-// Entorn VGI. Timer: common part, do this only once
+	// Loop until the user closes the window
+	while (!glfwWindowShouldClose(window))
+	{
+		// Entorn VGI. Timer: common part, do this only once
 		now = glfwGetTime();
 		delta = now - previous;
 		previous = now;
 
-// Entorn VGI. Timer: for each timer do this
+		// Entorn VGI. Timer: for each timer do this
 		time -= delta;
 		if ((time <= 0.0) && (satelit || anima)) OnTimer();
 
-// Poll for and process events
+		// Poll for and process events
 		glfwPollEvents();
 
-// Entorn VGI.ImGui: Dibuixa menú ImGui
-		//draw_Menu_ImGui();
+		// Entorn VGI.ImGui: Dibuixa menú ImGui
+				//draw_Menu_ImGui();
 
-// ABP: Game update
+		// ABP: Game update
 		gameState.UpdateGame(delta);
 
-// Crida a OnPaint() per redibuixar l'escena
+		// Crida a OnPaint() per redibuixar l'escena
 		OnPaint(window);
 
-// Entorn VGI.ImGui: Capta dades del menú InGui
-		//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		// Entorn VGI.ImGui: Capta dades del menú InGui
+				//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-// Entorn VGI: Activa la finestra actual
+		// Entorn VGI: Activa la finestra actual
 		glfwMakeContextCurrent(window);
 
-// Entorn VGI: Transferència del buffer OpenGL a buffer de pantalla
+		// Entorn VGI: Transferència del buffer OpenGL a buffer de pantalla
 		glfwSwapBuffers(window);
-    }
+	}
 
-// Check if the ESC key was pressed or the window was closed
+	// Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(window) == 0);
 
-// Entorn VGI.ImGui: Cleanup ImGui
+	// Entorn VGI.ImGui: Cleanup ImGui
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
 
 	glfwDestroyWindow(window);
 
-// Terminating GLFW: Destroy the windows, monitors and cursor objects
-    glfwTerminate();
+	// Terminating GLFW: Destroy the windows, monitors and cursor objects
+	glfwTerminate();
 
 	if (shaderLighting.getProgramID() != -1) shaderLighting.DeleteProgram();
 	if (shaderSkyBox.getProgramID() != -1) shaderSkyBox.DeleteProgram();
-    return 0;
+	return 0;
 }
