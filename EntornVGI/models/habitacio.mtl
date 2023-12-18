@@ -1,4 +1,4 @@
-# Blender 3.6.5 MTL File: 'None'
+# Blender 4.0.1 MTL File: 'None'
 # www.blender.org
 
 newmtl 82
@@ -531,6 +531,16 @@ d 1.000000
 illum 1
 map_Kd dogport_diffuse.jpeg
 
+newmtl doooor
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd textures_mid.png
+
 newmtl frame.001
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -566,10 +576,10 @@ Ns 1000.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.450000
+Ni 1.050000
 d 1.000000
 illum 2
-map_Kd frame_2.png
+map_Kd foto2.png
 
 newmtl leaves_texture
 Ns 200.000000
@@ -609,7 +619,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd cantiMusic.jpg
+map_Kd foto3.jpg
 
 newmtl port2
 Ns 250.000000
@@ -619,7 +629,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd MusicSheet_diffuse.jpeg
+map_Kd foto5.jpg
 
 newmtl port3
 Ns 250.000000
@@ -629,7 +639,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd cantiMusic.jpg
+map_Kd foto8.jpg
 
 newmtl port4
 Ns 250.000000
@@ -649,17 +659,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd dogport_diffuse.jpeg
-
-newmtl port5.001
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd cantiMusic.jpg
+map_Kd foto12.jpg
 
 newmtl port6
 Ns 250.000000
@@ -669,7 +669,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd dogport_diffuse.jpeg
+map_Kd foto1.jpeg
 
 newmtl port7
 Ns 250.000000
@@ -679,7 +679,17 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd dogport_diffuse.jpeg
+map_Kd foto7.jpg
+
+newmtl port999
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd foto3.jpg
 
 newmtl poster1
 Ns 250.000000
@@ -742,6 +752,16 @@ illum 1
 map_Kd rugtex_diffuse.png
 
 newmtl suelo
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd tile_floor.tga.png
+
+newmtl suelo.001
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000

@@ -328,7 +328,8 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 			puz3_match = checkMatch(puz3_currentCombination, puz3_correctCombination, puz3_n_Symbols);
 			if (puz3_match) { 
 				puz3_complete = true;
-				ChangeScene(SCENE_GAME);
+				//drawParetFalsa = false;
+				ChangeScene(SCENE_PUZLE6);
 			}
 		}
 		break;
@@ -402,6 +403,7 @@ void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action,
 		else if (hit == "Puzle 4") ChangeScene(SCENE_PUZLE4);
 		else if (hit == "Puzle 5") ChangeScene(SCENE_PUZLE5);
 		else if (hit == "Puzle 6") ChangeScene(SCENE_PUZLE6);
+		else if (hit == "Win") ChangeScene(SCENE_WIN);
 	}
 	break;
 	}
@@ -481,7 +483,16 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 		if (normalized.y < 0)
 			rot = -rot;
 		//printf("Rotation mouse: %f\n", rot);
+		puz6_progress += abs(rot - puz6_rotation);
+		printf("Progress: %f\n", puz6_progress);
 		puz6_rotation = rot;
+
+		if (puz6_progress > 120.0f) {
+			drawParetFalsa = false;
+			boundaries.push_back(ObjectBoundaries(vec3(0.0f, -2.0f, 0.0f), 1.0f, (char*)"Win"));
+			ChangeScene(SCENE_GAME);
+			
+		}
 	}
 }
 

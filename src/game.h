@@ -30,7 +30,8 @@
 #define SCENE_PUZLE2			14
 #define SCENE_PUZLE3			15
 #define SCENE_PUZLE4			16
-#define SCENE_PUZLE5			17
+//#define SCENE_PUZLE5			17
+#define SCENE_WIN			17
 #define SCENE_PUZLE6			18
 
 // Textures
@@ -185,10 +186,12 @@ public:
 
 	// Puzle 6
 	float puz6_rotation = 0.0f;
+	float puz6_progress = 0.0f;
 
 	// Habitacion
 	// Hitboxes de los objetos interactuables de la habitación
 	std::list<ObjectBoundaries> boundaries;
+	bool drawParetFalsa = true;
 
 // FUNCIONES
 
