@@ -2517,7 +2517,8 @@ void LoadModelsABP()
 		//std::make_tuple(40, (char*)".\\models\\pared.obj")
 		std::make_tuple(41, (char*)".\\models\\manivela.obj"),
 		std::make_tuple(42, (char*)".\\models\\llave.obj"),
-		std::make_tuple(43, (char*)".\\models\\historia.obj")
+		std::make_tuple(43, (char*)".\\models\\historia.obj"),
+		std::make_tuple(44, (char*)".\\models\\estatua.obj")
 
 	};
 
