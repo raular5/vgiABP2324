@@ -31,6 +31,15 @@ bool GameState::IsGemInInventory() {
 	return gemIterator != inventory.end();
 }
 
+bool GameState::IsKeyInInventory() {
+	// Utilizar std::find_if para buscar una instancia de InventorySlot con itemName igual a "Gem"
+	auto gemIterator = std::find_if(inventory.begin(), inventory.end(),
+		[](const InventorySlot& slot) { return slot.itemName == "Key"; });
+
+	// Devolver true si se encontró la gema, false en caso contrario
+	return gemIterator != inventory.end();
+}
+
 void GameState::RemoveGemFromInventory() {
 	auto it = std::find_if(inventory.begin(), inventory.end(),
 		[](const InventorySlot& slot) { return slot.itemName == "Gem"; });
@@ -401,9 +410,9 @@ void GameState::OnMouseButtonRelease(GLFWwindow* window, int button, int action,
 		else if (hit == "Puzle 2") ChangeScene(SCENE_PUZLE2);
 		else if (hit == "Puzle 3" && !puz3_complete) ChangeScene(SCENE_PUZLE3);
 		else if (hit == "Puzle 4") ChangeScene(SCENE_PUZLE4);
-		else if (hit == "Puzle 5") ChangeScene(SCENE_PUZLE5);
+		//else if (hit == "Puzle 5") ChangeScene(SCENE_PUZLE5);
 		else if (hit == "Puzle 6") ChangeScene(SCENE_PUZLE6);
-		else if (hit == "Win") ChangeScene(SCENE_WIN);
+		else if (hit == "Win" && IsKeyInInventory()) ChangeScene(SCENE_WIN);
 	}
 	break;
 	}
@@ -504,7 +513,7 @@ void GameState::ChangeScene(int scene)
 	case SCENE_PUZLE2:
 	case SCENE_PUZLE3:
 	case SCENE_PUZLE4:
-	case SCENE_PUZLE5:
+	case SCENE_WIN:
 	case SCENE_PUZLE6:
 		enableCameraRotation = false;
 		break;

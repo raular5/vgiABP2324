@@ -1134,7 +1134,7 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case SCENE_PUZLE4:
-	case SCENE_PUZLE5:
+	case SCENE_WIN:
 	case SCENE_PUZLE6:
 	case SCENE_ITEM_INSPECT:
 		ImGui_ImplOpenGL3_NewFrame();

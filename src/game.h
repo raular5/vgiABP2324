@@ -113,6 +113,8 @@ public:
 
 	bool IsGemInInventory();
 
+	bool IsKeyInInventory();
+
 	void RemoveGemFromInventory();
 
 	std::vector<InventorySlot> inventory;

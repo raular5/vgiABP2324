@@ -159,7 +159,7 @@ void dibuixa_EscenaGL(GLuint sh_programID, bool eix, GLuint axis_Id, CMask3D rei
 	case SCENE_PUZLE4:
 		escenaPuzle4(sh_programID, MatriuVista, MatriuTG, sw_mat, texturID, textur_map, gameState, modelos);
 		break;
-	case SCENE_PUZLE5:
+	case SCENE_WIN:
 		escenaPuzle5(sh_programID, MatriuVista, MatriuTG, sw_mat, texturID, textur_map, gameState, modelos);
 		break;
 	case SCENE_PUZLE6:
