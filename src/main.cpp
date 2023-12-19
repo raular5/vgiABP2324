@@ -22,6 +22,9 @@
 
 #include <tuple>
 
+#include <chrono>
+#include <thread>
+
 void InitGL()
 {
 	// TODO: agregar aquí el código de construcción
@@ -669,7 +672,68 @@ void draw_Menu_ABP()
 	float buttonHeight = 75;
 	float largerVerticalSpacing = 500.0f;
 
+	const char* textLines[] = {
+			"...",
+			"The faint hum of the lock precedes the decisive click...",
+			"The door swings open, revealing a dimly lit corridor...",
+			"Congratulations, adventurer",
+			"You've conquered the escape room",
+			"",
+			"Press Enter to continue"
+	};
+
+	const char* intro[] = {
+		"",
+		"Awakening in a dimly lit, vintage - designed room,",
+		"your surroundings are shrouded in mystery.",
+		"No recollection of your arrival, only the weight of an unsettling atmosphere.",
+		"Now, you must find the exit before the time runs out.",
+		"",
+		"Press Enter"
+	};
+
+	static int currentLine = 0;
+	static bool showNextLine = true;
+	static std::chrono::time_point<std::chrono::steady_clock> startTime = std::chrono::steady_clock::now();
+
+	auto currentTime = std::chrono::steady_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime);
+
 	switch (gameScene) {
+	case SCENE_INTRO:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+		ImGui::SetNextWindowSize(ImVec2(1200.0f, 1000.0f));
+		ImGui::SetNextWindowPos(ImVec2(((ImGui::GetIO().DisplaySize.x / 2) - 300), ((ImGui::GetIO().DisplaySize.y / 2) - 200)));
+		ImGui::Begin("Escape Room Intro", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoInputs);
+
+
+		//ImGui::SetNextWindowPos(ImVec2(200, 300));
+		
+		currentTime = std::chrono::steady_clock::now();
+		duration = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime);
+		ImGui::PushFont(font2);
+
+		for (int i = 0; i <= currentLine; ++i) {
+
+			ImGui::Text("%s", intro[i]);
+
+		}
+		
+		if (duration.count() > 2000 * currentLine && currentLine < sizeof(intro) / sizeof(intro[0]) - 1) {
+			currentLine++;
+		}
+
+		if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+			gameScene = 2;
+		}
+		
+		ImGui::PopFont();
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
 	case SCENE_START:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -806,9 +870,10 @@ void draw_Menu_ABP()
 			gameState.audioEngine->setSoundVolume(0.1f);
 			gameState.audioEngine->play2D("media\\MUSICA DE TERROR.ogg", true, false, true);
 			gameState.enableCameraRotation = true;
-			gameScene = 2;
+			gameScene = 19;
 			printf("gameScene= %d \n", gameScene);
 			gameTimer = time(NULL);
+			startTime = std::chrono::steady_clock::now();
 		}
 
 		ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
@@ -833,88 +898,6 @@ void draw_Menu_ABP()
 			}
 		}
 
-		//if (ImGui::Button("Debug scene for testing")) {
-		//	gameState.enableCameraRotation = true;
-		//	gameScene = 10;
-		//	printf("gameScene= %d \n", gameScene);
-		//	gameTimer = time(NULL);
-		//}
-
-		//if (ImGui::Button("Debug scene for textures")) {
-		//	gameState.enableCameraRotation = true;
-		//	gameScene = 11;
-		//	printf("gameScene= %d \n", gameScene);
-		//	gameTimer = time(NULL);
-		//}
-
-		//if (ImGui::Button("Game Over Scene")) {
-		//	gameState.enableCameraRotation = true;
-		//	gameScene = SCENE_TIMER_GAMEOVER;
-		//	printf("gameScene= %d \n", gameScene);
-		//	gameTimer = time(NULL);
-		//}
-
-		//if (ImGui::Button("Test skyboxes")) {
-		//	gameState.enableCameraRotation = true;
-		//	gameScene = SCENE_SKYBOXES;
-		//	printf("gameScene= %d \n", gameScene);
-		//	gameTimer = time(NULL);
-		//}
-
-		//if (ImGui::Button("Puzle 1")) {
-		//	gameState.enableCameraRotation = false;
-
-		//	gameScene = SCENE_PUZLE1;
-		//	printf("gameScene= %d \n", gameScene);
-		//	gameTimer = time(NULL);
-		//}
-
-		//if (ImGui::Button("Puzle 2")) {
-		//	gameState.enableCameraRotation = false;
-
-		//	gameScene = SCENE_PUZLE2;
-		//	printf("gameScene= %d \n", gameScene);
-		//	gameTimer = time(NULL);
-		//}
-
-		//if (ImGui::Button("Puzle 3")) {
-		//	gameState.enableCameraRotation = false;
-
-		//	gameScene = SCENE_PUZLE3;
-		//	printf("gameScene= %d \n", gameScene);
-		//	gameTimer = time(NULL);
-		//}
-
-		//if (ImGui::Button("Puzle 4")) {
-		//	gameState.enableCameraRotation = false;
-
-		//	gameScene = SCENE_PUZLE4;
-		//	printf("gameScene= %d \n", gameScene);
-		//	gameTimer = time(NULL);
-		//}
-
-		//if (ImGui::Button("Puzle 5")) {
-		//	gameState.enableCameraRotation = false;
-
-		//	gameScene = SCENE_PUZLE5;
-		//	printf("gameScene= %d \n", gameScene);
-		//	gameTimer = time(NULL);
-		//}
-
-		//if (ImGui::Button("Puzle 6")) {
-		//	gameState.enableCameraRotation = false;
-
-		//	gameScene = SCENE_PUZLE6;
-		//	printf("gameScene= %d \n", gameScene);
-		//	gameTimer = time(NULL);
-		//}
-
-	/*	if (ImGui::Button("Start scape room")) {
-			gameScene = 2;
-			printf("gameScene= %d \n", gameScene);
-			gameTimer = time(NULL);
-		}*/
-
 		ImGui::Dummy(ImVec2(0.0f, verticalSpacing));
 		if (ImGui::Button("Exit Game", ImVec2(buttonWidth, buttonHeight))) {
 			glfwSetWindowShouldClose(window, true);
@@ -924,8 +907,6 @@ void draw_Menu_ABP()
 		ImGui::PopFont();
 
 		ImGui::End();
-
-
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -960,8 +941,6 @@ void draw_Menu_ABP()
 
 			showMenu = !showMenu;
 		}
-
-
 
 
 		if (showMenu) {
@@ -1037,6 +1016,7 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case SCENE_DEBUG_TEST:
+		break;
 	case SCENE_DEBUG_TEX:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -1134,8 +1114,39 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case SCENE_PUZLE4:
+		break;
 	case SCENE_WIN:
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+		ImGui::SetNextWindowSize(ImVec2(1200.0f, 1000.0f));
+		ImGui::SetNextWindowPos(ImVec2(((ImGui::GetIO().DisplaySize.x / 2)-300), ((ImGui::GetIO().DisplaySize.y / 2)-200)));
+		ImGui::Begin("Escape Room Ending", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoInputs);
+		currentTime = std::chrono::steady_clock::now();
+		//ImGui::SetNextWindowPos(ImVec2(200, 300));
+		;
+		ImGui::PushFont(font2);
+
+		for (int i = 0; i <= currentLine; ++i) {
+			
+			ImGui::Text("%s", textLines[i]);
+			
+		}
+
+		if (duration.count() > 2000 * currentLine && currentLine < sizeof(textLines) / sizeof(textLines[0]) - 1) {
+			currentLine++;
+		}
+		if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+			gameScene = 1;
+		}
+
+		ImGui::PopFont();
+		ImGui::End();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		break;
 	case SCENE_PUZLE6:
+		break;
 	case SCENE_ITEM_INSPECT:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
