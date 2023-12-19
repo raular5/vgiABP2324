@@ -31,8 +31,9 @@
 #define SCENE_PUZLE3			15
 #define SCENE_PUZLE4			16
 //#define SCENE_PUZLE5			17
-#define SCENE_WIN			17
+#define SCENE_WIN				17
 #define SCENE_PUZLE6			18
+#define SCENE_INTRO				19
 
 // Textures
 #define TEXTURE_CADENAT_SYMBOLS 7
