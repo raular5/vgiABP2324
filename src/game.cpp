@@ -302,7 +302,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 			if (!audioEngine) {
 				std::cout << "ERROR" << std::endl;
 			}
-			irrklang::ISound* mySound = audioEngine->play2D("media\\MUSICA DE TERROR.ogg", false, false, true);
+			//irrklang::ISound* mySound = audioEngine->play2D("media\\MUSICA DE TERROR.ogg", false, false, true);
 			
 			RemoveGemFromInventory();
 			puz2_complete = true;
