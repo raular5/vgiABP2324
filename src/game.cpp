@@ -13,7 +13,7 @@ GameState::GameState()
 	cube_color.a = 0.5f;
 
 	boundaries.push_back(ObjectBoundaries(vec3(10.2f, 8.0f, -1.3f), 1.0f, (char*)"Puzle 1")); // candado simbolos
-	boundaries.push_back(ObjectBoundaries(vec3(0.0f, -15.0f, 0.0f), 1.0f, (char*)"Puzle 2")); // estatua
+	boundaries.push_back(ObjectBoundaries(vec3(0.0f, -15.0f, 0.0f), 2.0f, (char*)"Puzle 2")); // estatua
 	boundaries.push_back(ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f),   1.0f, (char*)"Puzle 3")); // candado numerico
 	boundaries.push_back(ObjectBoundaries(vec3(18.0f, 6.0f, 1.0f),  1.5f, (char*)"Puzle 4")); // cuadro
 	boundaries.push_back(ObjectBoundaries(vec3(13.5f, -8.0f, 0.5f), 1.5f, (char*)"nota"));    // ver nota
@@ -502,7 +502,7 @@ void GameState::OnMouseMove(GLFWwindow* window, double xpos, double ypos)
 
 		if (puz6_progress > 120.0f) {
 			drawParetFalsa = false;
-			boundaries.push_back(ObjectBoundaries(vec3(0.0f, -2.0f, 0.0f), 1.0f, (char*)"Win"));
+			boundaries.push_back(ObjectBoundaries(vec3(0.0f, -2.0f, 0.0f), 1.5f, (char*)"Win"));
 			ChangeScene(SCENE_GAME);
 			
 		}

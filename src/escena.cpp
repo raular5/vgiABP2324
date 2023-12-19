@@ -1054,7 +1054,8 @@ void escenaPuzle4(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 MatriuTG
 		// Pas NormalMatrix a shader
 		NormalMatrix = transpose(inverse(MatriuVista * ModelMatrix));
 		glUniformMatrix4fv(glGetUniformLocation(sh_programID, "normalMatrix"), 1, GL_FALSE, &NormalMatrix[0][0]);
-		dibuixa_Key(sh_programID, MatriuVista, ModelMatrix, sw_mat);
+		//dibuixa_Key(sh_programID, MatriuVista, ModelMatrix, sw_mat);
+		modelos[42].draw_TriVAO_OBJ(sh_programID);
 	}
 
 	// PARET
