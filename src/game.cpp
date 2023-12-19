@@ -288,6 +288,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 			{ 
 				inventory.push_back(InventorySlot("Gem", 61, 1, 10));
 				puz1_complete = true;
+				//audioEngine->drop();
 				ChangeScene(SCENE_GAME); 
 			}
 		}
@@ -305,6 +306,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 			
 			RemoveGemFromInventory();
 			puz2_complete = true;
+			//audioEngine->drop();
 			
 
 		}
@@ -337,6 +339,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 			puz3_match = checkMatch(puz3_currentCombination, puz3_correctCombination, puz3_n_Symbols);
 			if (puz3_match) { 
 				puz3_complete = true;
+				//audioEngine->drop();
 				//drawParetFalsa = false;
 				ChangeScene(SCENE_PUZLE6);
 			}
@@ -345,6 +348,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	case SCENE_PUZLE4:
 		if (puz4_hasMovedFrame && worldPos.y > 0 && worldPos.y < 1.25 && worldPos.z < -1.5 && worldPos.z > -2.5) {// Click on key
 			puz4_hasPickedKey = true;
+			//audioEngine->drop();
 			inventory.push_back(InventorySlot("Key", 64, 1, 42));
 		}
 		else if (worldPos.y > -2.5 && worldPos.y < 2.5 && worldPos.z < 2.5 && worldPos.z > -2.5) // Click on frame
