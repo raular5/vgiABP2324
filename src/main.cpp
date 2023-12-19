@@ -804,7 +804,7 @@ void draw_Menu_ABP()
 		ImGui::Dummy(ImVec2(0.0f, largerVerticalSpacing));
 		if (ImGui::Button("Play", ImVec2(buttonWidth, buttonHeight))) {
 			gameState.audioEngine->setSoundVolume(0.1f);
-			gameState.audioEngine->play2D("media\\MUSICA DE TERROR.mp3", true, false, true);
+			gameState.audioEngine->play2D("media\\MUSICA DE TERROR.ogg", true, false, true);
 			gameState.enableCameraRotation = true;
 			gameScene = 2;
 			printf("gameScene= %d \n", gameScene);
