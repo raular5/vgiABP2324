@@ -297,12 +297,13 @@ void escenaABP_antigua(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Mat
 	if (gameState.drawParetFalsa)
 	{
 		glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
-		glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
-		glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_FALSE);	// La textura esta en espejo
+		//glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+		glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_FALSE); //glEnable(GL_MODULATE);
+		glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_TRUE);	// La textura esta en espejo
 		ModelMatrix = MatriuTG;
 		//SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
-		ModelMatrix = glm::translate(MatriuTG, vec3(-9.0f, 0.0f, -2.0f));
-		//ModelMatrix = glm::scale(ModelMatrix, vec3(2.0f, 2.0f, 2.0f));
+		ModelMatrix = glm::translate(MatriuTG, vec3(-7.0f, 0.0f, -1.9f));
+		ModelMatrix = glm::scale(ModelMatrix, vec3(0.9f, 0.9f, 0.9f));
 		ModelMatrix = glm::rotate(ModelMatrix, radians(90.0f), vec3(1.0f, 0.0f, 0.0f));
 		//ModelMatrix = glm::rotate(ModelMatrix, radians(180.0f), vec3(0.0f, 0.0f, 1.0f));
 		//ModelMatrix = glm::rotate(ModelMatrix, radians(180.0f), vec3(0.0f, 1.0f, 0.0f));
