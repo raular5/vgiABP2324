@@ -1016,6 +1016,7 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case SCENE_DEBUG_TEST:
+		break;
 	case SCENE_DEBUG_TEX:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -1113,6 +1114,7 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case SCENE_PUZLE4:
+		break;
 	case SCENE_WIN:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -1144,6 +1146,7 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case SCENE_PUZLE6:
+		break;
 	case SCENE_ITEM_INSPECT:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
