@@ -12,7 +12,7 @@ GameState::GameState()
 	cube_color.b = 0.0;
 	cube_color.a = 0.5f;
 
-	boundaries.push_back(ObjectBoundaries(vec3(10.2f, 8.0f, -1.3f), 1.0f, (char*)"Puzle 1")); // candado simbolos
+	boundaries.push_back(ObjectBoundaries(vec3(13.0f, 7.8f, 0.13f), 1.0f, (char*)"Puzle 1")); // candado simbolos
 	boundaries.push_back(ObjectBoundaries(vec3(0.0f, -15.0f, 0.0f), 2.0f, (char*)"Puzle 2")); // estatua
 	boundaries.push_back(ObjectBoundaries(vec3(0.0f, 0.0f, 0.0f),   1.0f, (char*)"Puzle 3")); // candado numerico
 	boundaries.push_back(ObjectBoundaries(vec3(18.0f, 6.0f, 1.0f),  1.5f, (char*)"Puzle 4")); // cuadro
@@ -227,11 +227,6 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	clickPosWorld_y = worldPos.y;
 	clickPosWorld_z = worldPos.z;
 
-	
-
-	
-	
-
 	switch (*gameScene)
 	{
 	case SCENE_DEBUG_TEST:
@@ -246,16 +241,16 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 	break;
 
 	case SCENE_PUZLE1:
-		if (worldPos.z > -0.5 && worldPos.z < 0.5)
+		if (worldPos.z > -1.3 && worldPos.z < 1.1)
 		{
-			if (worldPos.y > -2 && worldPos.y < -1) {
+			if (worldPos.y > -4.55 && worldPos.y < -2.68) {
 				puz1_currentCombination[0] = (puz1_currentCombination[0] + 1) % puz1_n_Symbols;
 				if (!audioEngine) {
 					std::cout << "ERROR" << std::endl;
 				}
 				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
 			}
-			else if (worldPos.y > -1 && worldPos.y < 0) {
+			else if (worldPos.y > -2.24 && worldPos.y < -0.3) {
 				puz1_currentCombination[1] = (puz1_currentCombination[1] + 1) % puz1_n_Symbols;
 				
 				if (!audioEngine) {
@@ -263,7 +258,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 				}
 				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
 			}
-			else if (worldPos.y > 0 && worldPos.y < 1) {
+			else if (worldPos.y > 0.13 && worldPos.y < 2.15) {
 				puz1_currentCombination[2] = (puz1_currentCombination[2] + 1) % puz1_n_Symbols;
 				
 				if (!audioEngine) {
@@ -271,7 +266,7 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 				}
 				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
 			}
-			else if (worldPos.y > 1 && worldPos.y < 2) {
+			else if (worldPos.y > 2.5 && worldPos.y < 4.5) {
 				puz1_currentCombination[3] = (puz1_currentCombination[3] + 1) % puz1_n_Symbols;
 				if (!audioEngine) {
 					std::cout << "ERROR" << std::endl;
@@ -291,6 +286,10 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 				//audioEngine->drop();
 				ChangeScene(SCENE_GAME); 
 			}
+		}
+		else
+		{
+			ChangeScene(SCENE_GAME);
 		}
 		break;
 	case SCENE_PUZLE2:
@@ -335,6 +334,10 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 				puz3_currentCombination[3] = (puz3_currentCombination[3] + 1) % 10;
 				irrklang::ISound* mySound = audioEngine->play2D("media\\Sonido de Mover Herramientas Efecto de Sonido.ogg", false, false, true);
 			}
+			else
+			{
+				ChangeScene(SCENE_GAME);
+			}
 
 			puz3_match = checkMatch(puz3_currentCombination, puz3_correctCombination, puz3_n_Symbols);
 			if (puz3_match) { 
@@ -343,6 +346,10 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 				//drawParetFalsa = false;
 				ChangeScene(SCENE_PUZLE6);
 			}
+		}
+		else
+		{
+			ChangeScene(SCENE_GAME);
 		}
 		break;
 	case SCENE_PUZLE4:
@@ -356,6 +363,10 @@ void GameState::OnMouseButton(GLFWwindow* window, int button, int action, int mo
 			if (puz4_hasPickedKey) { ChangeScene(SCENE_GAME); }	// Go back to the game
 			else { puz4_hasMovedFrame = !puz4_hasMovedFrame; }
 			
+		}
+		else
+		{
+			ChangeScene(SCENE_GAME);
 		}
 			
 	}

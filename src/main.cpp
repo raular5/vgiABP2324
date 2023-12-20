@@ -679,7 +679,7 @@ void draw_Menu_ABP()
 			"Congratulations, adventurer",
 			"You've conquered the escape room",
 			"",
-			"Press Enter to continue"
+			"Press Enter to exit"
 	};
 
 	const char* intro[] = {
@@ -921,7 +921,7 @@ void draw_Menu_ABP()
 
 		ImGui::Text("Time till game over");
 		//<<<<<<< inventory&menu
-		elapsedTimer = 180 - (time(NULL) - gameTimer);
+		elapsedTimer = 190 - (time(NULL) - gameTimer);
 		elapsedM = (elapsedTimer / 60) % 60;
 		//=======
 				//elapsedTimer = 5 - (time(NULL) - gameTimer);
@@ -1015,8 +1015,6 @@ void draw_Menu_ABP()
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
-	case SCENE_DEBUG_TEST:
-		break;
 	case SCENE_DEBUG_TEX:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -1037,7 +1035,7 @@ void draw_Menu_ABP()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
-	case SCENE_PUZLE1:
+		/*case SCENE_PUZLE1:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -1048,7 +1046,8 @@ void draw_Menu_ABP()
 		ImGui::Text("Puzzle 1 - CADENAT AMB SIMBOLS");
 		ImGui::Text("Current combination: %d%d%d%d", gameState.puz1_currentCombination[0], gameState.puz1_currentCombination[1], gameState.puz1_currentCombination[2], gameState.puz1_currentCombination[3]);
 		ImGui::Text("Correct combination: %d%d%d%d", gameState.puz1_correctCombination[0], gameState.puz1_correctCombination[1], gameState.puz1_correctCombination[2], gameState.puz1_correctCombination[3]);
-
+				ImGui::Text("Last click in world coords (x, y, z): %f, %f, %f", gameState.clickPosWorld_x, gameState.clickPosWorld_y, gameState.clickPosWorld_z);
+		RenderUI();
 		if (gameState.puz1_match)
 			ImGui::Text("MATCHING COMBINATION");
 
@@ -1063,7 +1062,7 @@ void draw_Menu_ABP()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
-	case SCENE_PUZLE2:
+		case SCENE_PUZLE2:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -1114,7 +1113,7 @@ void draw_Menu_ABP()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		break;
 	case SCENE_PUZLE4:
-		break;
+		break;*/
 	case SCENE_WIN:
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -1137,7 +1136,7 @@ void draw_Menu_ABP()
 			currentLine++;
 		}
 		if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
-			gameScene = 1;
+			glfwSetWindowShouldClose(window, true);
 		}
 
 		ImGui::PopFont();
@@ -2424,10 +2423,10 @@ void LoadTexturesABP()
 	texturesID[6] = loadIMA_SOIL(".\\textures\\wood.jpg");
 
 	// Textures cadenat
-	texturesID[7] = loadIMA_SOIL(".\\textures\\cadenat\\red.bmp");
-	texturesID[8] = loadIMA_SOIL(".\\textures\\cadenat\\green.bmp");
-	texturesID[9] = loadIMA_SOIL(".\\textures\\cadenat\\blue.bmp");
-	texturesID[10] = loadIMA_SOIL(".\\textures\\cadenat\\black.bmp");
+	texturesID[7] = loadIMA_SOIL(".\\textures\\cadenat\\cono.bmp");
+	texturesID[8] = loadIMA_SOIL(".\\textures\\cadenat\\esfera.bmp");
+	texturesID[9] = loadIMA_SOIL(".\\textures\\cadenat\\cilindro.bmp");
+	texturesID[10] = loadIMA_SOIL(".\\textures\\cadenat\\cubo.bmp");
 
 	//Textures menu
 	texturesID[11] = loadIMA_SOIL(".\\textures\\menu\\menu_bar.png");
@@ -2473,6 +2472,8 @@ void LoadTexturesABP()
 	//game over
 	texturesID[100] = loadIMA_SOIL(".\\textures\\menu\\game_over.png"); // main branch
 
+	texturesID[101] = loadIMA_SOIL(".\\models\\textura-maneta.jpg");
+	texturesID[102] = loadIMA_SOIL(".\\models\\textura-llave.jpg");
 }
 
 void LoadModelsABP()
@@ -2530,8 +2531,9 @@ void LoadModelsABP()
 		std::make_tuple(42, (char*)".\\models\\llave.obj"),
 		std::make_tuple(43, (char*)".\\models\\historia.obj"),
 		std::make_tuple(44, (char*)".\\models\\estatua.obj"),
-		std::make_tuple(45, (char*)".\\models\\posters-2.obj")
-
+		std::make_tuple(45, (char*)".\\models\\posters-2.obj"),
+		std::make_tuple(46, (char*)".\\models\\maleta_1.obj"),
+		std::make_tuple(47, (char*)".\\models\\maleta_2.obj")
 	};
 
 	printf("Loading OBJ models...\n");

@@ -163,7 +163,7 @@ public:
 	// Puzle 1: Cadenat amb simbols
 	int puz1_n_Symbols = 4;
 	int puz1_currentCombination[4] = { 0, 0, 0, 0 };
-	int puz1_correctCombination[4] = { 1, 1, 1, 2 };
+	int puz1_correctCombination[4] = { 0, 2, 3, 1 };
 	bool puz1_match = false;
 	bool puz1_complete = false;
 	bool puz1_checkMatch(); // se podria usar tambien para el candado numerico
