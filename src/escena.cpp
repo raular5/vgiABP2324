@@ -1313,6 +1313,11 @@ void escenaItemInspect(GLuint sh_programID, glm::mat4 MatriuVista, glm::mat4 Mat
 {
 	CColor col_object = { 1.0,1.0,1.0,1.0 };
 	glm::mat4 NormalMatrix(1.0), ModelMatrix(1.0);
+
+	SeleccionaColorMaterial(sh_programID, col_object, sw_mat);
+	glUniform1i(glGetUniformLocation(sh_programID, "textur"), GL_TRUE); //glEnable(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(sh_programID, "modulate"), GL_TRUE); //glEnable(GL_MODULATE);
+	glUniform1i(glGetUniformLocation(sh_programID, "flag_invert_y"), GL_FALSE);	// La textura esta en espejo
 	ModelMatrix = glm::scale(MatriuTG, gameState.item_inspect_scale);
 	ModelMatrix = glm::translate(ModelMatrix, vec3(0.0f, 0.0f, 0.0f));
 	ModelMatrix = glm::rotate(ModelMatrix, radians(gameState.item_inspect_rotation.x), vec3(1.0f, 0.0f, 0.0f));
